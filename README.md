@@ -10,6 +10,10 @@ This project is being developed as a full-stack ecosystem consisting of Android,
 
 ## 🚀 Project Goals
 
+![build](https://img.shields.io/github/actions/workflow/status/nazmul-1117/plantive-ecosystem/ci.yml)
+![license](https://img.shields.io/github/license/nazmul-1117/plantive-ecosystem)
+![contributors](https://img.shields.io/github/contributors/nazmul-1117/plantive-ecosystem)
+
 Plantive Ecosystem aims to:
 
 - Help users manage their plants and gardens easily
