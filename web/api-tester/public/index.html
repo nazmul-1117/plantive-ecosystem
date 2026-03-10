@@ -4,7 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plantive Prototype</title>
+    <title>Plantive</title>
+
+    <!-- Styles -->
     <link rel="stylesheet" href="../css/styles.css">
 </head>
 
@@ -12,25 +14,28 @@
 
     <div class="app">
 
-        <header>
-            <h2>🌱 Plantive</h2>
+        <!-- Header -->
+        <header class="app-header">
+            <h1>🌱 Plantive</h1>
         </header>
 
-        <!-- Screens -->
 
-        <main>
+        <!-- Main Screens -->
+        <main class="screens">
 
+            <!-- HOME SCREEN -->
             <section id="home" class="screen active">
 
                 <div class="welcome">
-                    <h3>Hello, Gardener 🌱</h3>
+                    <h2>Hello, Gardener 🌱</h2>
                     <p>Let's keep your plants healthy today</p>
                 </div>
 
 
+                <!-- Weather Card -->
                 <div class="card weather">
 
-                    <h4>Weather Today</h4>
+                    <h3>Weather Today</h3>
 
                     <div class="weather-info">
 
@@ -63,9 +68,10 @@
                 </div>
 
 
+                <!-- Garden Overview -->
                 <div class="card">
 
-                    <h4>Garden Overview</h4>
+                    <h3>Garden Overview</h3>
 
                     <div class="overview">
 
@@ -84,7 +90,7 @@
                         <div class="overview-item warning">
                             <span class="icon">⚠️</span>
                             <strong>3</strong>
-                            <p>Care</p>
+                            <p>Need Care</p>
                         </div>
 
                     </div>
@@ -92,22 +98,46 @@
                 </div>
 
 
+                <!-- Quick Feature Cards -->
                 <div class="card">
-                    <h4>⚡ Quick Actions</h4>
 
-                    <div class="actions">
+                    <div class="card-row">
 
-                        <button class="primary">Add Plant</button>
-                        <button class="secondary">Scan Plant</button>
-                        <button class="secondary">Ask AI</button>
+                        <a href="pages/fertilizer.html" class="link-box fertilizer">
+                            <span class="icon">💩</span>
+                            <p>Fertilizer Info</p>
+                        </a>
+
+                        <a href="pages/community.html" class="link-box community">
+                            <span class="icon">🌿</span>
+                            <p>Community</p>
+                        </a>
 
                     </div>
 
                 </div>
 
 
+                <!-- Quick Actions -->
                 <div class="card">
-                    <h4>📅 Today's Tasks</h4>
+
+                    <h3>⚡ Quick Actions</h3>
+
+                    <div class="actions">
+
+                        <button type="button" class="primary">Add Plant</button>
+                        <button type="button" class="secondary">Scan Plant</button>
+                        <button type="button" class="secondary">Ask AI</button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Today's Tasks -->
+                <div class="card">
+
+                    <h3>📅 Today's Tasks</h3>
 
                     <ul class="task-list">
 
@@ -131,17 +161,26 @@
                 </div>
 
 
+                <!-- AI Doctor -->
                 <div class="card ai-card">
-                    <h4>🤖 AI Plant Doctor</h4>
-                    <p>Upload a photo or describe symptoms and our AI will help diagnose plant problems.</p>
 
-                    <button class="primary">Open AI Assistant</button>
+                    <h3>🤖 AI Plant Doctor</h3>
+
+                    <p>
+                        Upload a photo or describe symptoms and our AI will help diagnose plant problems.
+                    </p>
+
+                    <button type="button" class="primary">
+                        Open AI Assistant
+                    </button>
+
                 </div>
 
 
+                <!-- Daily Tip -->
                 <div class="card tip-card">
 
-                    <h4>🌱 Daily Plant Tip</h4>
+                    <h3>🌱 Daily Plant Tip</h3>
 
                     <p>
                         Overwatering is one of the most common mistakes.
@@ -153,91 +192,130 @@
             </section>
 
 
+
+            <!-- GARDEN SCREEN -->
             <section id="garden" class="screen">
-                <h3>My Garden</h3>
+
+                <h2>My Garden</h2>
 
                 <div class="card">
-                    <h4>Tomato</h4>
+                    <h3>Tomato</h3>
                     <p>Status: Healthy</p>
                 </div>
 
                 <div class="card">
-                    <h4>Basil</h4>
+                    <h3>Basil</h3>
                     <p>Status: Needs Water</p>
                 </div>
 
-                <button class="primary">Add Plant</button>
+                <button type="button" class="primary">Add Plant</button>
+
             </section>
 
 
+
+            <!-- AI SCREEN -->
             <section id="ai" class="screen">
-                <h3>AI Assistant</h3>
 
-                <div class="chat-box" id="chatBox"></div>
+                <h2>AI Assistant</h2>
 
-                <input id="chatInput" placeholder="Ask about plant care..." />
-                <button onclick="sendChat()">Send</button>
+                <div class="chat-container">
+
+                    <div class="chat-box" id="chatBox"></div>
+
+                    <div class="chat-input">
+
+                        <input type="text" id="chatInput" placeholder="Ask about plant care...">
+
+                        <button type="button" onclick="sendChat()">
+                            Send
+                        </button>
+
+                    </div>
+
+                </div>
+
             </section>
 
 
+
+            <!-- MARKETPLACE -->
             <section id="market" class="screen">
-                <h3>Marketplace</h3>
+
+                <h2>Marketplace</h2>
 
                 <div class="card">
-                    <h4>Organic Fertilizer</h4>
+
+                    <h3>Organic Fertilizer</h3>
                     <p>$5</p>
-                    <button class="primary">Buy</button>
+
+                    <button type="button" class="primary">
+                        Buy
+                    </button>
+
                 </div>
 
                 <div class="card">
-                    <h4>Plant Pot</h4>
+
+                    <h3>Plant Pot</h3>
                     <p>$3</p>
-                    <button class="primary">Buy</button>
+
+                    <button type="button" class="primary">
+                        Buy
+                    </button>
+
                 </div>
 
             </section>
 
 
+
+            <!-- PROFILE -->
             <section id="profile" class="screen">
-                <h3>Profile</h3>
+
+                <h2>Profile</h2>
 
                 <div class="card">
+
                     <p>Name: User</p>
                     <p>Email: user@email.com</p>
+
                 </div>
 
-                <button class="primary">Logout</button>
+                <button type="button" class="primary">
+                    Logout
+                </button>
 
             </section>
 
         </main>
 
 
-        <!-- Bottom Navigation -->
 
+        <!-- Bottom Navigation -->
         <nav class="bottom-nav">
 
-            <button class="nav-item active" onclick="showScreen('home', this)">
+            <button class="nav-item active" onclick="showScreen('home', this)" aria-label="Home">
                 <span>🏠</span>
                 <p>Home</p>
             </button>
 
-            <button class="nav-item" onclick="showScreen('garden', this)">
+            <button class="nav-item" onclick="showScreen('garden', this)" aria-label="Garden">
                 <span>🌿</span>
                 <p>Garden</p>
             </button>
 
-            <button class="nav-item" onclick="showScreen('ai', this)">
+            <button class="nav-item" onclick="showScreen('ai', this)" aria-label="AI Assistant">
                 <span>🤖</span>
                 <p>AI</p>
             </button>
 
-            <button class="nav-item" onclick="showScreen('market', this)">
+            <button class="nav-item" onclick="showScreen('market', this)" aria-label="Marketplace">
                 <span>🛒</span>
                 <p>Market</p>
             </button>
 
-            <button class="nav-item" onclick="showScreen('profile', this)">
+            <button class="nav-item" onclick="showScreen('profile', this)" aria-label="Profile">
                 <span>👤</span>
                 <p>Profile</p>
             </button>
@@ -246,6 +324,8 @@
 
     </div>
 
+
+    <!-- JavaScript -->
     <script src="../js/app.js"></script>
 
 </body>
