@@ -154,12 +154,62 @@ vite.config.ts.timestamp-*
 # ------------------------------------------------------------
 #                          Python
 # ------------------------------------------------------------
+
+# Byte-compiled / optimized / DLL files
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
-.env
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+*.egg
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Virtual environments
+.env/
 venv/
+ENV/
+env/
+.venv/
+
+# Python environment variables
+*.env
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# IDE / Editor files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Logs and databases
+*.log
+*.sqlite3
+*.db
+*.sqlite
+
+# ML / AI artifacts
+# ml_models/
+data/__pycache__/
+*.h5
+*.pt
+*.ckpt
+*.onnx
 
 # ------------------------------------------------------------
 #                          General

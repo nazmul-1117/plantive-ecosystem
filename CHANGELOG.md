@@ -5,6 +5,29 @@ This follows **[Keep a Changelog](https://keepachangelog.com/en/1.0.0/)** conven
 
 ---
 
+## [v0.3.0] – 12-03-2026
+
+### Added
+
+* **AI Fertilizer Recommendation API** (`/ai/fertilizer/`)
+
+  * Returns top N fertilizer recommendations based on plant type, soil, sunlight, nutrients, and location
+  * Includes detailed probability and description for each recommendation
+  * Fully documented with Swagger UI examples
+  * Request and response validated using Pydantic models
+  * Logging added for requests, responses, and warnings
+
+### Changed
+
+* Updated project folder structure for AI service
+* Added Pydantic request and response models for fertilizer recommendation
+
+### Fixed
+
+* Error handling added for cases with no recommendations found
+
+---
+
 ## [v0.2.0] – 09-03-2026
 
 ### Added

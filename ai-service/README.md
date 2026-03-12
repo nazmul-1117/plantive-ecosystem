@@ -40,6 +40,9 @@ ai-service/
     │
     ├── tests/
     │   └── test_ai_routes.py
+
+    ├── logs/
+    │   └── ai_service.log
     │
     ├── requirements.txt
     ├── Dockerfile
