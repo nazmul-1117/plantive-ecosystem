@@ -1,18 +1,22 @@
 # 🌱 Plantive Ecosystem
 
+[![Repo Size](https://img.shields.io/github/repo-size/nazmul-1117/plantive-ecosystem?color=blue)](https://github.com/nazmul-1117/plantive-ecosystem)
+[![License](https://img.shields.io/github/license/nazmul-1117/plantive-ecosystem?color=blue)](LICENSE)
+[![Contributors](https://img.shields.io/github/contributors/nazmul-1117/plantive-ecosystem?color=green)](https://github.com/nazmul-1117/plantive-ecosystem/graphs/contributors)
+[![Issues](https://img.shields.io/github/issues/nazmul-1117/plantive-ecosystem?color=yellow)](https://github.com/nazmul-1117/plantive-ecosystem/issues)
+[![Last Commit](https://img.shields.io/github/last-commit/nazmul-1117/plantive-ecosystem)](https://github.com/nazmul-1117/plantive-ecosystem/commits/main)
+
+---
+
 Plantive Ecosystem is a smart plant care platform designed to help users monitor, manage, and improve plant health using modern technology.
 
 The system combines a **mobile application**, **backend services**, and **AI-powered plant intelligence** to provide users with tools for plant management, health monitoring, and smart recommendations.
 
-This project is being developed as a full-stack ecosystem consisting of Android, backend APIs, and AI services.
+This project is being developed as a full-stack ecosystem consisting of **Android**, **backend APIs**, and **AI services**.
 
 ---
 
 ## 🚀 Project Goals
-
-![build](https://img.shields.io/github/actions/workflow/status/nazmul-1117/plantive-ecosystem/ci.yml)
-![license](https://img.shields.io/github/license/nazmul-1117/plantive-ecosystem)
-![contributors](https://img.shields.io/github/contributors/nazmul-1117/plantive-ecosystem)
 
 Plantive Ecosystem aims to:
 
@@ -101,6 +105,7 @@ A lightweight web interface used to test backend APIs during development.
 
 ### Database
 - PostgreSQL / MySQL
+- MongoDB
 
 ### Web
 - HTML / CSS / JavaScript (API testing interface)
@@ -112,14 +117,14 @@ A lightweight web interface used to test backend APIs during development.
 ```
 plantive-ecosystem
 │
-├── mobile
+├── mobile-app
 │   └── android-app
 │
 ├── backend
 │   └── api-server
 │
-├── ai
-│   └── ai-service
+├── ai-service
+│   └── app
 │
 ├── web
 │   └── api-tester
@@ -127,6 +132,12 @@ plantive-ecosystem
 ├── database
 │
 ├── docs
+│
+├── CONTRIBUTING.md
+│
+├── CHANGELOG.md
+│
+├── LIECNSE
 │
 └── README.md
 ```
