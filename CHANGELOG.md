@@ -5,6 +5,28 @@ This follows **[Keep a Changelog](https://keepachangelog.com/en/1.0.0/)** conven
 
 ---
 
+
+
+## [v0.4.0] – 15-04-2026
+
+### Added
+
+* AI Fertilizer Recommendation API (`/ai/fertilizer/`) integrated into web frontend
+* Displays top fertilizer recommendations with probability and description
+* Basic request handling added in web UI using Fetch API
+
+### Changed
+
+* Connected web frontend to FastAPI backend service for testing
+* Updated frontend config to use API base URL
+
+### Fixed
+
+* Minor UI/API integration issues during fertilizer recommendation request
+
+---
+
+
 ## [v0.3.0] – 12-03-2026
 
 ### Added
