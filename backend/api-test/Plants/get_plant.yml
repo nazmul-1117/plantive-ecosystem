@@ -1,0 +1,15 @@
+info:
+  name: get_plant
+  type: http
+  seq: 2
+
+http:
+  method: GET
+  url: "{{PLANTS_URL}}/090ac188-a515-4b75-82a1-6e86df2e1040"
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

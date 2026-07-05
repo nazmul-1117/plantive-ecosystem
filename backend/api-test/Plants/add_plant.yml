@@ -1,0 +1,25 @@
+info:
+  name: add_plant
+  type: http
+  seq: 3
+
+http:
+  method: POST
+  url: "{{PLANTS_URL}}/"
+  body:
+    type: json
+    data: |-
+      {
+        "name": "Alu",
+        "description": "alu alu",
+        "type": "sobji",
+        "price": 44.99,
+        "stock": 5000
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

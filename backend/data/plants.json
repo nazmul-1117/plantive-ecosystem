@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "name": "Monstera Deliciosa",
+    "description": "A tropical plant with large split leaves.",
+    "type": "Indoor",
+    "price": 24.99,
+    "stock": 15
+  },
+  {
+    "id": 2,
+    "name": "Snake Plant",
+    "description": "A low-maintenance plant that thrives in low light.",
+    "type": "Indoor",
+    "price": 18.50,
+    "stock": 30
+  },
+  {
+    "id": 3,
+    "name": "Peace Lily",
+    "description": "An elegant flowering plant with white blooms.",
+    "type": "Indoor",
+    "price": 22.75,
+    "stock": 12
+  },
+  {
+    "id": 4,
+    "name": "Lavender",
+    "description": "A fragrant herb with purple flowers.",
+    "type": "Outdoor",
+    "price": 12.99,
+    "stock": 25
+  },
+  {
+    "id": 5,
+    "name": "Aloe Vera",
+    "description": "A succulent known for its medicinal properties.",
+    "type": "Succulent",
+    "price": 15.99,
+    "stock": 20
+  }
+]
