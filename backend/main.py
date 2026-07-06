@@ -1,29 +1,43 @@
 from fastapi import FastAPI, status
-from app.routers import plant_router
+from contextlib import asynccontextmanager
+
 from app.config.settings import settings
 from app.config.database import init_db
-from contextlib import asynccontextmanager
+
+from app.routers import plant_router, auth_router
 
 
 @asynccontextmanager
 async def life_span(app: FastAPI):
     print("Server Started successfully ------------>")
-    await init_db()
+    # await init_db()
     yield
-    
     print("Server Ended successfully ------------>")
 
-version = "v1"
-version_prefix = f"/api/{version}"
+API_VERSION = settings.API_VERSION
+API_PREFIX = f"/api/{API_VERSION}"
 
 app = FastAPI(
     title="Plantive Ecosystem",
     description="A centralized Smart Garden management system with Marketplace and Community Post, Like, Comment",
-    version=version,
+    version=API_VERSION,
     lifespan=life_span
     )
 
-app.include_router(router = plant_router.router, prefix = f"{version_prefix}/plants", tags = ["Plants"])
+app.include_router(
+    router = plant_router.router,
+    prefix = f"{API_PREFIX}/plants",
+    tags = ["Plants"]
+)
+
+app.include_router(
+    router=auth_router.auth_router,
+    prefix=f"{API_PREFIX}/auth",
+    tags=['Auth']
+)
+
+
+
 
 @app.get('/', status_code = status.HTTP_200_OK)
 def root() -> dict:

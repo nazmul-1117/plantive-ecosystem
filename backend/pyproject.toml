@@ -5,8 +5,10 @@ description = "plantive-ecosystem, a centralized Android-based garden management
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "alembic>=1.18.5",
     "asyncpg>=0.31.0",
     "fastapi[standard]>=0.139.0",
+    "pwdlib[argon2]>=0.3.0",
     "pydantic-settings>=2.14.2",
     "sqlmodel>=0.0.39",
 ]
