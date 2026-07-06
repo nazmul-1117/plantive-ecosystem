@@ -34,3 +34,12 @@ class UserRead(BaseModel):
 
 class UserUpdate(UserCreate):
     pass
+
+
+# auth
+class LoginRequest(BaseModel):
+    username: str
+    password: str
+
+class TokenResponse(BaseModel):
+    pass

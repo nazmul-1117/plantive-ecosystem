@@ -1,19 +1,17 @@
 info:
-  name: create_user
+  name: login
   type: http
-  seq: 1
+  seq: 2
 
 http:
   method: POST
-  url: "{{AUTH_URL}}/signup"
+  url: "{{AUTH_URL}}/login"
   body:
     type: json
     data: |-
       {
-        "full_name": "hey, bruh",
-        "email": "st1ri5ng@c.me",
         "username": "str1uingxd",
-        "plain_password": "nx1d"
+        "password": "nx1d"
       }
   auth: inherit
 
