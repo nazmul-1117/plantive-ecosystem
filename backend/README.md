@@ -260,13 +260,3 @@ See the `LICENSE` file for details.
 # ⭐ Support
 
 If you find this project useful, consider giving it a ⭐ on GitHub. It helps others discover the project and motivates continued development.
-
-For an open-source project, I'd also recommend a few repository additions beyond the README:
-
-* `LICENSE` (MIT or Apache-2.0 are common choices)
-* `.gitignore`
-* `.env.example` (never commit your real `.env`)
-* `CONTRIBUTING.md` (how to set up the project and submit PRs)
-* `CODE_OF_CONDUCT.md` (optional but recommended for community projects)
-* GitHub issue templates and pull request templates under `.github/`
-* GitHub Actions for linting and tests
