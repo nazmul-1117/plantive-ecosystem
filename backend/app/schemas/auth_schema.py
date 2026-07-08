@@ -2,33 +2,56 @@ from pydantic import BaseModel
 from datetime import datetime
 import uuid
 from sqlmodel import Field
+from typing import Optional
 
 
 class UserInDB(BaseModel):
     user_uid: uuid.UUID
-    full_name: str
+    
+    first_name: str
+    last_name: Optional[str] = None
+    
     email: str
     username: str
-    password_hashed: str
+    
+    password_hash: Optional[str] = None
+    auth_provider: str
+    
+    avatar_url: Optional[str] = None
+    bio: Optional[str] = None
+    
     is_active: bool
     is_verified: bool
+
     created_at: datetime
     updated_at: datetime
 
 
 class UserCreate(BaseModel):
-    full_name: str
+    first_name: str
+    last_name: Optional[str] = None
+    avatar_url: Optional[str] = None
+    bio: Optional[str] = None
     email: str
     username: str
-    plain_password: str
+    password: str
 
 class UserRead(BaseModel):
     user_uid: uuid.UUID
-    full_name: str
+
+    ftrst_name: str
+    last_name: Optional[str] = None
+
     email: str
     username: str
+    auth_provider: str
+
+    avatar_url: Optional[str] = None
+    bio: Optional[str] = None
+
     is_active: bool
     is_verified: bool
+
     created_at: datetime
     updated_at: datetime
 

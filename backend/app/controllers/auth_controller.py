@@ -58,7 +58,7 @@ async def login_user(
 
     if user is None or not verity_hashed_password(
         password=login_data.password,
-        hashed_password=user.password_hashed
+        hashed_password=user.password_hash
     ):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,

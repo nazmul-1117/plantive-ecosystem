@@ -10,11 +10,11 @@ http:
     type: json
     data: |-
       {
-        "name": "Alu",
-        "description": "alu alu",
+        "name": "Kakrol",
+        "description": "Begun Potol",
         "type": "sobji",
-        "price": 44.99,
-        "stock": 5000
+        "price": 23.5,
+        "stock": 150
       }
   auth: inherit
 

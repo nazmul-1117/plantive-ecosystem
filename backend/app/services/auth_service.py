@@ -25,13 +25,16 @@ class UserService:
             session: AsyncSession
     ) -> User:
         
-        password_hashed = generate_hash_password(user_data.plain_password)
+        password_hash: str = generate_hash_password(user_data.password)
 
         user = User(
-            full_name=user_data.full_name,
+            first_name=user_data.first_name,
+            last_name=user_data.last_name,
             email=user_data.email,
+            avatar_url=user_data.avatar_url,
+            bio=user_data.bio,
             username=user_data.username,
-            password_hashed=password_hashed
+            password_hash=password_hash
         )
 
         session.add(user)

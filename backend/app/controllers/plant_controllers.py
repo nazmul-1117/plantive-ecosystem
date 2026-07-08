@@ -1,22 +1,23 @@
 # app/controllers/plant_controllers.py
 
 import json
-from typing import Annotated
+from typing import Annotated, List
 from fastapi import HTTPException, status, Depends
 from sqlmodel.ext.asyncio.session import AsyncSession
 
 from app.schemas.plant_schema import Plant, PlantUpdate, PlantCreate
 from app.core.database import get_session
 from app.services.plant_service import PlantService
-from app.dependencies.auth_dependency import get_current_user
+from app.dependencies.auth_dependency import get_current_user, get_access_token_payload
 from app.models.auth_model import User
+from app.models.plant_model import Plants
 
 plant_services = PlantService()
 
 
 async def get_all_plants(
         session: Annotated[AsyncSession, Depends(get_session)],
-        current_user: Annotated[User, Depends(get_current_user)]
+        current_user: Annotated[User, Depends(get_access_token_payload)]
     ):
 
     result = await plant_services.get_all_plants(session)

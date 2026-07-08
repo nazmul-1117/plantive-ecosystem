@@ -12,14 +12,14 @@ from app.models.auth_model import User
 from app.services.token_service import TokenService
 from app.dependencies.redis_dependency import get_redis
 
-oath_scheme = OAuth2PasswordBearer(tokenUrl=f'/api/{settings.API_VERSION}/auth/login')
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl=f'/api/{settings.API_VERSION}/auth/login')
 user_service = UserService()
 token_service = TokenService()
 
 
 
 async def verify_token(
-        token: Annotated[str, Depends(oath_scheme)],
+        token: Annotated[str, Depends(oauth2_scheme)],
         redis: Annotated[Redis, Depends(get_redis)]
 ) -> dict:
     
@@ -50,6 +50,7 @@ async def verify_token(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail=str(ve)
         )
+
 
 async def get_current_user(
         session: Annotated[AsyncSession, Depends(get_session)],
@@ -101,4 +102,72 @@ async def required_admin(
             detail="Insufficiant Permission"
         )
     return current_user
+
+
+async def get_access_token_payload(
+        token: Annotated[str, Depends(oauth2_scheme)],
+        redis: Annotated[Redis, Depends(get_redis)]
+) -> dict:
+    """
+    Validate that provider JWT is a valid access token
+    and return it's payload
+    """
+
+    payload: dict = decode_token(token)
+
+    if await token_service.is_revoked(
+        jti=payload['jti'],
+        redis=redis
+    ): 
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Token expired or invalid"
+        ) 
+
+    token_type: str = payload.get("type")
+
+    if token_type != "access":
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Access Token Required",
+            headers={
+                "WWW-Authenticate": "Bearer"
+            }
+        )
+    
+    return payload
+
+
+async def get_refresh_token_payload(
+        token: Annotated[str, Depends(oauth2_scheme)],
+        redis: Annotated[Redis, Depends(get_redis)]
+) -> dict:
+    """
+    Validate that provider JWT is a valid refresh token
+    and return it's payload
+    """
+
+    payload: dict = decode_token(token)
+
+    if await token_service.is_revoked(
+        jti=payload['jti'],
+        redis=redis
+    ): 
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Token expired or invalid"
+        )
+
+    token_type: str = payload.get("type")
+
+    if token_type != "refresh":
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Refresh Token Required",
+            headers={
+                "WWW-Authenticate": "Bearer"
+            }
+        )
+    
+    return payload
 
