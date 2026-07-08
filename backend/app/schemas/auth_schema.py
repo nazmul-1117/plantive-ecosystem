@@ -43,3 +43,14 @@ class LoginRequest(BaseModel):
 
 class TokenResponse(BaseModel):
     pass
+
+# class PayloadSchema(BaseModel):
+#     sub
+
+#         payload = {
+#         "sub": user_uid,
+#         "type": token_type,
+#         "iat": now,
+#         "exp": expire,
+#         "jti": str(uuid.uuid4())
+#     }

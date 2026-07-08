@@ -1,16 +1,25 @@
+from typing import Annotated
+from datetime import datetime, timezone
+import time
 
 from sqlmodel.ext.asyncio.session import AsyncSession
+from redis.asyncio import Redis
 from fastapi import Depends, HTTPException, status
 from fastapi.responses import JSONResponse
-from app.config.database import get_session
 
+from app.core.database import get_session
+from app.core.redis import get_redis
 from app.schemas.auth_schema import UserCreate, UserRead, UserUpdate, LoginRequest
 from app.services.auth_service import UserService
-from app.config.security import verity_hashed_password
-from app.models.auth import User
-from app.config.jwt import create_token, decode_token
+from app.services.token_service import TokenService
+from app.core.security import verity_hashed_password
+from app.models.auth_model import User
+from app.core.jwt import create_token, decode_token
+from app.dependencies.auth_dependency import verify_token
+
 
 user_service = UserService()
+token_service = TokenService()
 
 async def create_user(
         user_data: UserCreate,
@@ -79,4 +88,56 @@ async def login_user(
             }
         }
     )
+
+
+async def create_new_access_token(
+        token_payload: Annotated[dict, Depends(verify_token)],
+        session: Annotated[AsyncSession, Depends(get_session)]
+ ) -> dict:
     
+    if token_payload.get('type') != "refresh":
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Refresh Token Required"
+        )
+    
+    user: User | None = await user_service.get_by_uid(
+        user_uid=token_payload['sub'],
+        session=session
+    )
+
+    if token_payload.get('type') != "refresh" or user is None:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="User Not Found"
+        )
+    
+    new_access_token: str =  create_token(
+        user_uid=str(user.user_uid)
+    )
+    
+    return {
+        "access_token": new_access_token,
+        "token_type": "bearer"
+    }
+
+
+async def revoke_token(
+    token_payload: Annotated[dict, Depends(verify_token)],
+    redis: Annotated[Redis, Depends(get_redis)]  
+):
+    
+    jti: str = token_payload['jti']
+    ttl: int = max(1, token_payload['exp'] - int(time.time()))
+    
+    await token_service.revoke_token(
+        jti=jti,
+        ttl=ttl,
+        redis=redis
+    )
+
+    return{
+        "message": "logged out successfully"
+    }
+
+

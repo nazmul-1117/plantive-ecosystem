@@ -11,5 +11,6 @@ dependencies = [
     "pwdlib[argon2]>=0.3.0",
     "pydantic-settings>=2.14.2",
     "pyjwt>=2.13.0",
+    "redis[hiredis]>=8.0.1",
     "sqlmodel>=0.0.39",
 ]

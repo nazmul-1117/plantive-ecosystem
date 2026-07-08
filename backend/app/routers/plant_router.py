@@ -3,7 +3,7 @@
 from fastapi import APIRouter, status
 from typing import List
 from app.controllers.plant_controllers import add_plant, delete_plant, search_plant, get_all_plants, update_plant, get_plant
-from app.schemas.plant import PlantCreate, Plant
+from app.schemas.plant_schema import PlantCreate, Plant
 
 router = APIRouter()
 

@@ -2,8 +2,8 @@ from fastapi import status, HTTPException
 from sqlmodel.ext.asyncio.session import AsyncSession
 from sqlmodel import select, asc
 from datetime import datetime
-from app.schemas.plant import PlantCreate, PlantUpdate
-from app.models.plant import Plants
+from app.schemas.plant_schema import PlantCreate, PlantUpdate
+from app.models.plant_model import Plants
 
 class PlantService:
     async def get_all_plants(self, session: AsyncSession):

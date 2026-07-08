@@ -1,6 +1,7 @@
 import jwt
 from datetime import datetime, timedelta, timezone
 import uuid
+import time
 from fastapi import HTTPException, status
 
 from app.core.config import settings
@@ -10,8 +11,9 @@ def create_token(
         user_uid: str,
         expires_delta: timedelta | None = None,
         token_type: str = "access"
-):
-    now = datetime.now(timezone.utc)
+) -> str:
+    
+    # now = datetime.now(timezone.utc)
 
     if expires_delta is None:
 
@@ -22,12 +24,10 @@ def create_token(
             expires_delta = timedelta(days=settings.REFRESH_TOKEN_EXPIRE_DAYS)
 
         else:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="invalid token type"
-            )
-        
-    expire = now + expires_delta
+            raise ValueError("invalid token type")
+    
+    now = int(time.time())
+    expire = now + int(expires_delta.total_seconds())
 
     payload = {
         "sub": user_uid,

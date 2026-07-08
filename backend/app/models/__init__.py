@@ -1,3 +1,3 @@
 from sqlmodel import SQLModel
-from .auth import User
-from .plant import Plants
+from .auth_model import User
+from .plant_model import Plants

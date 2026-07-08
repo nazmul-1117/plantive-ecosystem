@@ -5,7 +5,13 @@ info:
 
 http:
   method: GET
-  url: "{{PLANTS_URL}}"
+  url: "{{PLANTS_URL}}/"
+  headers:
+    - name: Authorization
+      value: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4ZTM2ODQwNi0wMzI1LTRlNTYtOTdmZi1iYTZkZTA4YWEzY2QiLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzgzNDI4MTUzLCJleHAiOjE3ODM0MzI2NTMsImp0aSI6IjkwZDg2YTZhLTg4MWYtNGEyMS05ODE0LWRhOGMzODRhMDRiMSJ9.T6RtGnodrHRGfu5HAALVGpGpR2nH6pqu6wxwngeNrNQ
+  body:
+    type: json
+    data: ""
   auth: inherit
 
 settings:

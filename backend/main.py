@@ -1,8 +1,8 @@
 from fastapi import FastAPI, status
 from contextlib import asynccontextmanager
 
-from app.config.settings import settings
-from app.config.database import init_db
+from app.core.config import settings
+from app.core.database import init_db
 
 from app.routers import plant_router, auth_router
 

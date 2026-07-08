@@ -10,7 +10,7 @@ from sqlmodel import SQLModel
 from alembic import context
 
 import app.models
-from app.config.settings import settings
+from app.core.config import settings
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

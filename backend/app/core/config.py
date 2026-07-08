@@ -1,10 +1,15 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
-    DATABASE_URL: str
     API_VERSION: str
+    
+    DATABASE_URL: str
+    REDIS_HOSTNAME: str
+    REDIS_PORT: int
+
     JWT_SECRET: str
     JWT_ALGORITHM: str
+    
     REFRESH_TOKEN_EXPIRE_DAYS: int
     ACCESS_TOKEN_EXPIRE_MINUTES: int
 
