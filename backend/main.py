@@ -2,17 +2,22 @@ from fastapi import FastAPI, status
 from contextlib import asynccontextmanager
 
 from app.core.config import settings
-from app.core.database import init_db
+from app.core.redis import init_redis
 
 from app.routers import plant_router, auth_router
 
 
 @asynccontextmanager
 async def life_span(app: FastAPI):
-    print("Server Started successfully ------------>")
-    # await init_db()
+    print(">>>Server Started Successfully =====>")
+    
+    await init_redis(app)
+
     yield
-    print("Server Ended successfully ------------>")
+
+    await app.state.redis.aclose()
+
+    print(">>>Server Ended successfully =====>")
 
 API_VERSION = settings.API_VERSION
 API_PREFIX = f"/api/{API_VERSION}"

@@ -2,7 +2,7 @@ from redis.asyncio import Redis
 from typing import Annotated
 from fastapi import status, Depends
 
-from app.core.redis import get_redis
+# from app.dependencies.redis_dependency import get_redis
 
 class TokenService:
 

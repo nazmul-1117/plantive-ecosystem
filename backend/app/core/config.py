@@ -4,7 +4,10 @@ class Settings(BaseSettings):
     API_VERSION: str
     
     DATABASE_URL: str
+    
     REDIS_HOSTNAME: str
+    REDIS_USERNAME: str
+    REDIS_PASSWORD: str
     REDIS_PORT: int
 
     JWT_SECRET: str

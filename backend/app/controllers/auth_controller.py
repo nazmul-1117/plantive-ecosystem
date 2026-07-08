@@ -1,5 +1,4 @@
 from typing import Annotated
-from datetime import datetime, timezone
 import time
 
 from sqlmodel.ext.asyncio.session import AsyncSession
@@ -8,7 +7,7 @@ from fastapi import Depends, HTTPException, status
 from fastapi.responses import JSONResponse
 
 from app.core.database import get_session
-from app.core.redis import get_redis
+from app.dependencies.redis_dependency import get_redis
 from app.schemas.auth_schema import UserCreate, UserRead, UserUpdate, LoginRequest
 from app.services.auth_service import UserService
 from app.services.token_service import TokenService

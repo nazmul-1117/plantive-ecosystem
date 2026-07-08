@@ -10,7 +10,7 @@ from app.core.jwt import decode_token
 from app.services.auth_service import UserService
 from app.models.auth_model import User
 from app.services.token_service import TokenService
-from app.core.redis import get_redis
+from app.dependencies.redis_dependency import get_redis
 
 oath_scheme = OAuth2PasswordBearer(tokenUrl=f'/api/{settings.API_VERSION}/auth/login')
 user_service = UserService()
