@@ -7,7 +7,12 @@ from redis.asyncio import Redis
 from app.core.config import settings
 from app.core.database import get_session
 from app.core.jwt import decode_token
-from app.services.auth_service import UserService
+
+from app.services.auth_service import AuthService
+from app.services.user_service import UserService
+from app.services.token_service import TokenService
+from app.services.role_service import RoleService
+
 from app.models.auth_model import User
 from app.services.token_service import TokenService
 from app.dependencies.redis_dependency import get_redis
@@ -26,9 +31,10 @@ async def verify_token(
     """
     Verify Token data and return Payload
 
-    param token: Dependecy -> token from request header
-    return: dict: Token payload 
-    raise: unauthorized error
+    :param token: Dependecy -> token from request header
+    :param redis: Dependecy -> get redis from redis library
+    :return: dict: Token payload 
+    :raise: unauthorized error
     """
     
     try: 
@@ -113,7 +119,17 @@ async def get_access_token_payload(
     and return it's payload
     """
 
-    payload: dict = decode_token(token)
+    try:
+        payload: dict = decode_token(token)
+    
+    except ValueError as e:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail=str(e),
+            headers={
+                "WWW-Authenticate": "Bearer"
+            },
+        )
 
     if await token_service.is_revoked(
         jti=payload['jti'],
@@ -121,15 +137,13 @@ async def get_access_token_payload(
     ): 
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Token expired or invalid"
+            detail="Token revoked"
         ) 
 
-    token_type: str = payload.get("type")
-
-    if token_type != "access":
+    if payload['type'] != "access":
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Access Token Required",
+            detail="Access token required",
             headers={
                 "WWW-Authenticate": "Bearer"
             }
@@ -147,7 +161,17 @@ async def get_refresh_token_payload(
     and return it's payload
     """
 
-    payload: dict = decode_token(token)
+    try:
+        payload: dict = decode_token(token)
+    
+    except ValueError as e:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail=str(e),
+            headers={
+                "WWW-Authenticate": "Bearer"
+            },
+        )
 
     if await token_service.is_revoked(
         jti=payload['jti'],
@@ -155,15 +179,13 @@ async def get_refresh_token_payload(
     ): 
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Token expired or invalid"
+            detail="Token revoked"
         )
 
-    token_type: str = payload.get("type")
-
-    if token_type != "refresh":
+    if payload['type'] != "refresh":
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Refresh Token Required",
+            detail="Refresh token required",
             headers={
                 "WWW-Authenticate": "Bearer"
             }

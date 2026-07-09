@@ -1,142 +1,104 @@
 from typing import Annotated
-import time
-
 from sqlmodel.ext.asyncio.session import AsyncSession
 from redis.asyncio import Redis
 from fastapi import Depends, HTTPException, status
-from fastapi.responses import JSONResponse
 
+from app.models.auth_model import User
 from app.core.database import get_session
 from app.dependencies.redis_dependency import get_redis
-from app.schemas.auth_schema import UserCreate, UserRead, UserUpdate, LoginRequest
-from app.services.auth_service import UserService
+from app.schemas.auth_schema import UserCreate, LoginRequest
+from app.dependencies.auth_dependency import get_refresh_token_payload, get_access_token_payload
+
+from app.services.auth_service import AuthService
+from app.services.user_service import UserService
 from app.services.token_service import TokenService
-from app.core.security import verity_hashed_password
-from app.models.auth_model import User
-from app.core.jwt import create_token, decode_token
-from app.dependencies.auth_dependency import verify_token
+from app.services.role_service import RoleService
 
 
 user_service = UserService()
+auth_service = AuthService()
 token_service = TokenService()
+role_service = RoleService()
 
-async def create_user(
+async def register_user(
         user_data: UserCreate,
         session: AsyncSession = Depends(get_session)
-):
-    exist_user: User | None = await user_service.get_by_email_or_username(
-        session=session,
-        email=user_data.email,
-        username=user_data.username
-    )
+) -> dict:
+    
+    # suggestion:
+    #     try:
+    #         user = await auth_service.create_user(...)
+    #     except EmailAlreadyExists:
+    #         raise HTTPException(
+    #             status_code=409,
+    #             detail="Email already exists"
+    #         )
+    
+    try:
+        
+        user: User = await user_service.create_user(user_data, session)
 
-    if exist_user is None:
-        user: User | None = await user_service.create_user(user_data, session)
+        return {
+            "status": status.HTTP_201_CREATED,
+            "details": "User created successfully",
+            "data": user
+        }
+    
+    except:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="user not created"
+        )
 
-        if user is not None:
-            return {
-                "status": status.HTTP_201_CREATED,
-                "details": "User created successfully",
-                "data": user
-            }
-
-    raise HTTPException(
-        status_code=status.HTTP_403_FORBIDDEN,
-        detail="username or email already exist"
-    )
 
 async def login_user(
         login_data: LoginRequest,
         session: AsyncSession = Depends(get_session)
-    ):
-    
-    user: User | None = await user_service.get_by_email_or_username(
-        session=session,
-        email="hey",
-        username=login_data.username
-    )
-
-    if user is None or not verity_hashed_password(
-        password=login_data.password,
-        hashed_password=user.password_hash
-    ):
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid username or password"
+):
+    try:
+        user = await auth_service.login(
+            login_credentials=login_data,
+            session=session
         )
 
-    access_token = create_token(
-        user_uid= str(user.user_uid)
-    )
+        return user
 
-    refresh_token = create_token(
-        user_uid= str(user.user_uid),
-        token_type="refresh"
-    )
-
-    return JSONResponse(
-        content={
-            "message": "login successfull :)",
-            "access_token": access_token,
-            "refresh_token": refresh_token,
-            "token_type": "bearer",
-            "user": {
-                "user_uid": str(user.user_uid),
-                "username": user.username,
-                "email": user.email
-            }
-        }
-    )
+    except:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="user not created"
+        )
 
 
-async def create_new_access_token(
-        token_payload: Annotated[dict, Depends(verify_token)],
+async def refresh_access_token(
+        token_payload: Annotated[dict, Depends(get_refresh_token_payload)],
         session: Annotated[AsyncSession, Depends(get_session)]
  ) -> dict:
     
-    if token_payload.get('type') != "refresh":
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Refresh Token Required"
+    try:
+        return await auth_service.refresh_access_token(
+            token_payload=token_payload,
+            session=session
         )
-    
-    user: User | None = await user_service.get_by_uid(
-        user_uid=token_payload['sub'],
-        session=session
-    )
-
-    if token_payload.get('type') != "refresh" or user is None:
+    except:
         raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="User Not Found"
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="access token create failed"
         )
-    
-    new_access_token: str =  create_token(
-        user_uid=str(user.user_uid)
-    )
-    
-    return {
-        "access_token": new_access_token,
-        "token_type": "bearer"
-    }
 
 
-async def revoke_token(
-    token_payload: Annotated[dict, Depends(verify_token)],
+async def logout_user(
+    token_payload: Annotated[dict, Depends(get_access_token_payload)],
     redis: Annotated[Redis, Depends(get_redis)]  
 ):
-    
-    jti: str = token_payload['jti']
-    ttl: int = max(1, token_payload['exp'] - int(time.time()))
-    
-    await token_service.revoke_token(
-        jti=jti,
-        ttl=ttl,
-        redis=redis
-    )
-
-    return{
-        "message": "logged out successfully"
-    }
-
+    try:
+        return await auth_service.logout(
+            token_payload=token_payload,
+            redis=redis
+        )
+    except:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="user do not logged out"
+        )
 

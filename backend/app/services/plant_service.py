@@ -9,6 +9,7 @@ class PlantService:
     async def get_all_plants(self, session: AsyncSession):
         statement = select(Plants).order_by(asc(Plants.uid))
         results = await session.exec(statement=statement)
+        
         return results.all()
 
     async def get_plant(self, plant_uid: str, session: AsyncSession):

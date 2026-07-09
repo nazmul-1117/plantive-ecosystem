@@ -17,11 +17,10 @@ plant_services = PlantService()
 
 async def get_all_plants(
         session: Annotated[AsyncSession, Depends(get_session)],
-        current_user: Annotated[User, Depends(get_access_token_payload)]
-    ):
+        token_payload: Annotated[dict, Depends(get_access_token_payload)]
+):
+    return await plant_services.get_all_plants(session)
 
-    result = await plant_services.get_all_plants(session)
-    return result
 
 async def get_plant(
         plant_uid: str,

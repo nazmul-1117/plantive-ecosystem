@@ -62,18 +62,59 @@ class UserUpdate(UserCreate):
 # auth
 class LoginRequest(BaseModel):
     username: str
+    email: str | None = None
     password: str
 
 class TokenResponse(BaseModel):
     pass
 
-# class PayloadSchema(BaseModel):
-#     sub
 
-#         payload = {
-#         "sub": user_uid,
-#         "type": token_type,
-#         "iat": now,
-#         "exp": expire,
-#         "jti": str(uuid.uuid4())
-#     }
+
+# Role
+# | Column        | Type                      |
+# | --------------| --------------------------|
+# | role_uid      | UUID PK                   |
+# | name          | VARCHAR(50) UNIQUE        |
+# | description   | TEXT                      |
+# | is_active     | BOOLEAN                   |
+# | created_at    | TIMESTAMP DEFAULT TRUE    |
+# | updated_at    | TIMESTAMP DEFAULT TRUE    |
+class RoleInDB(BaseModel):
+    role_uid: uuid.UUID
+    name: str
+    description: Optional[str] = None
+    is_active: bool
+    created_at: datetime
+    updated_at: datetime
+
+class RoleCreate(BaseModel):
+    name: str
+    description: Optional[str] = None
+    is_active: Optional[bool] = True
+
+class RoleRead(BaseModel):
+    role_uid: uuid.UUID
+    name: str
+    description: Optional[str]
+    is_active: bool
+    created_at: datetime
+    updated_at: datetime
+
+class RoleUpdate(BaseModel):
+    pass
+
+
+
+# Role User
+
+class UserRoleInDB(BaseModel):
+    pass
+
+class UserRoleCreate(BaseModel):
+    pass
+
+class UserRoleRead(BaseModel):
+    pass
+
+class UserRoleUpdate(BaseModel):
+    pass
