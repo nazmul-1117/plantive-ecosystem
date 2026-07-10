@@ -9,9 +9,24 @@ http:
   body:
     type: json
     data: |-
+      
+      // {
+      //   "username": "ayesha_garden",
+      //   "password": "SecurePass@456"
+      // }
+
+
+      // admin
+      // {
+      //   "username": "nazmul_dev",
+      //   "password": "MyStrongPassword@123"
+      // }
+
+
+      // user
       {
-        "username": "nazmul_dev",
-        "password": "MyStrongPassword@123"
+        "username": "ayesha_garden",
+        "password": "SecurePass@456"
       }
   auth: inherit
 

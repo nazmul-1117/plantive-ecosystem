@@ -4,6 +4,12 @@ import uuid
 from sqlmodel import Field
 from typing import Optional
 
+# UserCreate
+# UserLogin
+# UserRead
+# RegisterResponse
+# LoginResponse
+# LoginRequest, RegisterRequest, LoginResponse
 
 class UserInDB(BaseModel):
     user_uid: uuid.UUID

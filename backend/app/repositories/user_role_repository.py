@@ -18,11 +18,22 @@ class UserRoleRepository:
 
         session.add(user_role_data)
 
-    async def get_roles():
-        pass
+    async def get_roles(
+            self,
+            user_uid: str,
+            session: AsyncSession
+    ) -> list[UserRole]:
+        
+        statement = select(UserRole).where(UserRole.user_uid == user_uid)
+        result = await session.exec(statement)
 
-    async def remove_roles():
+        return result.all()
+
+    async def remove_role():
         pass
 
     async def has_role():
         pass
+
+
+        

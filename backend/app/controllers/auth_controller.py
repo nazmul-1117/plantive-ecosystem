@@ -7,6 +7,7 @@ from app.models.auth_model import User
 from app.core.database import get_session
 from app.dependencies.redis_dependency import get_redis
 from app.schemas.auth_schema import UserCreate, LoginRequest
+from app.schemas.token_schema import AccessTokenResponse
 from app.dependencies.auth_dependency import get_refresh_token_payload, get_access_token_payload
 
 from app.services.auth_service import AuthService
@@ -73,7 +74,7 @@ async def login_user(
 async def refresh_access_token(
         token_payload: Annotated[dict, Depends(get_refresh_token_payload)],
         session: Annotated[AsyncSession, Depends(get_session)]
- ) -> dict:
+ ) -> AccessTokenResponse:
     
     try:
         return await auth_service.refresh_access_token(

@@ -7,7 +7,8 @@ from app.core.database import get_session
 from sqlmodel import select, or_
 from redis.asyncio import Redis
 
-from app.schemas.auth_schema import UserCreate, UserRead, LoginRequest
+from app.schemas.auth_schema import UserCreate, LoginRequest
+from app.schemas.token_schema import AccessTokenResponse
 from app.models.auth_model import User, Role, UserRole
 from app.services.token_service import TokenService
 
@@ -210,7 +211,7 @@ class AuthService:
             self,
             token_payload: dict,
             session: AsyncSession
-    ) -> dict:
+    ) -> AccessTokenResponse:
         
         user: User | None = await user_repository.get_by_uid(
             user_uid=token_payload['sub'],
@@ -227,7 +228,11 @@ class AuthService:
             user_uid=str(user.user_uid)
         )
         
-        return {
-            "access_token": new_access_token,
-            "token_type": "bearer"
-        }
+        # return {
+        #     "access_token": new_access_token,
+        #     "token_type": "bearer"
+        # }
+
+        return AccessTokenResponse(
+            access_token=new_access_token
+        )

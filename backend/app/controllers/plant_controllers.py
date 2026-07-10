@@ -8,16 +8,18 @@ from sqlmodel.ext.asyncio.session import AsyncSession
 from app.schemas.plant_schema import Plant, PlantUpdate, PlantCreate
 from app.core.database import get_session
 from app.services.plant_service import PlantService
-from app.dependencies.auth_dependency import get_current_user, get_access_token_payload
 from app.models.auth_model import User
 from app.models.plant_model import Plants
+
+from app.dependencies.auth_dependency import get_current_user, get_access_token_payload
+from app.dependencies.permission_dependency import require_roles
 
 plant_services = PlantService()
 
 
 async def get_all_plants(
         session: Annotated[AsyncSession, Depends(get_session)],
-        token_payload: Annotated[dict, Depends(get_access_token_payload)]
+        _: Annotated[User, Depends(require_roles("admin"))]
 ):
     return await plant_services.get_all_plants(session)
 

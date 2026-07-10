@@ -1,4 +1,5 @@
 from fastapi import APIRouter, status
+from app.schemas.token_schema import AccessTokenResponse
 
 from app.controllers.auth_controller import (
     register_user,
@@ -23,7 +24,8 @@ auth_router.post(
 
 auth_router.post(
     path="/refresh",
-    status_code=status.HTTP_200_OK
+    status_code=status.HTTP_200_OK,
+    response_model=AccessTokenResponse
 )(refresh_access_token)
 
 auth_router.post(

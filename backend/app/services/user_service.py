@@ -27,8 +27,16 @@ class UserService:
     Don't raise HTTPException in the service—use custom domain exceptions and let the controller translate them into HTTP responses.
     """
        
-    async def get_by_id():
-        pass
+    async def get_by_uid(
+            self,
+            user_uid: str,
+            session: AsyncSession
+    ) -> User | None:
+        
+        return await user_repository.get_by_uid(
+            user_uid=user_uid,
+            session=session
+        )
 
     async def update_profile():
         pass
