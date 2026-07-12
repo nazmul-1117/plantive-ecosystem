@@ -2,7 +2,6 @@ from sqlmodel.ext.asyncio.session import AsyncSession
 from sqlmodel import select, exists
 
 from app.models.auth_model import Role, UserRole
-from app.schemas.auth_schema import UserCreate
 
 class RoleRepository:
     async def get_by_uid(

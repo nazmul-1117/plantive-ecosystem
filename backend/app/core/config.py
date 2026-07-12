@@ -12,6 +12,8 @@ class Settings(BaseSettings):
 
     JWT_SECRET: str
     JWT_ALGORITHM: str
+    JWT_ISSUER: str
+    JWT_AUDIENCE: str
     
     REFRESH_TOKEN_EXPIRE_DAYS: int
     ACCESS_TOKEN_EXPIRE_MINUTES: int

@@ -1,8 +1,10 @@
 from typing import Annotated
+from fastapi import Depends
 from fastapi.security import OAuth2PasswordBearer
-from fastapi import Depends, HTTPException, status
 from sqlmodel.ext.asyncio.session import AsyncSession
 from redis.asyncio import Redis
+
+import jwt
 
 from app.core.config import settings
 from app.core.database import get_session
@@ -10,10 +12,22 @@ from app.core.jwt import decode_token
 
 from app.services.user_service import UserService
 from app.services.token_service import TokenService
+from app.schemas.token_schema import TokenPayload
 
 from app.models.auth_model import User
 from app.services.token_service import TokenService
 from app.dependencies.redis_dependency import get_redis
+
+from app.exceptions.auth_exception import (
+    ExpiredAccessToken,
+    InvalidAccessToken,
+    AccessTokenRequired,
+    RefreshTokenRequired
+)
+from app.exceptions.user_exception import(
+    UserNotFound,
+    UserInactive
+)
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl=f'/api/{settings.API_VERSION}/auth/login')
 user_service = UserService()
@@ -24,7 +38,7 @@ token_service = TokenService()
 async def verify_token(
         token: Annotated[str, Depends(oauth2_scheme)],
         redis: Annotated[Redis, Depends(get_redis)]
-) -> dict:
+) -> TokenPayload:
     
     """
     Verify Token data and return Payload
@@ -36,71 +50,56 @@ async def verify_token(
     """
     
     try: 
-        token_payload: dict = decode_token(token)
-
-        if await token_service.is_revoked(
-            jti=token_payload['jti'],
-            redis=redis
-        ):
-           raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Token expired or invalid"
-            )  
-        
-        return token_payload
+        token_payload: TokenPayload = decode_token(token)
     
-    except ValueError as ve:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail=str(ve)
-        )
+    except jwt.InvalidSignatureError:
+        raise ExpiredAccessToken()
+    
+    except jwt.InvalidTokenError:
+        raise InvalidAccessToken()
+
+    if await token_service.is_revoked(
+        jti=token_payload.jti,
+        redis=redis
+    ):
+        raise ExpiredAccessToken()
+    
+    return token_payload
 
 
 async def get_access_token_payload(
-        payload: Annotated[dict, Depends(verify_token)]
-) -> dict:
+        payload: Annotated[TokenPayload, Depends(verify_token)]
+) -> TokenPayload:
     
     """
     Validate that provider JWT is a valid access token
     and return it's payload
     """
 
-    if payload['type'] != "access":
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Access token required",
-            headers={
-                "WWW-Authenticate": "Bearer"
-            }
-        )
+    if payload.type != "access":
+        raise AccessTokenRequired()
     
     return payload
 
 
 async def get_refresh_token_payload(
-        payload: Annotated[dict, Depends(verify_token)]
-) -> dict:
+        payload: Annotated[TokenPayload, Depends(verify_token)]
+) -> TokenPayload:
     
     """
     Validate that provider JWT is a valid refresh token
     and return it's payload
     """
 
-    if payload['type'] != "refresh":
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Access token required",
-            headers={
-                "WWW-Authenticate": "Bearer"
-            }
-        )
+    if payload.type != "refresh":
+        raise RefreshTokenRequired()
     
     return payload
 
 
 async def get_current_user(
         session: Annotated[AsyncSession, Depends(get_session)],
-        payload: Annotated[dict, Depends(get_access_token_payload)]
+        payload: Annotated[TokenPayload, Depends(get_access_token_payload)]
 ) -> User:
     
     """
@@ -109,14 +108,11 @@ async def get_current_user(
     Raise: if something wrong, raise a value exception
     """
 
-    user_uid: str = payload.get('sub')
+    user_uid: str = payload.sub
     user: User = await user_service.get_by_uid(user_uid, session)
 
     if user is None:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="User not found"
-        )
+        raise UserNotFound()
     
     return user
     
@@ -124,13 +120,12 @@ async def get_current_user(
 async def get_current_active_user(
         current_user: Annotated[User, Depends(get_current_user)]
 ) -> User:
+    
     """
     Ensure authenticate user is active
     """
 
     if not current_user.is_active:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="Inactive User"
-        )
+        raise UserInactive()
+    
     return current_user

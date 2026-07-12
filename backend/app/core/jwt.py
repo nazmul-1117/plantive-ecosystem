@@ -1,20 +1,20 @@
-import jwt
-from datetime import datetime, timedelta, timezone
 import uuid
 import time
-from fastapi import HTTPException, status
+from typing import Literal
+from datetime import timedelta
+
+import jwt
 
 from app.core.config import settings
+from app.schemas.token_schema import TokenPayload
 
 
 def create_token(
         user_uid: str,
         expires_delta: timedelta | None = None,
-        token_type: str = "access"
+        token_type: Literal["access", "refresh"] = "access"
 ) -> str:
     
-    # now = datetime.now(timezone.utc)
-
     if expires_delta is None:
 
         if token_type == "access":
@@ -22,9 +22,6 @@ def create_token(
 
         elif token_type == "refresh":
             expires_delta = timedelta(days=settings.REFRESH_TOKEN_EXPIRE_DAYS)
-
-        else:
-            raise ValueError("invalid token type")
     
     now = int(time.time())
     expire = now + int(expires_delta.total_seconds())
@@ -34,7 +31,9 @@ def create_token(
         "type": token_type,
         "iat": now,
         "exp": expire,
-        "jti": str(uuid.uuid4())
+        "jti": str(uuid.uuid4()),
+        "iss": settings.JWT_ISSUER,
+        "aud": settings.JWT_AUDIENCE
     }
 
     return jwt.encode(
@@ -44,19 +43,13 @@ def create_token(
     )
 
 
-def decode_token(token: str) -> dict:
+def decode_token(token: str) -> TokenPayload:
 
-    try:
-        payload = jwt.decode(
+    payload = jwt.decode(
             jwt=token,
             key=settings.JWT_SECRET,
-            algorithms=settings.JWT_ALGORITHM
+            algorithms=[settings.JWT_ALGORITHM],
+            issuer= settings.JWT_ISSUER,
+            audience=settings.JWT_AUDIENCE
         )
-
-        return payload
-    
-    except jwt.ExpiredSignatureError:
-        raise ValueError("Token Expired")
-    
-    except jwt.InvalidTokenError:
-        raise ValueError("Invalid Token")
+    return TokenPayload.model_validate(payload)

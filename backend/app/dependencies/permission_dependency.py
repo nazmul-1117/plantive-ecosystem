@@ -10,6 +10,8 @@ from app.core.database import get_session
 
 from app.services.role_service import RoleService
 
+from app.exceptions.auth_exception import PermissionDenied
+
 
 def get_role_service() -> RoleService:
     return RoleService()
@@ -31,10 +33,7 @@ def require_roles(
         )
 
         if not has_role:
-            raise HTTPException(
-                status_code=status.HTTP_403_FORBIDDEN,
-                detail="You are not authorized"
-            )
+            raise PermissionDenied()
         
         return current_user
     return checker

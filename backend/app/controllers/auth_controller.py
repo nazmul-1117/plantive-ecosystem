@@ -6,7 +6,7 @@ from fastapi import Depends, HTTPException, status
 from app.models.auth_model import User
 from app.core.database import get_session
 from app.dependencies.redis_dependency import get_redis
-from app.schemas.auth_schema import UserCreate, LoginRequest
+from app.schemas.auth_schema import UserCreate, LoginRequest, LoginResponse
 from app.schemas.token_schema import AccessTokenResponse
 from app.dependencies.auth_dependency import get_refresh_token_payload, get_access_token_payload
 
@@ -37,7 +37,7 @@ async def register_user(
     
     try:
         
-        user: User = await user_service.create_user(user_data, session)
+        user: User = await user_service.register_user(user_data, session)
 
         return {
             "status": status.HTTP_201_CREATED,
@@ -55,20 +55,12 @@ async def register_user(
 async def login_user(
         login_data: LoginRequest,
         session: AsyncSession = Depends(get_session)
-):
-    try:
-        user = await auth_service.login(
-            login_credentials=login_data,
-            session=session
-        )
-
-        return user
-
-    except:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="user not created"
-        )
+) -> LoginResponse:
+    
+    return await auth_service.login(
+        login_credentials=login_data,
+        session=session
+    )
 
 
 async def refresh_access_token(

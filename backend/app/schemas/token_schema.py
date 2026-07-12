@@ -8,7 +8,7 @@ class TokenPayload(BaseModel):
     type: Literal["access", "refresh"]
     exp: int
     iat: int
-    iss: str | None = None #Issuer -> Who created (plantive-api)
+    iss: str | None = None # Issuer -> Who created (plantive-api)
     aud: str | None = None # Audience -> Who is allowed to use this token? (mobile-app, web-app, admin-panel)
 
 class TokenPair(BaseModel):

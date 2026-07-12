@@ -1,7 +1,7 @@
 from sqlmodel.ext.asyncio.session import AsyncSession
-from sqlmodel import select, exists
+from sqlmodel import select
 
-from app.models.auth_model import Role, User, UserRole
+from app.models.auth_model import UserRole
 
 class UserRoleRepository:
     

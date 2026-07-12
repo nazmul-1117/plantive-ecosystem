@@ -5,8 +5,10 @@ from app.core.config import settings
 from app.core.redis import init_redis
 
 from app.routers import plant_router, auth_router
+from app.exceptions.handlers_exception import register_exception_handler
 
 
+#context manager
 @asynccontextmanager
 async def life_span(app: FastAPI):
     print(">>>Server Started Successfully =====>")
@@ -19,9 +21,11 @@ async def life_span(app: FastAPI):
 
     print(">>>Server Ended successfully =====>")
 
+#app metadata
 API_VERSION = settings.API_VERSION
 API_PREFIX = f"/api/{API_VERSION}"
 
+#app creation
 app = FastAPI(
     title="Plantive Ecosystem",
     description="A centralized Smart Garden management system with Marketplace and Community Post, Like, Comment",
@@ -29,6 +33,11 @@ app = FastAPI(
     lifespan=life_span
     )
 
+# register handle an error/exception
+register_exception_handler(app)
+
+
+#routers
 app.include_router(
     router = plant_router.router,
     prefix = f"{API_PREFIX}/plants",

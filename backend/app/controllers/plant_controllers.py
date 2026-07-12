@@ -26,8 +26,9 @@ async def get_all_plants(
 
 async def get_plant(
         plant_uid: str,
-        session: AsyncSession = Depends(get_session)
-    ):
+        session: Annotated[AsyncSession, Depends(get_session)],
+        _: Annotated[User, Depends(require_roles("user", "admin"))]
+):
 
     plant: Plant = await plant_services.get_plant(
         plant_uid=plant_uid,

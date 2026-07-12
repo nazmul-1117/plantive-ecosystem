@@ -1,5 +1,6 @@
 from fastapi import APIRouter, status
 from app.schemas.token_schema import AccessTokenResponse
+from app.schemas.auth_schema import LoginResponse
 
 from app.controllers.auth_controller import (
     register_user,
@@ -18,7 +19,8 @@ auth_router.post(
 
 auth_router.post(
     path="/login",
-    status_code=status.HTTP_200_OK
+    status_code=status.HTTP_200_OK,
+    response_model=LoginResponse
 )(login_user)
 
 

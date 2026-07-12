@@ -32,7 +32,6 @@ class UserInDB(BaseModel):
     created_at: datetime
     updated_at: datetime
 
-
 class UserCreate(BaseModel):
     first_name: str
     last_name: Optional[str] = None
@@ -70,6 +69,12 @@ class LoginRequest(BaseModel):
     username: str
     email: str | None = None
     password: str
+
+class LoginResponse(BaseModel):
+    access_token: str
+    refresh_token: str
+    token_type: str
+    user: UserRead | None = None
 
 class TokenResponse(BaseModel):
     pass

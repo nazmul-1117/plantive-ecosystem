@@ -2,7 +2,6 @@ from sqlmodel.ext.asyncio.session import AsyncSession
 from sqlmodel import select, exists
 
 from app.models.auth_model import User
-from app.schemas.auth_schema import UserCreate
 
 class UserRepository:
     async def create(
