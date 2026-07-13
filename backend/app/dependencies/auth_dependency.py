@@ -30,6 +30,8 @@ from app.dependencies.service_dependency import (
     get_token_service
 )
 
+from app.constants.token_constant import TokenTypeConstant
+
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl=f'/api/{settings.API_VERSION}/auth/login')
 
 
@@ -74,7 +76,7 @@ async def get_access_token_payload(
     and return it's payload
     """
 
-    if payload.type != "access":
+    if payload.type != TokenTypeConstant.ACCESS:
         raise AccessTokenRequired()
     
     return payload
@@ -89,7 +91,7 @@ async def get_refresh_token_payload(
     and return it's payload
     """
 
-    if payload.type != "refresh":
+    if payload.type != TokenTypeConstant.REFRESH:
         raise RefreshTokenRequired()
     
     return payload

@@ -1,10 +1,7 @@
-from fastapi import Depends
-from sqlmodel.ext.asyncio.session import AsyncSession
 from sqlalchemy.exc import SQLAlchemyError
-from sqlmodel import select, or_
 
-from app.schemas.auth_schema import UserCreate, UserRead
-from app.models.auth_model import User, Role, UserRole
+from app.schemas.auth_schema import UserCreate
+from app.models.auth_model import User
 from app.core.security import generate_hash_password
 
 from app.repositories.user_repository import UserRepository
@@ -12,16 +9,12 @@ from app.repositories.role_repository import RoleRepository
 from app.repositories.user_role_repository import UserRoleRepository
 
 from app.exceptions.user_exception import (
-    UserNotFound,
     EmailAlreadyExists,
     UsernameAlreadyExists
 )
-from app.exceptions.auth_exception import InvalidLoginCredentials
 from app.exceptions.role_exception import RoleNotFound
 
-# user_repository = UserRepository()
-# role_repository = RoleRepository()
-# user_role_repository = UserRoleRepository()
+from app.constants.roles_constant import RoleConstant
 
 
 # UserService
@@ -81,7 +74,7 @@ class UserService:
         )
 
         role_table = await self.role_repository.get_by_name(
-            role_name="user",
+            role_name=RoleConstant.USER,
         )
 
         if role_table is None:

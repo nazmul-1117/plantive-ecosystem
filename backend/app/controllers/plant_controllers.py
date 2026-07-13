@@ -17,12 +17,12 @@ from app.dependencies.service_dependency import get_plant_service
 
 from app.exceptions.plant_exception import PlantNotFound
 
-# plant_services = PlantService()
+from app.constants.roles_constant import RoleConstant
 
 
 async def get_all_plants(
         session: Annotated[AsyncSession, Depends(get_session)],
-        _: Annotated[User, Depends(require_roles("admin"))],
+        _: Annotated[User, Depends(require_roles(RoleConstant.ADMIN))],
         plant_services: Annotated[PlantService, Depends(get_plant_service)]
 ) -> list[Plants]:
     
@@ -32,7 +32,7 @@ async def get_all_plants(
 async def get_plant(
         plant_uid: str,
         session: Annotated[AsyncSession, Depends(get_session)],
-        _: Annotated[User, Depends(require_roles("user", "admin"))],
+        _: Annotated[User, Depends(require_roles(RoleConstant.ADMIN, RoleConstant.USER, RoleConstant.MODERATOR))],
         plant_services: Annotated[PlantService, Depends(get_plant_service)]
 ) -> Plant:
 
