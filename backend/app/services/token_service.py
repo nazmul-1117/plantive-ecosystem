@@ -6,16 +6,19 @@ from fastapi import status, Depends
 
 class TokenService:
 
-    # def __init__(self, redis: Redis):
-    #     self.redis = redis
+    def __init__(
+            self,
+            redis: Redis
+    ):
+        self.redis = redis
     
     async def revoke_token(
-            self, jti: str,
+            self,
+            jti: str,
             ttl: int,
-            redis: Redis
         ) -> None:
 
-        await redis.set(
+        await self.redis.set(
             name=f"jwt:blacklist:{jti}",
             value="1", #1-> key exist, 0-> key doesnot exist
             ex=ttl
@@ -24,8 +27,8 @@ class TokenService:
     async def is_revoked(
             self,
             jti: str,
-            redis: Redis
-        ) -> bool:
-        return await redis.exists(
+    ) -> bool:
+        
+        return await self.redis.exists(
             f"jwt:blacklist:{jti}"
-            ) == 1
+        ) == 1

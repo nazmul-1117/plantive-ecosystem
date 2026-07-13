@@ -4,39 +4,42 @@ from sqlmodel import select, exists
 from app.models.auth_model import Role, UserRole
 
 class RoleRepository:
+
+    def __init__(
+            self,
+            session: AsyncSession
+    ):
+        self.session = session
+
     async def get_by_uid(
             self,
             role_uid: str,
-            session: AsyncSession
     ) -> Role | None:
         
         statement = select(Role).where(Role.role_uid == role_uid)
-        result = await session.exec(statement)
+        result = await self.session.exec(statement)
 
         return result.first()
 
     async def get_by_name(
             self,
             role_name: str,
-            session: AsyncSession
     ) -> Role | None:
         
         statement = select(Role).where(Role.name == role_name)
-        result = await session.exec(statement)
+        result = await self.session.exec(statement)
         
         return result.first()
 
     async def list_roles(
             self,
             role_uid: str,
-            session: AsyncSession
     ):
         pass
 
     async def get_user_role_names(
             self,
             user_uid: str,
-            session: AsyncSession
     ) -> list[str]:
         
         statement = (
@@ -45,16 +48,14 @@ class RoleRepository:
             .where(UserRole.user_uid == user_uid)
         )
 
-        result = await session.exec(statement)
+        result = await self.session.exec(statement)
         
         return result.all()
     
-
     async def has_any_role(
             self,
             user_uid: str,
             required_roles: tuple[str],
-            session: AsyncSession
     ) -> bool:
         
         statement = (
@@ -65,7 +66,7 @@ class RoleRepository:
             .limit(1)
         )
 
-        result = await session.exec(statement)
+        result = await self.session.exec(statement)
 
         return result.first() is not None
     

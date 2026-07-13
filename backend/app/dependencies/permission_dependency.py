@@ -11,10 +11,8 @@ from app.core.database import get_session
 from app.services.role_service import RoleService
 
 from app.exceptions.auth_exception import PermissionDenied
+from app.dependencies.service_dependency import get_role_service
 
-
-def get_role_service() -> RoleService:
-    return RoleService()
 
 def require_roles(
         *required_roles: str
@@ -22,14 +20,12 @@ def require_roles(
     
     async def checker(
             current_user: Annotated[User, Depends(get_current_active_user)],
-            session: Annotated[AsyncSession, Depends(get_session)],
             role_service: Annotated[RoleService, Depends(get_role_service)]
     ) -> User:
 
         has_role = await role_service.has_any_role(
             user_uid=current_user.user_uid,
             required_roles=required_roles,
-            session=session
         )
 
         if not has_role:

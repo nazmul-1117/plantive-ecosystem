@@ -10,10 +10,12 @@ class AppException(Exception):
             *,
             message: str,
             error_code: str,
-            status_code: int = status.HTTP_400_BAD_REQUEST
+            status_code: int = status.HTTP_400_BAD_REQUEST,
+            details: dict | None = None
     ):
         self.message = message
-        error_code = error_code
-        status_code = status_code
+        self.error_code = error_code
+        self.status_code = status_code
+        self.details = details or {}
 
         super().__init__(message)

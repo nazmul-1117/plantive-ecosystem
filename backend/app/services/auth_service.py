@@ -1,35 +1,25 @@
 
 import time
 from sqlmodel.ext.asyncio.session import AsyncSession
-from fastapi import Depends, HTTPException, status
-from fastapi.responses import JSONResponse
-from app.core.database import get_session
-from sqlmodel import select, or_
-from sqlalchemy.exc import SQLAlchemyError
 from redis.asyncio import Redis
 
-import jwt
-
-from app.schemas.auth_schema import UserCreate, LoginRequest, LoginResponse
+from app.schemas.auth_schema import LoginRequest, LoginResponse
 from app.schemas.token_schema import AccessTokenResponse
 
-from app.models.auth_model import User, Role, UserRole
 from app.services.token_service import TokenService
-
-from app.core.jwt import create_token, decode_token
-from app.core.security import generate_hash_password, verity_hashed_password
+from app.services.user_service import UserService
 
 from app.repositories.user_repository import UserRepository
-from app.repositories.role_repository import RoleRepository
-from app.repositories.user_role_repository import UserRoleRepository
 
-from app.exceptions.user_exception import (
-    UserNotFound,
-    EmailAlreadyExists,
-    UsernameAlreadyExists
-)
-from app.exceptions.auth_exception import InvalidLoginCredential
-from app.exceptions.role_exception import RoleNotFound
+from app.models.auth_model import User
+from app.schemas.token_schema import TokenPayload
+from app.schemas.auth_schema import LogoutResponse
+
+from app.core.jwt import create_token
+from app.core.security import verity_hashed_password
+
+from app.exceptions.user_exception import UserNotFound
+from app.exceptions.auth_exception import InvalidLoginCredentials
 
 
 """
@@ -72,11 +62,6 @@ commit()
 return user
 """
 
-user_repository = UserRepository()
-role_repository = RoleRepository()
-user_role_repository = UserRoleRepository()
-token_service = TokenService()
-
 # AuthService
     # register()
     # login()
@@ -84,23 +69,29 @@ token_service = TokenService()
     # refresh_token()
 
 class AuthService:
+
+    def __init__(
+            self,
+            token_service: TokenService,
+            user_repository: UserRepository
+    ):
+        self.token_service = token_service
+        self.user_repository = user_repository
     
     async def login(
             self,
             login_credentials: LoginRequest,
-            session: AsyncSession
     ) -> LoginResponse:
         
-        user: User | None = await user_repository.get_by_username(
+        user: User | None = await self.user_repository.get_by_username(
             username=login_credentials.username,
-            session=session
         )
 
         if user is None or not verity_hashed_password(
             password=login_credentials.password,
             hashed_password=user.password_hash
         ):
-            raise InvalidLoginCredential()
+            raise InvalidLoginCredentials()
 
         access_token: str = create_token(
             user_uid= str(user.user_uid)
@@ -119,32 +110,28 @@ class AuthService:
 
     async def logout(
             self,
-            token_payload: dict,
-            redis: Redis
-    ) -> dict:
+            token_payload: TokenPayload,
+    ) -> LogoutResponse:
         
-        jti: str = token_payload['jti']
-        ttl: int = max(1, token_payload['exp'] - int(time.time()))
+        jti: str = token_payload.jti
+        ttl: int = max(1, token_payload.exp - int(time.time()))
         
-        await token_service.revoke_token(
+        await self.token_service.revoke_token(
             jti=jti,
             ttl=ttl,
-            redis=redis
         )
 
-        return{
-            "message": "logged out successfully"
-        }
+        return LogoutResponse(
+            success=True
+        )
 
     async def refresh_access_token(
             self,
-            token_payload: dict,
-            session: AsyncSession
+            token_payload: TokenPayload,
     ) -> AccessTokenResponse:
         
-        user: User | None = await user_repository.get_by_uid(
-            user_uid=token_payload['sub'],
-            session=session
+        user: User | None = await self.user_repository.get_by_uid(
+            user_uid=token_payload.sub,
         )
 
         if user is None:

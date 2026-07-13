@@ -31,7 +31,7 @@ app = FastAPI(
     description="A centralized Smart Garden management system with Marketplace and Community Post, Like, Comment",
     version=API_VERSION,
     lifespan=life_span
-    )
+)
 
 # register handle an error/exception
 register_exception_handler(app)
@@ -39,15 +39,15 @@ register_exception_handler(app)
 
 #routers
 app.include_router(
-    router = plant_router.router,
-    prefix = f"{API_PREFIX}/plants",
-    tags = ["Plants"]
-)
-
-app.include_router(
     router=auth_router.auth_router,
     prefix=f"{API_PREFIX}/auth",
     tags=['Auth']
+)
+
+app.include_router(
+    router = plant_router.router,
+    prefix = f"{API_PREFIX}/plants",
+    tags = ["Plants"]
 )
 
 

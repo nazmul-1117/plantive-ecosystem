@@ -20,7 +20,8 @@ def register_exception_handler(app: FastAPI):
                 "success": False,
                 "error": {
                     "code": exc.error_code,
-                    "message": exc.message
+                    "message": exc.message,
+                    "details": exc.details,
                 },
             },
         )

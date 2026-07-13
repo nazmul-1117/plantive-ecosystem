@@ -121,3 +121,16 @@ class RefreshTokenRequired(AppException):
             error_code="REFRESH_TOKEN_REQUIRED",
             status_code=status.HTTP_401_UNAUTHORIZED,
         )
+
+class RevokedAccessToken(AppException):
+    """
+    Access token is revoked
+    """
+
+    def __init__(self):
+        super().__init__(
+            message="Access token revoked.",
+            error_code="ACCESS_TOKEN_REVOKED",
+            status_code=status.HTTP_401_UNAUTHORIZED,
+        )
+

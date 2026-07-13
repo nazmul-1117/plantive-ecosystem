@@ -45,14 +45,14 @@ class UserRead(BaseModel):
     user_uid: uuid.UUID
 
     ftrst_name: str
-    last_name: Optional[str] = None
+    last_name: str | None = None
 
     email: str
     username: str
     auth_provider: str
 
-    avatar_url: Optional[str] = None
-    bio: Optional[str] = None
+    avatar_url: str | None = None
+    bio: str | None = None
 
     is_active: bool
     is_verified: bool
@@ -60,8 +60,14 @@ class UserRead(BaseModel):
     created_at: datetime
     updated_at: datetime
 
-class UserUpdate(UserCreate):
+class UserUpdate(BaseModel):
     pass
+
+class UserResponse(BaseModel):
+    success: bool
+    message: str
+    data: UserRead | None = None
+
 
 
 # auth
@@ -75,6 +81,10 @@ class LoginResponse(BaseModel):
     refresh_token: str
     token_type: str
     user: UserRead | None = None
+
+class LogoutResponse(BaseModel):
+    success: bool
+    message: str = "Logged out successfully."
 
 class TokenResponse(BaseModel):
     pass

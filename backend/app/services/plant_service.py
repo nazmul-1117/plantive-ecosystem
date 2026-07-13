@@ -1,11 +1,14 @@
 from fastapi import status, HTTPException
 from sqlmodel.ext.asyncio.session import AsyncSession
 from sqlmodel import select, asc
-from datetime import datetime
 from app.schemas.plant_schema import PlantCreate, PlantUpdate
 from app.models.plant_model import Plants
 
 class PlantService:
+
+    def __init__(self):
+        pass
+
     async def get_all_plants(self, session: AsyncSession):
         statement = select(Plants).order_by(asc(Plants.uid))
         results = await session.exec(statement=statement)
@@ -18,7 +21,11 @@ class PlantService:
         plant = result.first()
         return plant if plant is not None else None
 
-    async def create_plant(self, create_data: PlantCreate, session: AsyncSession):
+    async def create_plant(
+            self,
+            create_data: PlantCreate,
+            session: AsyncSession
+    ):
         plant_data_dict = create_data.model_dump()
         new_data = Plants(**plant_data_dict)
         session.add(new_data)

@@ -13,40 +13,44 @@ from app.models.plant_model import Plants
 
 from app.dependencies.auth_dependency import get_current_user, get_access_token_payload
 from app.dependencies.permission_dependency import require_roles
+from app.dependencies.service_dependency import get_plant_service
 
-plant_services = PlantService()
+from app.exceptions.plant_exception import PlantNotFound
+
+# plant_services = PlantService()
 
 
 async def get_all_plants(
         session: Annotated[AsyncSession, Depends(get_session)],
-        _: Annotated[User, Depends(require_roles("admin"))]
-):
+        _: Annotated[User, Depends(require_roles("admin"))],
+        plant_services: Annotated[PlantService, Depends(get_plant_service)]
+) -> list[Plants]:
+    
     return await plant_services.get_all_plants(session)
 
 
 async def get_plant(
         plant_uid: str,
         session: Annotated[AsyncSession, Depends(get_session)],
-        _: Annotated[User, Depends(require_roles("user", "admin"))]
-):
+        _: Annotated[User, Depends(require_roles("user", "admin"))],
+        plant_services: Annotated[PlantService, Depends(get_plant_service)]
+) -> Plant:
 
-    plant: Plant = await plant_services.get_plant(
+    plant: Plant | None = await plant_services.get_plant(
         plant_uid=plant_uid,
         session=session
-        )
-    
-    if plant is not None:
-        return plant
-        
-    raise HTTPException(
-        status_code=status.HTTP_404_NOT_FOUND,
-        detail="This Plant is not available right now"
     )
+    
+    if plant is None:
+        raise PlantNotFound()
+        
+    return plant
 
 async def add_plant(
         plant_data: PlantCreate,
-        session: AsyncSession = Depends(get_session)
-        ):
+        session: Annotated[AsyncSession, Depends(get_session)],
+        plant_services: Annotated[PlantService, Depends(get_plant_service)]
+):
     
     result = await plant_services.create_plant(plant_data, session)
     
@@ -64,8 +68,9 @@ async def add_plant(
 
 async def delete_plant(
         plant_uid: str,
-        session: AsyncSession = Depends(get_session)
-        ):
+        session: Annotated[AsyncSession, Depends(get_session)],
+        plant_services: Annotated[PlantService, Depends(get_plant_service)]
+):
     
     result = await plant_services.delete_plant(
         plant_uid=plant_uid,
@@ -83,8 +88,9 @@ async def delete_plant(
 async def update_plant(
         plant_uid: str,
         update_data: PlantUpdate,
-        session: AsyncSession = Depends(get_session)
-        ):
+        session: Annotated[AsyncSession, Depends(get_session)],
+        plant_services: Annotated[PlantService, Depends(get_plant_service)]
+):
     
     result = await plant_services.update_plant(
         plant_uid=plant_uid,
@@ -106,6 +112,6 @@ async def update_plant(
 
 async def search_plant(
         plant_uid: str,
-        session: AsyncSession = Depends(get_session)
+        session: Annotated[AsyncSession, Depends(get_session)]
 ):
     pass
