@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plantive - Your Smart Gardening Companion</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            primary: '#2E7D32',    /* Deep Forest Green */
+                            secondary: '#66BB6A',  /* Leaf Green */
+                            accent: '#E8F5E9',     /* Soft Mint Mint */
+                            bg: '#F7FAF5',         /* Warm Off-White Nature Background */
+                            dark: '#1B3A1E'        /* Deep Midnight Green */
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    </style>
+</head>
+<body class="bg-brand-bg text-brand-dark font-sans antialiased selection:bg-brand-secondary selection:text-white">
+
+    <header class="fixed top-0 left-0 right-0 z-50 bg-brand-bg/80 backdrop-blur-md border-b border-brand-primary/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-2 group">
+                <div class="bg-brand-primary text-white p-2 rounded-xl group-hover:scale-105 transition-transform">
+                    <i data-lucide="sprout" class="w-6 h-6"></i>
+                </div>
+                <span class="text-xl font-bold tracking-tight text-brand-dark">Plantive</span>
+            </a>
+
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600">
+                <a href="#" class="hover:text-brand-primary transition-colors">Home</a>
+                <a href="#features" class="hover:text-brand-primary transition-colors">Features</a>
+                <a href="#how-it-works" class="hover:text-brand-primary transition-colors">How It Works</a>
+                <a href="https://github.com/nazmul-1117/plantive-ecosystem" target="_blank" class="hover:text-brand-primary transition-colors flex items-center gap-1">
+                    GitHub <i data-lucide="external-link" class="w-3 h-3"></i>
+                </a>
+            </nav>
+
+            <div class="hidden md:flex items-center gap-4">
+                <a href="login.html" class="text-sm font-medium text-gray-600 hover:text-brand-primary transition-colors">Login</a>
+                <a href="register.html" class="bg-brand-primary hover:bg-brand-dark text-white px-5 py-2.5 rounded-xl text-sm font-medium shadow-md hover:shadow-lg transition-all duration-200">
+                    Get Started
+                </a>
+            </div>
+
+            <button id="mobile-menu-btn" class="md:hidden text-brand-dark focus:outline-none" aria-label="Toggle Menu">
+                <i data-lucide="menu" id="menu-icon" class="w-6 h-6"></i>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden border-b border-brand-primary/10 bg-brand-bg px-4 pt-2 pb-6 space-y-4 shadow-xl">
+            <nav class="flex flex-col gap-4 text-base font-medium text-gray-600">
+                <a href="#" class="hover:text-brand-primary transition-colors py-2">Home</a>
+                <a href="#features" class="hover:text-brand-primary transition-colors py-2">Features</a>
+                <a href="#how-it-works" class="hover:text-brand-primary transition-colors py-2">How It Works</a>
+                <a href="https://github.com" target="_blank" class="hover:text-brand-primary transition-colors py-2 flex items-center gap-1">
+                    GitHub <i data-lucide="external-link" class="w-4 h-4"></i>
+                </a>
+            </nav>
+            <div class="h-[1px] bg-gray-200 my-4"></div>
+            <div class="flex flex-col gap-3">
+                <a href="login.html" class="w-full text-center py-2.5 rounded-xl border border-gray-300 font-medium text-gray-700 hover:bg-gray-50 transition-colors">Login</a>
+                <a href="register.html" class="w-full text-center py-2.5 rounded-xl bg-brand-primary text-white font-medium hover:bg-brand-dark transition-colors">Get Started</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="pt-32 pb-20 md:pt-44 md:pb-32 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-12 gap-12 items-center">
+            <div class="md:col-span-7 space-y-6 text-center md:text-left">
+                <div class="inline-flex items-center gap-2 bg-brand-accent text-brand-primary px-3 py-1.5 rounded-full text-xs font-semibold tracking-wide uppercase">
+                    <span class="flex h-2 w-2 rounded-full bg-brand-secondary animate-pulse"></span>
+                    Now with AI-Powered Diagnostics
+                </div>
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-brand-dark tracking-tight leading-[1.1]">
+                    Your Smart <br class="hidden sm:inline" />
+                    <span class="text-brand-primary">Gardening</span> Companion
+                </h1>
+                <p class="text-lg text-gray-600 max-w-xl mx-auto md:mx-0 leading-relaxed">
+                    Grow healthier plants, manage your gardens, and track watering schedules seamlessly with tailored AI-powered botanical insights.
+                </p>
+                <div class="pt-4 flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4">
+                    <a href="register.html" class="w-full sm:w-auto text-center bg-brand-primary hover:bg-brand-dark text-white px-8 py-4 rounded-2xl font-medium shadow-xl hover:shadow-2xl hover:-translate-y-0.5 transition-all duration-200">
+                        Get Started Free
+                    </a>
+                    <a href="#features" class="w-full sm:w-auto text-center bg-white border border-gray-200 text-gray-700 hover:text-brand-primary px-8 py-4 rounded-2xl font-medium shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
+                        Explore Features
+                    </a>
+                </div>
+            </div>
+            
+            <div class="md:col-span-5 relative flex justify-center">
+                <div class="absolute -inset-4 bg-gradient-to-tr from-brand-secondary/20 to-brand-accent/40 rounded-3xl blur-3xl -z-10"></div>
+                <div class="bg-white p-6 rounded-3xl shadow-2xl border border-gray-100 max-w-sm w-full space-y-6 transform hover:scale-[1.02] transition-transform duration-300">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 bg-brand-accent text-brand-primary rounded-2xl flex items-center justify-center font-bold">🪴</div>
+                            <div>
+                                <h4 class="font-bold text-sm">Fiddle Leaf Fig</h4>
+                                <p class="text-xs text-gray-400">Living Room Garden</p>
+                            </div>
+                        </div>
+                        <span class="bg-amber-100 text-amber-800 text-xs px-2.5 py-1 rounded-full font-medium">Thirsty</span>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-xs font-semibold text-gray-500">
+                            <span>Soil Moisture</span>
+                            <span>34%</span>
+                        </div>
+                        <div class="w-full bg-gray-100 h-2.5 rounded-full overflow-hidden">
+                            <div class="bg-amber-500 h-full w-[34%] rounded-full"></div>
+                        </div>
+                    </div>
+                    <div class="bg-brand-accent/50 rounded-2xl p-4 flex items-start gap-3 border border-brand-primary/10">
+                        <i data-lucide="bot" class="w-5 h-5 text-brand-primary shrink-0 mt-0.5"></i>
+                        <p class="text-xs text-brand-dark leading-relaxed">
+                            <strong>AI Assistant:</strong> Based on the brown spots on lower leaves, consider reducing direct sunlight and boosting ambient humidity.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="py-24 bg-white border-y border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto space-y-4 mb-16">
+                <h2 class="text-3xl sm:text-4xl font-bold tracking-tight">Everything you need to grow successfully</h2>
+                <p class="text-gray-500 text-base">Plantive merges simplified organizational logs with sophisticated tech metrics to keep your greens healthy.</p>
+            </div>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="group p-8 rounded-2xl bg-brand-bg hover:bg-white border border-transparent hover:border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300">
+                    <div class="w-12 h-12 bg-white text-brand-primary rounded-xl flex items-center justify-center shadow-sm group-hover:bg-brand-primary group-hover:text-white transition-colors">
+                        <i data-lucide="layout-dashboard" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mt-6 mb-2">Garden Management</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">Group your plant collection by zones, custom physical locations, or light profiles effortlessly.</p>
+                </div>
+
+                <div class="group p-8 rounded-2xl bg-brand-bg hover:bg-white border border-transparent hover:border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300">
+                    <div class="w-12 h-12 bg-white text-brand-primary rounded-xl flex items-center justify-center shadow-sm group-hover:bg-brand-primary group-hover:text-white transition-colors">
+                        <i data-lucide="bot" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mt-6 mb-2">AI Gardening Assistant</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">Identify diseases, check care parameters, and troubleshoot structural decay with instant chat feedback.</p>
+                </div>
+
+                <div class="group p-8 rounded-2xl bg-brand-bg hover:bg-white border border-transparent hover:border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300">
+                    <div class="w-12 h-12 bg-white text-brand-primary rounded-xl flex items-center justify-center shadow-sm group-hover:bg-brand-primary group-hover:text-white transition-colors">
+                        <i data-lucide="bell" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mt-6 mb-2">Smart Reminders</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">Receive precise system pushes for watering cycles, nutrition intervals, and pruning phases based on species.</p>
+                </div>
+
+                <div class="group p-8 rounded-2xl bg-brand-bg hover:bg-white border border-transparent hover:border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300">
+                    <div class="w-12 h-12 bg-white text-brand-primary rounded-xl flex items-center justify-center shadow-sm group-hover:bg-brand-primary group-hover:text-white transition-colors">
+                        <i data-lucide="activity" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mt-6 mb-2">Health Tracking</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">Upload progress photos to analyze historical development trends and keep a record of leaf counts.</p>
+                </div>
+
+                <div class="group p-8 rounded-2xl bg-brand-bg hover:bg-white border border-transparent hover:border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300">
+                    <div class="w-12 h-12 bg-white text-brand-primary rounded-xl flex items-center justify-center shadow-sm group-hover:bg-brand-primary group-hover:text-white transition-colors">
+                        <i data-lucide="shopping-bag" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mt-6 mb-2">Marketplace</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">Source high-grade fertilizer blends, verified propagation cuttings, and organic pots safely.</p>
+                </div>
+
+                <div class="group p-8 rounded-2xl bg-brand-bg hover:bg-white border border-transparent hover:border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300">
+                    <div class="w-12 h-12 bg-white text-brand-primary rounded-xl flex items-center justify-center shadow-sm group-hover:bg-brand-primary group-hover:text-white transition-colors">
+                        <i data-lucide="users" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mt-6 mb-2">Social Community</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">Exchange propagation advice, trade seasonal seeds, and show off your indoor green layouts.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="how-it-works" class="py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto space-y-4 mb-20">
+                <h2 class="text-3xl sm:text-4xl font-bold tracking-tight">Four Steps to Botanical Success</h2>
+                <p class="text-gray-500 text-sm">Getting started takes minutes. Automating your green workflow lasts seasons.</p>
+            </div>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 relative">
+                <div class="text-center space-y-4">
+                    <div class="w-12 h-12 rounded-full bg-brand-accent text-brand-primary font-bold text-lg flex items-center justify-center mx-auto">1</div>
+                    <h4 class="font-bold text-lg">Create a Garden</h4>
+                    <p class="text-gray-500 text-sm max-w-xs mx-auto">Categorize structural areas like Balcony, Living Room, or Backyard Patch.</p>
+                </div>
+                <div class="text-center space-y-4">
+                    <div class="w-12 h-12 rounded-full bg-brand-accent text-brand-primary font-bold text-lg flex items-center justify-center mx-auto">2</div>
+                    <h4 class="font-bold text-lg">Add Your Plants</h4>
+                    <p class="text-gray-500 text-sm max-w-xs mx-auto">Search our robust database to link accurate species presets to your dashboard.</p>
+                </div>
+                <div class="text-center space-y-4">
+                    <div class="w-12 h-12 rounded-full bg-brand-accent text-brand-primary font-bold text-lg flex items-center justify-center mx-auto">3</div>
+                    <h4 class="font-bold text-lg">Get Smart Reminders</h4>
+                    <p class="text-gray-500 text-sm max-w-xs mx-auto">Follow smart dynamic alerts tailored explicitly to your local humidity and weather.</p>
+                </div>
+                <div class="text-center space-y-4">
+                    <div class="w-12 h-12 rounded-full bg-brand-accent text-brand-primary font-bold text-lg flex items-center justify-center mx-auto">4</div>
+                    <h4 class="font-bold text-lg">Consult the AI</h4>
+                    <p class="text-gray-500 text-sm max-w-xs mx-auto">Snap diagnostic images anytime to catch micro-deficiencies before they clear out leaves.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
+        <div class="bg-brand-dark rounded-3xl p-8 sm:p-12 lg:p-16 text-center text-white relative overflow-hidden shadow-2xl">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-brand-primary/20 rounded-full blur-3xl -mr-20 -mt-20"></div>
+            <div class="absolute bottom-0 left-0 w-64 h-64 bg-brand-secondary/15 rounded-full blur-3xl -ml-20 -mb-20"></div>
+
+            <div class="relative z-10 max-w-2xl mx-auto space-y-6">
+                <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Start growing smarter today</h2>
+                <p class="text-brand-accent/80 text-base max-w-md mx-auto">
+                    Join thousands of urban gardeners managing happy houseplants and productive plots with artificial intelligence insights.
+                </p>
+                <div class="pt-4">
+                    <a href="register.html" class="inline-block bg-brand-secondary hover:bg-brand-secondary/90 text-white px-8 py-4 rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5">
+                        Create Free Account
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-white border-t border-gray-100 mt-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col sm:flex-row items-center justify-between gap-6 text-sm text-gray-500">
+            <div class="flex items-center gap-2">
+                <div class="bg-brand-primary text-white p-1.5 rounded-lg">
+                    <i data-lucide="sprout" class="w-4 h-4"></i>
+                </div>
+                <span class="font-bold text-brand-dark">Plantive</span>
+                <span>&copy; 2026. All rights reserved.</span>
+            </div>
+            <div class="flex items-center gap-6 font-medium">
+                <a href="#" class="hover:text-brand-primary transition-colors">About</a>
+                <a href="#" class="hover:text-brand-primary transition-colors">Docs</a>
+                <a href="https://github.com" target="_blank" class="hover:text-brand-primary transition-colors">GitHub</a>
+                <a href="#" class="hover:text-brand-primary transition-colors">Privacy</a>
+                <a href="#" class="hover:text-brand-primary transition-colors">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Mobile Menu Toggle
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            
+            // Toggle icon state dynamically
+            const isHidden = mobileMenu.classList.contains('hidden');
+            menuIcon.setAttribute('data-lucide', isHidden ? 'menu' : 'x');
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-brand-bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Botanist Assistant - Plantive</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            primary: '#2E7D32',    /* Deep Forest Green */
+                            secondary: '#66BB6A',  /* Leaf Green */
+                            accent: '#E8F5E9',     /* Soft Mint */
+                            bg: '#F7FAF5',         /* Warm Off-White Nature Background */
+                            dark: '#1B3A1E'        /* Deep Midnight Green */
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght=300;400;500;600;700;800&display=swap');
+    </style>
+</head>
+<body class="text-brand-dark font-sans antialiased h-full flex flex-col md:flex-row overflow-hidden">
+
+    <!-- MOBILE HEADER (Hidden on Desktop) -->
+    <header class="md:hidden flex items-center justify-between px-6 py-4 bg-white border-b border-gray-100 shrink-0">
+        <a href="index.html" class="flex items-center gap-2">
+            <div class="bg-brand-primary text-white p-1.5 rounded-lg">
+                <i data-lucide="sprout" class="w-5 h-5"></i>
+            </div>
+            <span class="text-lg font-bold tracking-tight">Plantive</span>
+        </a>
+        <button id="mobile-sidebar-toggle" class="text-brand-dark p-1">
+            <i data-lucide="menu" class="w-6 h-6"></i>
+        </button>
+    </header>
+
+    <!-- SIDEBAR NAVIGATION -->
+    <aside id="sidebar" class="hidden md:flex flex-col w-64 lg:w-72 bg-white border-r border-gray-100 shrink-0 h-full justify-between transition-all duration-300">
+        <div class="flex flex-col pt-8 px-6 space-y-8 overflow-y-auto">
+            <!-- Brand Logo -->
+            <a href="index.html" class="flex items-center gap-2.5">
+                <div class="bg-brand-primary text-white p-2 rounded-xl">
+                    <i data-lucide="sprout" class="w-6 h-6"></i>
+                </div>
+                <span class="text-xl font-bold tracking-tight">Plantive</span>
+            </a>
+
+            <!-- User Status Profile -->
+            <div class="flex items-center gap-3 bg-brand-bg p-3.5 rounded-2xl border border-brand-primary/5">
+                <div class="w-10 h-10 rounded-xl bg-brand-secondary/20 flex items-center justify-center font-bold text-brand-primary">
+                    AT
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm leading-tight">Alex Thorne</h4>
+                    <p class="text-xs text-gray-500">Pro Botanist</p>
+                </div>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="space-y-1">
+                <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-brand-accent/50 hover:text-brand-primary font-medium text-sm transition-all">
+                    <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+                    Dashboard
+                </a>
+                <a href="gardens.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-brand-accent/50 hover:text-brand-primary font-medium text-sm transition-all">
+                    <i data-lucide="grid" class="w-4 h-4"></i>
+                    My Gardens
+                </a>
+                <a href="plants.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-brand-accent/50 hover:text-brand-primary font-medium text-sm transition-all">
+                    <i data-lucide="leaf" class="w-4 h-4"></i>
+                    Plants
+                </a>
+                <a href="ai-assistant.html" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-brand-primary text-white font-medium text-sm transition-all shadow-md shadow-brand-primary/10">
+                    <i data-lucide="bot" class="w-4 h-4"></i>
+                    AI Assistant
+                </a>
+                <a href="marketplace.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-brand-accent/50 hover:text-brand-primary font-medium text-sm transition-all">
+                    <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+                    Marketplace
+                </a>
+                <a href="community.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-brand-accent/50 hover:text-brand-primary font-medium text-sm transition-all">
+                    <i data-lucide="users" class="w-4 h-4"></i>
+                    Community
+                </a>
+            </nav>
+        </div>
+
+        <!-- Footer actions in sidebar -->
+        <div class="p-6 border-t border-gray-50 space-y-1 bg-white">
+            <a href="settings.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-brand-accent/50 hover:text-brand-primary font-medium text-sm transition-all">
+                <i data-lucide="settings" class="w-4 h-4"></i>
+                Settings
+            </a>
+            <a href="index.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-rose-600 hover:bg-rose-50 font-medium text-sm transition-all">
+                <i data-lucide="log-out" class="w-4 h-4"></i>
+                Sign Out
+            </a>
+        </div>
+    </aside>
+
+    <!-- MAIN BODY CONTENT WRAPPER -->
+    <main class="flex-1 flex flex-col lg:flex-row overflow-hidden h-full">
+
+        <!-- MIDDLE STREAM (AI Chat workspace) -->
+        <section class="flex-1 flex flex-col justify-between overflow-hidden h-full bg-white">
+            <!-- Chat Header -->
+            <div class="px-6 py-5 border-b border-gray-100 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-brand-accent text-brand-primary flex items-center justify-center">
+                        <i data-lucide="bot" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-base font-bold">FloraAI Assistant</h1>
+                        <p class="text-[10px] text-gray-400">Powered by Plantive Botanical Core v4.2</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button class="p-2 text-gray-400 hover:text-brand-primary hover:bg-gray-50 rounded-xl transition-all" title="Clear Chat">
+                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                    </button>
+                    <button class="p-2 text-gray-400 hover:text-brand-primary hover:bg-gray-50 rounded-xl transition-all" title="Configure Agent">
+                        <i data-lucide="sliders" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Chat Message Stream -->
+            <div class="flex-1 overflow-y-auto p-6 space-y-6 bg-brand-bg/35" id="chat-stream">
+                
+                <!-- System Greeting Message -->
+                <div class="flex items-start gap-3.5 max-w-3xl">
+                    <div class="w-8 h-8 rounded-lg bg-brand-accent text-brand-primary shrink-0 flex items-center justify-center">
+                        <i data-lucide="bot" class="w-4.5 h-4.5"></i>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="bg-white border border-gray-100 rounded-2xl rounded-tl-none p-4 shadow-sm">
+                            <p class="text-xs sm:text-sm text-gray-700 leading-relaxed">
+                                Hello Alex! I am your interactive **FloraAI Agent**. I have synchronized access to your connected sensor metrics across your custom gardens.
+                            </p>
+                            <p class="text-xs sm:text-sm text-gray-700 leading-relaxed mt-2">
+                                Ask me to cross-reference moisture data, compute target **N-P-K nutrient ratios**, or analyze photos of leaf abnormalities. What are we growing today?
+                            </p>
+                        </div>
+                        <span class="text-[10px] text-gray-400 font-medium ml-1">FloraAI • Just Now</span>
+                    </div>
+                </div>
+
+                <!-- User Message -->
+                <div class="flex items-start gap-3.5 max-w-3xl ml-auto justify-end">
+                    <div class="space-y-2 text-right">
+                        <div class="bg-brand-primary text-white rounded-2xl rounded-tr-none p-4 shadow-sm text-left">
+                            <p class="text-xs sm:text-sm leading-relaxed">
+                                Can you examine the telemetry data for my Monstera Deliciosa? The bottom leaf tips look slightly yellow and translucent.
+                            </p>
+                        </div>
+                        <span class="text-[10px] text-gray-400 font-medium mr-1">You • 2 minutes ago</span>
+                    </div>
+                    <div class="w-8 h-8 rounded-lg bg-brand-secondary text-white shrink-0 flex items-center justify-center font-bold text-xs">
+                        AT
+                    </div>
+                </div>
+
+                <!-- AI Response with Structured Data -->
+                <div class="flex items-start gap-3.5 max-w-3xl">
+                    <div class="w-8 h-8 rounded-lg bg-brand-accent text-brand-primary shrink-0 flex items-center justify-center">
+                        <i data-lucide="bot" class="w-4.5 h-4.5"></i>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="bg-white border border-gray-100 rounded-2xl rounded-tl-none p-4 shadow-sm space-y-3">
+                            <p class="text-xs sm:text-sm text-gray-700 leading-relaxed">
+                                I've queried the live soil sensor data for **Garden A: Monstera Node**. Here is what my analysis suggests:
+                            </p>
+                            
+                            <!-- Internal Telemetry Evaluation Table -->
+                            <div class="border border-gray-100 rounded-xl overflow-hidden text-xs">
+                                <div class="grid grid-cols-3 bg-gray-50 p-2.5 font-bold border-b border-gray-100">
+                                    <div>Metric</div>
+                                    <div>Current</div>
+                                    <div>Optimal Target</div>
+                                </div>
+                                <div class="grid grid-cols-3 p-2.5 border-b border-gray-50">
+                                    <div class="font-semibold">Soil Moisture</div>
+                                    <span class="text-rose-600 font-bold">81% (Saturated)</span>
+                                    <span class="text-gray-500">45% - 60%</span>
+                                </div>
+                                <div class="grid grid-cols-3 p-2.5">
+                                    <div class="font-semibold">Soil Temp</div>
+                                    <span class="text-emerald-600 font-bold">22.4°C</span>
+                                    <span class="text-gray-500">18°C - 24°C</span>
+                                </div>
+                            </div>
+
+                            <p class="text-xs sm:text-sm text-gray-700 leading-relaxed">
+                                💡 **Diagnosis**: The translucent, yellowing lower leaves combined with continuous **81% soil saturation** indicate early **root rot risk** due to root hypoxia. I recommend halting irrigation for the next 7 days and ensuring your cachepot draining is unobstructed.
+                            </p>
+                        </div>
+                        <span class="text-[10px] text-gray-400 font-medium ml-1">FloraAI • 1 minute ago</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Bottom Interactive Input Zone -->
+            <div class="p-4 sm:p-6 border-t border-gray-100 bg-white space-y-4 shrink-0">
+                <!-- Suggested Prompting Pills -->
+                <div class="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+                    <button class="px-3.5 py-1.5 rounded-lg border border-gray-100 bg-gray-50 hover:bg-brand-accent/40 text-gray-600 hover:text-brand-primary text-xs font-semibold shrink-0 transition-all">
+                        🔍 Diagnose Leaf Yellowing
+                    </button>
+                    <button class="px-3.5 py-1.5 rounded-lg border border-gray-100 bg-gray-50 hover:bg-brand-accent/40 text-gray-600 hover:text-brand-primary text-xs font-semibold shrink-0 transition-all">
+                        🧪 Calculate N-P-K Ratio
+                    </button>
+                    <button class="px-3.5 py-1.5 rounded-lg border border-gray-100 bg-gray-50 hover:bg-brand-accent/40 text-gray-600 hover:text-brand-primary text-xs font-semibold shrink-0 transition-all">
+                        📅 Generate Pruning Schedule
+                    </button>
+                </div>
+
+                <!-- Textarea input form -->
+                <div class="relative flex items-center">
+                    <textarea rows="1" placeholder="Type diagnostic queries, nutrient tasks, or plant names..." 
+                        class="w-full pl-4 pr-12 py-3 border border-gray-200 rounded-xl text-sm bg-gray-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-primary/15 focus:border-brand-primary transition-all resize-none"></textarea>
+                    <button class="absolute right-3 p-1.5 bg-brand-primary text-white rounded-lg hover:bg-brand-dark transition-all">
+                        <i data-lucide="send" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- RIGHT PANEL (Botanical Vision Analysis Sidebar) -->
+        <section class="w-full lg:w-80 xl:w-96 bg-white border-l border-gray-100 p-6 sm:p-8 flex flex-col justify-between h-full overflow-y-auto shrink-0">
+            <div class="space-y-8">
+                <!-- Title -->
+                <div>
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Botanical Computer Vision</h3>
+                    <h2 class="text-lg font-extrabold">Instant Leaf Pathology</h2>
+                    <p class="text-xs text-gray-500 mt-1">Upload photos to run localized neural net classification on pest infestation, nutrient starvation, or blight.</p>
+                </div>
+
+                <!-- Drag & Drop Photo Upload Mock Area -->
+                <div class="border-2 border-dashed border-gray-200 hover:border-brand-primary/50 bg-gray-50/50 rounded-2xl p-6 text-center cursor-pointer transition-all space-y-3">
+                    <div class="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center mx-auto text-gray-400">
+                        <i data-lucide="camera" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <span class="text-xs font-bold text-brand-primary block">Upload leaf detail photo</span>
+                        <span class="text-[10px] text-gray-400 block mt-0.5">JPEG or PNG up to 10MB</span>
+                    </div>
+                </div>
+
+                <!-- Simulation/Example Scan Result -->
+                <div class="space-y-3">
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-gray-400">Last analyzed tissue sample</h4>
+                    
+                    <div class="bg-brand-accent/20 rounded-xl p-4 border border-brand-primary/5 space-y-3 text-xs">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-brand-dark">Monstera_Leaf_04.jpg</span>
+                            <span class="text-emerald-600 font-semibold text-[10px]">94% Confidence</span>
+                        </div>
+                        
+                        <!-- Mini Analysis Progress Metrics -->
+                        <div class="space-y-1.5">
+                            <div class="flex justify-between text-[10px] font-semibold text-gray-500">
+                                <span>Chlorophyll Degradation</span>
+                                <span>80% Detected</span>
+                            </div>
+                            <div class="w-full h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                                <div class="bg-amber-500 h-full rounded-full" style="width: 80%"></div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-1.5">
+                            <div class="flex justify-between text-[10px] font-semibold text-gray-500">
+                                <span>Fungal Spore Necrosis</span>
+                                <span>12% Detected</span>
+                            </div>
+                            <div class="w-full h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                                <div class="bg-brand-primary h-full rounded-full" style="width: 12%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Meta tag -->
+            <div class="pt-8 border-t border-gray-50 hidden lg:block">
+                <p class="text-[10px] text-gray-400 text-center uppercase tracking-widest font-semibold">Local Inference Sandbox • 2026</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Scripting Interactions -->
+    <script>
+        lucide.createIcons();
+
+        // Responsive Sidebar Drawer Toggle
+        const mobileToggle = document.getElementById('mobile-sidebar-toggle');
+        const sidebar = document.getElementById('sidebar');
+
+        mobileToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('hidden');
+            sidebar.classList.toggle('fixed');
+            sidebar.classList.toggle('inset-y-0');
+            sidebar.classList.toggle('left-0');
+            sidebar.classList.toggle('z-50');
+            sidebar.classList.toggle('flex');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-brand-bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alex Thorne's Botanical Profile - Plantive</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            primary: '#2E7D32',    /* Deep Forest Green */
+                            secondary: '#66BB6A',  /* Leaf Green */
+                            accent: '#E8F5E9',     /* Soft Mint */
+                            bg: '#F7FAF5',         /* Warm Off-White Nature Background */
+                            dark: '#1B3A1E'        /* Deep Midnight Green */
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght=300;400;500;600;700;800&display=swap');
+    </style>
+</head>
+<body class="text-brand-dark font-sans antialiased h-full flex flex-col md:flex-row overflow-hidden">
+
+    <!-- MOBILE HEADER (Hidden on Desktop) -->
+    <header class="md:hidden flex items-center justify-between px-6 py-4 bg-white border-b border-gray-100 shrink-0">
+        <a href="index.html" class="flex items-center gap-2">
+            <div class="bg-brand-primary text-white p-1.5 rounded-lg">
+                <i data-lucide="sprout" class="w-5 h-5"></i>
+            </div>
+            <span class="text-lg font-bold tracking-tight">Plantive</span>
+        </a>
+        <button id="mobile-sidebar-toggle" class="text-brand-dark p-1">
+            <i data-lucide="menu" class="w-6 h-6"></i>
+        </button>
+    </header>
+
+    <!-- SIDEBAR NAVIGATION -->
+    <aside id="sidebar" class="hidden md:flex flex-col w-64 lg:w-72 bg-white border-r border-gray-100 shrink-0 h-full justify-between transition-all duration-300">
+        <div class="flex flex-col pt-8 px-6 space-y-8 overflow-y-auto">
+            <!-- Brand Logo -->
+            <a href="index.html" class="flex items-center gap-2.5">
+                <div class="bg-brand-primary text-white p-2 rounded-xl">
+                    <i data-lucide="sprout" class="w-6 h-6"></i>
+                </div>
+                <span class="text-xl font-bold tracking-tight">Plantive</span>
+            </a>
+
+            <!-- User Status Profile -->
+            <div class="flex items-center gap-3 bg-brand-bg p-3.5 rounded-2xl border border-brand-primary/5">
+                <div class="w-10 h-10 rounded-xl bg-brand-secondary/20 flex items-center justify-center font-bold text-brand-primary">
+                    AT
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm leading-tight">Alex Thorne</h4>
+                    <p class="text-xs text-gray-500">Pro Botanist</p>
+                </div>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="space-y-1">
+                <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-brand-accent/50 hover:text-brand-primary font-medium text-sm transition-all">
+                    <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+                    Dashboard
+                </a>
+                <a href="gardens.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-brand-accent/50 hover:text-brand-primary font-medium text-sm transition-all">
+                    <i data-lucide="grid" class="w-4 h-4"></i>
+                    My Gardens
+                </a>
+                <a href="plants.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-brand-accent/50 hover:text-brand-primary font-medium text-sm transition-all">
+                    <i data-lucide="leaf" class="w-4 h-4"></i>
+                    Plants
+                </a>
+                <a href="ai-assistant.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-brand-accent/50 hover:text-brand-primary font-medium text-sm transition-all">
+                    <i data-lucide="bot" class="w-4 h-4"></i>
+                    AI Assistant
+                </a>
+                <a href="marketplace.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-brand-accent/50 hover:text-brand-primary font-medium text-sm transition-all">
+                    <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+                    Marketplace
+                </a>
+                <a href="community.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-brand-accent/50 hover:text-brand-primary font-medium text-sm transition-all">
+                    <i data-lucide="users" class="w-4 h-4"></i>
+                    Community
+                </a>
+            </nav>
+        </div>
+
+        <!-- Footer actions in sidebar -->
+        <div class="p-6 border-t border-gray-50 space-y-1 bg-white">
+            <a href="settings.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-brand-accent/50 hover:text-brand-primary font-medium text-sm transition-all">
+                <i data-lucide="settings" class="w-4 h-4"></i>
+                Settings
+            </a>
+            <a href="index.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-rose-600 hover:bg-rose-50 font-medium text-sm transition-all">
+                <i data-lucide="log-out" class="w-4 h-4"></i>
+                Sign Out
+            </a>
+        </div>
+    </aside>
+
+    <!-- MAIN BODY CONTENT WRAPPER -->
+    <main class="flex-1 flex flex-col lg:flex-row overflow-hidden h-full">
+
+        <!-- MIDDLE STREAM (Bio, Stats, & Activities) -->
+        <section class="flex-1 overflow-y-auto px-6 py-8 sm:px-8 lg:px-10 space-y-8">
+            
+            <!-- User Banner & Bio Info -->
+            <div class="bg-white rounded-3xl border border-gray-100 p-6 sm:p-8 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+                <div class="flex flex-col sm:flex-row items-center gap-5 text-center sm:text-left">
+                    <!-- High Density Profile Avatar -->
+                    <div class="relative">
+                        <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-3xl bg-brand-secondary/20 flex items-center justify-center font-black text-brand-primary text-3xl shadow-inner">
+                            AT
+                        </div>
+                        <span class="absolute -bottom-1 -right-1 bg-brand-primary text-white p-1.5 rounded-xl border-4 border-white">
+                            <i data-lucide="shield-check" class="w-4 h-4"></i>
+                        </span>
+                    </div>
+
+                    <div class="space-y-1">
+                        <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2">
+                            <h1 class="text-xl sm:text-2xl font-black tracking-tight">Alex Thorne</h1>
+                            <span class="bg-brand-accent text-brand-primary text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider">Pro Botanist</span>
+                        </div>
+                        <p class="text-xs text-gray-400">Pacifica Northwest • Member since Nov 2024</p>
+                        <p class="text-xs sm:text-sm text-gray-600 max-w-lg pt-1 leading-relaxed">
+                            Cultivator specializing in rare indoor tropical aroids. Developing localized greenhouse integration models and monitoring soil moisture dynamics via modular IoT sensors.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Bio Edit / Settings Callout -->
+                <a href="settings.html" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gray-50 hover:bg-brand-accent/50 text-gray-700 hover:text-brand-primary px-4 py-3 rounded-xl text-xs font-bold transition-all border border-gray-100">
+                    <i data-lucide="edit-3" class="w-3.5 h-3.5"></i> Edit Profile
+                </a>
+            </div>
+
+            <!-- Quantitative Stats Summary Grid -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm text-center sm:text-left">
+                    <span class="text-gray-400 text-[10px] uppercase font-bold tracking-wider block mb-1">Reputation Score</span>
+                    <span class="text-2xl font-black text-brand-primary">4,195</span>
+                    <p class="text-[10px] text-gray-400 mt-0.5">Top 3% of Local Growers</p>
+                </div>
+                <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm text-center sm:text-left">
+                    <span class="text-gray-400 text-[10px] uppercase font-bold tracking-wider block mb-1">Plants Tracked</span>
+                    <span class="text-2xl font-black text-brand-dark">34</span>
+                    <p class="text-[10px] text-gray-400 mt-0.5">across 3 specialized zones</p>
+                </div>
+                <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm text-center sm:text-left">
+                    <span class="text-gray-400 text-[10px] uppercase font-bold tracking-wider block mb-1">Accuracy Rating</span>
+                    <span class="text-2xl font-black text-brand-dark">98.2%</span>
+                    <p class="text-[10px] text-gray-400 mt-0.5">AI pathology verified</p>
+                </div>
+                <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm text-center sm:text-left">
+                    <span class="text-gray-400 text-[10px] uppercase font-bold tracking-wider block mb-1">Solutions Provided</span>
+                    <span class="text-2xl font-black text-emerald-600">89</span>
+                    <p class="text-[10px] text-gray-400 mt-0.5">Accepted by community</p>
+                </div>
+            </div>
+
+            <!-- Activity Logs & Community Sub-Tab System -->
+            <div class="space-y-4">
+                <div class="flex items-center justify-between border-b border-gray-200/60 pb-2">
+                    <div class="flex gap-4">
+                        <button class="text-sm font-bold text-brand-primary border-b-2 border-brand-primary pb-2">Community Discussions</button>
+                        <button class="text-sm font-semibold text-gray-400 hover:text-brand-primary pb-2 transition-colors">Propagation Journals</button>
+                    </div>
+                </div>
+
+                <!-- Selected Tab List Content -->
+                <div class="space-y-4">
+                    <!-- Activity Thread Item 1 -->
+                    <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm space-y-3">
+                        <div class="flex items-center justify-between text-xs text-gray-400">
+                            <div class="flex items-center gap-1.5 font-semibold text-brand-primary">
+                                <i data-lucide="message-square" class="w-3.5 h-3.5"></i> Post Published
+                            </div>
+                            <span>July 11, 2026</span>
+                        </div>
+                        <h3 class="font-extrabold text-sm sm:text-base hover:text-brand-primary cursor-pointer transition-colors">
+                            Testing automated N-P-K nutrient dosing rates on delicate Calathea varieties
+                        </h3>
+                        <p class="text-xs text-gray-600 line-clamp-2">
+                            After running several soil diagnostics with our new optical sensors, I developed a low-dosage Nitrogen liquid formulation that protects root margins while increasing growth speed by 20%...
+                        </p>
+                        <div class="flex gap-4 text-[10px] font-bold text-gray-400 uppercase tracking-wider pt-2 border-t border-gray-50">
+                            <span>👍 54 Upvotes</span>
+                            <span>💬 19 Comments</span>
+                        </div>
+                    </div>
+
+                    <!-- Activity Thread Item 2 -->
+                    <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm space-y-3">
+                        <div class="flex items-center justify-between text-xs text-gray-400">
+                            <div class="flex items-center gap-1.5 font-semibold text-emerald-600">
+                                <i data-lucide="check-circle" class="w-3.5 h-3.5"></i> Marked Best Solution
+                            </div>
+                            <span>June 28, 2026</span>
+                        </div>
+                        <h3 class="font-extrabold text-sm sm:text-base hover:text-brand-primary cursor-pointer transition-colors">
+                            Re: Addressing root scale insects on Monstera stems
+                        </h3>
+                        <p class="text-xs text-gray-600 line-clamp-2">
+                            I suggest treating the petioles directly using diluted isopropyl alcohol (70%) on cotton swabs. This breaks down the scale's waxy shell without harming the plant's underlying vascular tissue...
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RIGHT PANEL (Badges & Connected Devices Status) -->
+        <section class="w-full lg:w-80 xl:w-96 bg-white border-l border-gray-100 p-6 sm:p-8 flex flex-col justify-between h-full overflow-y-auto shrink-0">
+            <div class="space-y-8">
+                <!-- Badges Earned Section -->
+                <div class="space-y-4">
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-gray-400">Badges Earned</h4>
+                    <div class="grid grid-cols-3 gap-3">
+                        <!-- Badge 1 -->
+                        <div class="bg-brand-accent/35 border border-brand-primary/5 rounded-xl p-3 text-center space-y-1.5">
+                            <span class="inline-flex p-2 bg-white text-brand-primary rounded-lg shadow-sm">
+                                <i data-lucide="award" class="w-5 h-5"></i>
+                            </span>
+                            <span class="text-[9px] font-bold text-brand-dark block leading-tight">Master Propagator</span>
+                        </div>
+                        <!-- Badge 2 -->
+                        <div class="bg-amber-50 border border-amber-100 rounded-xl p-3 text-center space-y-1.5">
+                            <span class="inline-flex p-2 bg-white text-amber-600 rounded-lg shadow-sm">
+                                <i data-lucide="cpu" class="w-5 h-5"></i>
+                            </span>
+                            <span class="text-[9px] font-bold text-brand-dark block leading-tight">IoT Pioneer</span>
+                        </div>
+                        <!-- Badge 3 -->
+                        <div class="bg-emerald-50 border border-emerald-100 rounded-xl p-3 text-center space-y-1.5">
+                            <span class="inline-flex p-2 bg-white text-emerald-600 rounded-lg shadow-sm">
+                                <i data-lucide="heart" class="w-5 h-5"></i>
+                            </span>
+                            <span class="text-[9px] font-bold text-brand-dark block leading-tight">Civic Healer</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Linked Telemetry Devices Status -->
+                <div class="space-y-4">
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-gray-400">Linked Telemetry Hardware</h4>
+                    <div class="space-y-3">
+                        <!-- Device 1 -->
+                        <div class="p-3.5 bg-gray-50 rounded-xl border border-gray-100 flex items-center justify-between text-xs">
+                            <div class="flex items-center gap-2.5">
+                                <div class="w-2.5 h-2.5 bg-emerald-500 rounded-full animate-pulse"></div>
+                                <div>
+                                    <h5 class="font-bold">Zone-A Moisture Probe</h5>
+                                    <p class="text-[10px] text-gray-400">Plantive Core v2 • Battery: 94%</p>
+                                </div>
+                            </div>
+                            <span class="text-emerald-600 font-bold text-[10px]">Online</span>
+                        </div>
+
+                        <!-- Device 2 -->
+                        <div class="p-3.5 bg-gray-50 rounded-xl border border-gray-100 flex items-center justify-between text-xs">
+                            <div class="flex items-center gap-2.5">
+                                <div class="w-2.5 h-2.5 bg-emerald-500 rounded-full animate-pulse"></div>
+                                <div>
+                                    <h5 class="font-bold">Greenhouse Ambient Hub</h5>
+                                    <p class="text-[10px] text-gray-400">Plantive Core v2 • Battery: 88%</p>
+                                </div>
+                            </div>
+                            <span class="text-emerald-600 font-bold text-[10px]">Online</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Regional Network Membership -->
+                <div class="space-y-3">
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-gray-400">Botanical Groups</h4>
+                    <div class="p-4 bg-gray-50 rounded-xl border border-gray-100 flex items-center justify-between text-xs">
+                        <div>
+                            <span class="font-bold">Cascadia Botanical Guild</span>
+                            <p class="text-[10px] text-gray-400 mt-0.5">Elite Level Member</p>
+                        </div>
+                        <i data-lucide="shield" class="w-4 h-4 text-brand-primary"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- System Footer Status -->
+            <div class="pt-8 border-t border-gray-50 hidden lg:block text-center">
+                <p class="text-[10px] text-gray-400 uppercase tracking-widest font-semibold">Verified Botanist Portfolio • 2026</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Scripting Interactions -->
+    <script>
+        lucide.createIcons();
+
+        // Responsive Sidebar Drawer Toggle
+        const mobileToggle = document.getElementById('mobile-sidebar-toggle');
+        const sidebar = document.getElementById('sidebar');
+
+        mobileToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('hidden');
+            sidebar.classList.toggle('fixed');
+            sidebar.classList.toggle('inset-y-0');
+            sidebar.classList.toggle('left-0');
+            sidebar.classList.toggle('z-50');
+            sidebar.classList.toggle('flex');
+        });
+    </script>
+</body>
+</html>

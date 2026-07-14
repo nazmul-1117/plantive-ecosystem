@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-brand-bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketplace - Plantive</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            primary: '#2E7D32',    /* Deep Forest Green */
+                            secondary: '#66BB6A',  /* Leaf Green */
+                            accent: '#E8F5E9',     /* Soft Mint */
+                            bg: '#F7FAF5',         /* Warm Off-White Nature Background */
+                            dark: '#1B3A1E'        /* Deep Midnight Green */
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght=300;400;500;600;700&display=swap');
+    </style>
+</head>
+<body class="text-brand-dark font-sans antialiased h-full flex flex-col md:flex-row overflow-hidden">
+
+    <!-- MOBILE HEADER (Hidden on Desktop) -->
+    <header class="md:hidden flex items-center justify-between px-6 py-4 bg-white border-b border-gray-100 shrink-0">
+        <a href="index.html" class="flex items-center gap-2">
+            <div class="bg-brand-primary text-white p-1.5 rounded-lg">
+                <i data-lucide="sprout" class="w-5 h-5"></i>
+            </div>
+            <span class="text-lg font-bold tracking-tight">Plantive</span>
+        </a>
+        <button id="mobile-sidebar-toggle" class="text-brand-dark p-1">
+            <i data-lucide="menu" class="w-6 h-6"></i>
+        </button>
+    </header>
+
+    <!-- SIDEBAR NAVIGATION -->
+    <aside id="sidebar" class="hidden md:flex flex-col w-64 lg:w-72 bg-white border-r border-gray-100 shrink-0 h-full justify-between transition-all duration-300">
+        <div class="flex flex-col pt-8 px-6 space-y-8 overflow-y-auto">
+            <!-- Brand Logo -->
+            <a href="index.html" class="flex items-center gap-2.5">
+                <div class="bg-brand-primary text-white p-2 rounded-xl">
+                    <i data-lucide="sprout" class="w-6 h-6"></i>
+                </div>
+                <span class="text-xl font-bold tracking-tight">Plantive</span>
+            </a>
+
+            <!-- User Status Profile -->
+            <div class="flex items-center gap-3 bg-brand-bg p-3.5 rounded-2xl border border-brand-primary/5">
+                <div class="w-10 h-10 rounded-xl bg-brand-secondary/20 flex items-center justify-center font-bold text-brand-primary">
+                    AT
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm leading-tight">Alex Thorne</h4>
+                    <p class="text-xs text-gray-500">Pro Botanist</p>
+                </div>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="space-y-1">
+                <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-brand-accent/50 hover:text-brand-primary font-medium text-sm transition-all">
+                    <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+                    Dashboard
+                </a>
+                <a href="gardens.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-brand-accent/50 hover:text-brand-primary font-medium text-sm transition-all">
+                    <i data-lucide="grid" class="w-4 h-4"></i>
+                    My Gardens
+                </a>
+                <a href="plants.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-brand-accent/50 hover:text-brand-primary font-medium text-sm transition-all">
+                    <i data-lucide="leaf" class="w-4 h-4"></i>
+                    Plants
+                </a>
+                <a href="ai-assistant.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-brand-accent/50 hover:text-brand-primary font-medium text-sm transition-all">
+                    <i data-lucide="bot" class="w-4 h-4"></i>
+                    AI Assistant
+                </a>
+                <a href="marketplace.html" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-brand-primary text-white font-medium text-sm transition-all shadow-md shadow-brand-primary/10">
+                    <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+                    Marketplace
+                </a>
+                <a href="community.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-brand-accent/50 hover:text-brand-primary font-medium text-sm transition-all">
+                    <i data-lucide="users" class="w-4 h-4"></i>
+                    Community
+                </a>
+            </nav>
+        </div>
+
+        <!-- Footer actions in sidebar -->
+        <div class="p-6 border-t border-gray-50 space-y-1 bg-white">
+            <a href="settings.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-brand-accent/50 hover:text-brand-primary font-medium text-sm transition-all">
+                <i data-lucide="settings" class="w-4 h-4"></i>
+                Settings
+            </a>
+            <a href="index.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-rose-600 hover:bg-rose-50 font-medium text-sm transition-all">
+                <i data-lucide="log-out" class="w-4 h-4"></i>
+                Sign Out
+            </a>
+        </div>
+    </aside>
+
+    <!-- MAIN BODY CONTENT WRAPPER -->
+    <main class="flex-1 flex flex-col lg:flex-row overflow-hidden h-full">
+
+        <!-- MIDDLE STREAM (Marketplace Directory) -->
+        <section class="flex-1 overflow-y-auto px-6 py-8 sm:px-8 lg:px-10 space-y-8">
+            <!-- Header and Direct Actions -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                    <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Marketplace</h1>
+                    <p class="text-sm text-gray-500">Upgrade your cultivation setups with premium plants, soils, and IoT hardware.</p>
+                </div>
+            </div>
+
+            <!-- Search and Filter Bar -->
+            <div class="flex flex-col md:flex-row gap-4 justify-between items-stretch md:items-center bg-white p-4 rounded-2xl border border-gray-100 shadow-sm">
+                <!-- Search Input -->
+                <div class="relative flex-1 max-w-md">
+                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
+                        <i data-lucide="search" class="w-4 h-4"></i>
+                    </div>
+                    <input type="text" placeholder="Search curated products, tools, soils..." 
+                        class="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-xl text-sm bg-gray-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-primary/15 focus:border-brand-primary transition-all">
+                </div>
+
+                <!-- Filters -->
+                <div class="flex flex-wrap items-center gap-2">
+                    <button class="px-3.5 py-1.5 rounded-lg bg-brand-primary text-white text-xs font-semibold">All Items</button>
+                    <button class="px-3.5 py-1.5 rounded-lg hover:bg-brand-accent/50 text-gray-600 hover:text-brand-primary text-xs font-semibold transition-all">Live Plants</button>
+                    <button class="px-3.5 py-1.5 rounded-lg hover:bg-brand-accent/50 text-gray-600 hover:text-brand-primary text-xs font-semibold transition-all">Organic Soils</button>
+                    <button class="px-3.5 py-1.5 rounded-lg hover:bg-brand-accent/50 text-gray-600 hover:text-brand-primary text-xs font-semibold transition-all">IoT Sensors</button>
+                </div>
+            </div>
+
+            <!-- Products Grid (Highly scannable) -->
+            <div class="grid sm:grid-cols-2 xl:grid-cols-3 gap-6">
+                <!-- Product 1 -->
+                <div class="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all overflow-hidden flex flex-col justify-between group">
+                    <div>
+                        <!-- Product Icon / Badge Header -->
+                        <div class="p-8 bg-brand-accent/30 flex items-center justify-center relative">
+                            <span class="text-5xl group-hover:scale-110 transition-transform duration-300">🪴</span>
+                            <span class="absolute top-4 left-4 bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">In Stock</span>
+                        </div>
+                        <div class="p-6 space-y-2">
+                            <h3 class="font-bold text-base group-hover:text-brand-primary transition-colors">Premium Alocasia Polly</h3>
+                            <p class="text-xs text-gray-400">Indoor Species • High Humidity Target</p>
+                            <p class="text-xs text-gray-500 leading-relaxed pt-1">
+                                Striking dark green leaves accented with bright, structural cream veins. Shipped with active moisture nursery pot inserts.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="p-4 bg-gray-50 border-t border-gray-100 flex items-center justify-between">
+                        <span class="text-lg font-black text-brand-dark">$24.99</span>
+                        <button class="bg-brand-primary hover:bg-brand-dark text-white px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5">
+                            <i data-lucide="shopping-cart" class="w-3.5 h-3.5"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all overflow-hidden flex flex-col justify-between group">
+                    <div>
+                        <!-- Product Icon / Badge Header -->
+                        <div class="p-8 bg-brand-accent/30 flex items-center justify-center relative">
+                            <span class="text-5xl group-hover:scale-110 transition-transform duration-300">🪵</span>
+                            <span class="absolute top-4 left-4 bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">Trending</span>
+                        </div>
+                        <div class="p-6 space-y-2">
+                            <h3 class="font-bold text-base group-hover:text-brand-primary transition-colors">Premium Aroid Soil Blend</h3>
+                            <p class="text-xs text-gray-400">Substrate • 5L Bag</p>
+                            <p class="text-xs text-gray-500 leading-relaxed pt-1">
+                                Hand-mixed chunky perlite, coco coir chips, orchid bark, and worm castings. Formulated specifically to prevent potting root rot.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="p-4 bg-gray-50 border-t border-gray-100 flex items-center justify-between">
+                        <span class="text-lg font-black text-brand-dark">$18.50</span>
+                        <button class="bg-brand-primary hover:bg-brand-dark text-white px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5">
+                            <i data-lucide="shopping-cart" class="w-3.5 h-3.5"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all overflow-hidden flex flex-col justify-between group">
+                    <div>
+                        <!-- Product Icon / Badge Header -->
+                        <div class="p-8 bg-brand-accent/30 flex items-center justify-center relative">
+                            <span class="text-5xl group-hover:scale-110 transition-transform duration-300">🌡️</span>
+                            <span class="absolute top-4 left-4 bg-amber-100 text-amber-800 text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">IoT Enabled</span>
+                        </div>
+                        <div class="p-6 space-y-2">
+                            <h3 class="font-bold text-base group-hover:text-brand-primary transition-colors">Plantive IoT Moisture Probe v2</h3>
+                            <p class="text-xs text-gray-400">Gardening Smart Hardware</p>
+                            <p class="text-xs text-gray-500 leading-relaxed pt-1">
+                                Low-power Wi-Fi enabled capacitive moisture, light, and temperature sensor. Auto-syncs directly into your dashboard.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="p-4 bg-gray-50 border-t border-gray-100 flex items-center justify-between">
+                        <span class="text-lg font-black text-brand-dark">$39.99</span>
+                        <button class="bg-brand-primary hover:bg-brand-dark text-white px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5">
+                            <i data-lucide="shopping-cart" class="w-3.5 h-3.5"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RIGHT PANEL (Integrated Shopping Cart Overview) -->
+        <section class="w-full lg:w-80 xl:w-96 bg-white border-l border-gray-100 p-6 sm:p-8 flex flex-col justify-between h-full overflow-y-auto shrink-0">
+            <div class="space-y-8">
+                <!-- Cart Title -->
+                <div class="flex items-center justify-between border-b border-gray-100 pb-4">
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="shopping-bag" class="text-brand-primary w-5 h-5"></i>
+                        <h2 class="font-bold text-lg">My Cart</h2>
+                    </div>
+                    <span class="bg-brand-accent text-brand-primary text-xs font-bold px-2.5 py-0.5 rounded-full">2 Items</span>
+                </div>
+
+                <!-- Active Cart Items -->
+                <div class="space-y-4">
+                    <!-- Item 1 -->
+                    <div class="flex items-center justify-between gap-4 pb-4 border-b border-gray-50">
+                        <div class="flex items-center gap-3">
+                            <span class="text-2xl bg-brand-accent/50 p-2 rounded-xl">🪴</span>
+                            <div>
+                                <h4 class="font-bold text-xs">Alocasia Polly</h4>
+                                <p class="text-[10px] text-gray-400">Qty: 1</p>
+                            </div>
+                        </div>
+                        <span class="font-bold text-xs text-brand-dark">$24.99</span>
+                    </div>
+
+                    <!-- Item 2 -->
+                    <div class="flex items-center justify-between gap-4 pb-4 border-b border-gray-50">
+                        <div class="flex items-center gap-3">
+                            <span class="text-2xl bg-brand-accent/50 p-2 rounded-xl">🌡️</span>
+                            <div>
+                                <h4 class="font-bold text-xs">IoT Moisture Probe v2</h4>
+                                <p class="text-[10px] text-gray-400">Qty: 1</p>
+                            </div>
+                        </div>
+                        <span class="font-bold text-xs text-brand-dark">$39.99</span>
+                    </div>
+                </div>
+
+                <!-- Price Aggregations -->
+                <div class="space-y-3 pt-4">
+                    <div class="flex justify-between text-xs">
+                        <span class="text-gray-500">Subtotal</span>
+                        <span class="font-bold text-brand-dark">$64.98</span>
+                    </div>
+                    <div class="flex justify-between text-xs">
+                        <span class="text-gray-500">Estimated Shipping</span>
+                        <span class="font-bold text-brand-dark text-emerald-600">FREE</span>
+                    </div>
+                    <div class="flex justify-between text-xs border-t border-gray-100 pt-3">
+                        <span class="font-bold">Total Estimated</span>
+                        <span class="font-black text-sm text-brand-primary">$64.98</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Checkout Controls -->
+            <div class="pt-8 space-y-3">
+                <button class="w-full bg-brand-primary hover:bg-brand-dark text-white py-3 rounded-xl text-sm font-bold shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2">
+                    Proceed to Secure Checkout <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+                <p class="text-[10px] text-gray-400 text-center uppercase tracking-widest font-semibold">Plantive Fast Logistics</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Sidebar Navigation Drawer Toggle Logic -->
+    <script>
+        lucide.createIcons();
+
+        const mobileToggle = document.getElementById('mobile-sidebar-toggle');
+        const sidebar = document.getElementById('sidebar');
+
+        mobileToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('hidden');
+            sidebar.classList.toggle('fixed');
+            sidebar.classList.toggle('inset-y-0');
+            sidebar.classList.toggle('left-0');
+            sidebar.classList.toggle('z-50');
+            sidebar.classList.toggle('flex');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-brand-bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plantive IoT Moisture Probe v2 - Product Details</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            primary: '#2E7D32',    /* Deep Forest Green */
+                            secondary: '#66BB6A',  /* Leaf Green */
+                            accent: '#E8F5E9',     /* Soft Mint */
+                            bg: '#F7FAF5',         /* Warm Off-White Nature Background */
+                            dark: '#1B3A1E'        /* Deep Midnight Green */
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght=300;400;500;600;700;800&display=swap');
+    </style>
+</head>
+<body class="text-brand-dark font-sans antialiased h-full flex flex-col md:flex-row overflow-hidden">
+
+    <!-- MOBILE HEADER (Hidden on Desktop) -->
+    <header class="md:hidden flex items-center justify-between px-6 py-4 bg-white border-b border-gray-100 shrink-0">
+        <a href="index.html" class="flex items-center gap-2">
+            <div class="bg-brand-primary text-white p-1.5 rounded-lg">
+                <i data-lucide="sprout" class="w-5 h-5"></i>
+            </div>
+            <span class="text-lg font-bold tracking-tight">Plantive</span>
+        </a>
+        <button id="mobile-sidebar-toggle" class="text-brand-dark p-1">
+            <i data-lucide="menu" class="w-6 h-6"></i>
+        </button>
+    </header>
+
+    <!-- SIDEBAR NAVIGATION -->
+    <aside id="sidebar" class="hidden md:flex flex-col w-64 lg:w-72 bg-white border-r border-gray-100 shrink-0 h-full justify-between transition-all duration-300">
+        <div class="flex flex-col pt-8 px-6 space-y-8 overflow-y-auto">
+            <!-- Brand Logo -->
+            <a href="index.html" class="flex items-center gap-2.5">
+                <div class="bg-brand-primary text-white p-2 rounded-xl">
+                    <i data-lucide="sprout" class="w-6 h-6"></i>
+                </div>
+                <span class="text-xl font-bold tracking-tight">Plantive</span>
+            </a>
+
+            <!-- User Status Profile -->
+            <div class="flex items-center gap-3 bg-brand-bg p-3.5 rounded-2xl border border-brand-primary/5">
+                <div class="w-10 h-10 rounded-xl bg-brand-secondary/20 flex items-center justify-center font-bold text-brand-primary">
+                    AT
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm leading-tight">Alex Thorne</h4>
+                    <p class="text-xs text-gray-500">Pro Botanist</p>
+                </div>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="space-y-1">
+                <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-brand-accent/50 hover:text-brand-primary font-medium text-sm transition-all">
+                    <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+                    Dashboard
+                </a>
+                <a href="gardens.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-brand-accent/50 hover:text-brand-primary font-medium text-sm transition-all">
+                    <i data-lucide="grid" class="w-4 h-4"></i>
+                    My Gardens
+                </a>
+                <a href="plants.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-brand-accent/50 hover:text-brand-primary font-medium text-sm transition-all">
+                    <i data-lucide="leaf" class="w-4 h-4"></i>
+                    Plants
+                </a>
+                <a href="ai-assistant.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-brand-accent/50 hover:text-brand-primary font-medium text-sm transition-all">
+                    <i data-lucide="bot" class="w-4 h-4"></i>
+                    AI Assistant
+                </a>
+                <a href="marketplace.html" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-brand-primary text-white font-medium text-sm transition-all shadow-md shadow-brand-primary/10">
+                    <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+                    Marketplace
+                </a>
+                <a href="community.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-brand-accent/50 hover:text-brand-primary font-medium text-sm transition-all">
+                    <i data-lucide="users" class="w-4 h-4"></i>
+                    Community
+                </a>
+            </nav>
+        </div>
+
+        <!-- Footer actions in sidebar -->
+        <div class="p-6 border-t border-gray-50 space-y-1 bg-white">
+            <a href="settings.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-brand-accent/50 hover:text-brand-primary font-medium text-sm transition-all">
+                <i data-lucide="settings" class="w-4 h-4"></i>
+                Settings
+            </a>
+            <a href="index.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-rose-600 hover:bg-rose-50 font-medium text-sm transition-all">
+                <i data-lucide="log-out" class="w-4 h-4"></i>
+                Sign Out
+            </a>
+        </div>
+    </aside>
+
+    <!-- MAIN BODY CONTENT WRAPPER -->
+    <main class="flex-1 flex flex-col lg:flex-row overflow-hidden h-full">
+
+        <!-- MIDDLE STREAM (Dynamic Media Showcase & Tech Specs) -->
+        <section class="flex-1 overflow-y-auto px-6 py-8 sm:px-8 lg:px-10 space-y-8">
+            <!-- Breadcrumbs -->
+            <div class="flex items-center gap-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                <a href="marketplace.html" class="hover:text-brand-primary transition-colors">Marketplace</a>
+                <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+                <a href="#" class="hover:text-brand-primary transition-colors">Hardware</a>
+                <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+                <span class="text-gray-600">IoT Moisture Probe v2</span>
+            </div>
+
+            <!-- Product Image & Media Showcase Grid -->
+            <div class="grid lg:grid-cols-12 gap-8 items-start">
+                <!-- Multi-Angle Thumbnails Panel -->
+                <div class="lg:col-span-2 flex lg:flex-col gap-3 order-2 lg:order-1">
+                    <button class="flex-1 lg:flex-initial p-2 rounded-xl bg-white border-2 border-brand-primary shadow-sm hover:border-brand-primary transition-all aspect-square flex items-center justify-center text-3xl">
+                        🌡️
+                    </button>
+                    <button class="flex-1 lg:flex-initial p-2 rounded-xl bg-white border border-gray-100 shadow-sm hover:border-brand-primary transition-all aspect-square flex items-center justify-center text-3xl grayscale">
+                        📡
+                    </button>
+                    <button class="flex-1 lg:flex-initial p-2 rounded-xl bg-white border border-gray-100 shadow-sm hover:border-brand-primary transition-all aspect-square flex items-center justify-center text-3xl grayscale">
+                        🔋
+                    </button>
+                </div>
+
+                <!-- Main Hero Display Card -->
+                <div class="lg:col-span-10 bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden p-12 flex flex-col items-center justify-center relative order-1 lg:order-2 min-h-[320px]">
+                    <span class="absolute top-4 right-4 bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">In Stock</span>
+                    <span class="text-9xl mb-4 drop-shadow-md select-none">🌡️</span>
+                    <p class="text-xs text-gray-400 font-semibold tracking-wide">Studio Close-up: Matte Forest Green Edition</p>
+                </div>
+            </div>
+
+            <!-- Technical Narrative & AI Companion Details -->
+            <div class="space-y-6">
+                <div class="border-b border-gray-100 pb-4">
+                    <h2 class="text-xl font-bold">Deep Hydro-Capacitive Telemetry</h2>
+                    <p class="text-sm text-gray-500 mt-1">Engineered to keep delicate root systems healthy without constant manual testing.</p>
+                </div>
+
+                <p class="text-sm text-gray-600 leading-relaxed">
+                    Unlike standard resistance-based sensors that rust inside your soil potting mixes, the **Plantive IoT Moisture Probe v2** uses high-frequency capacitive signaling to read volumetric water content. It provides real-time soil condition data without direct metallic contact, ensuring long-term hardware integrity.
+                </p>
+
+                <!-- AI Link Promo Box -->
+                <div class="bg-brand-accent/30 border border-brand-primary/10 rounded-2xl p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div class="flex items-start gap-3">
+                        <span class="p-2.5 bg-brand-primary text-white rounded-xl shrink-0"><i data-lucide="cpu" class="w-5 h-5"></i></span>
+                        <div>
+                            <h4 class="font-bold text-xs">Seamless Plantive Dashboard Sync</h4>
+                            <p class="text-[11px] text-gray-500 mt-0.5 leading-relaxed">Instantly transfers real-time soil, light levels, and ambient temperature readouts to the Plantive AI Engine.</p>
+                        </div>
+                    </div>
+                    <a href="ai-assistant.html" class="text-xs font-bold text-brand-primary hover:underline shrink-0 flex items-center gap-1">Configure Smart Prompts <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></a>
+                </div>
+            </div>
+
+            <!-- Hardware Spec Sheets -->
+            <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+                <div class="px-6 py-4 bg-gray-50/50 border-b border-gray-100">
+                    <h3 class="font-bold text-sm">Hardware Technical Specifications</h3>
+                </div>
+                <div class="divide-y divide-gray-100 text-xs">
+                    <div class="grid grid-cols-3 p-4">
+                        <span class="font-semibold text-gray-400">Power Interface</span>
+                        <span class="col-span-2 font-medium text-brand-dark">CR2477 Coin Battery (Included, average 12-month operational lifespan)</span>
+                    </div>
+                    <div class="grid grid-cols-3 p-4">
+                        <span class="font-semibold text-gray-400">Sensing Range</span>
+                        <span class="col-span-2 font-medium text-brand-dark">0% to 100% Volumetric Soil Moisture Content (Accuracy within ±2%)</span>
+                    </div>
+                    <div class="grid grid-cols-3 p-4">
+                        <span class="font-semibold text-gray-400">Network Connection</span>
+                        <span class="col-span-2 font-medium text-brand-dark">Low Energy Bluetooth 5.2 / Wi-Fi Sync (Integrated 2.4Ghz auto-mesh fallback)</span>
+                    </div>
+                    <div class="grid grid-cols-3 p-4">
+                        <span class="font-semibold text-gray-400">Water Resistance Rating</span>
+                        <span class="col-span-2 font-medium text-brand-dark">IP67 Dust & Water Immersion Shielding (Perfect for indoor and misted greenhouse settings)</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RIGHT PANEL (Transactional Interface & Add to Cart) -->
+        <section class="w-full lg:w-80 xl:w-96 bg-white border-l border-gray-100 p-6 sm:p-8 flex flex-col justify-between h-full overflow-y-auto shrink-0">
+            <div class="space-y-8">
+                <!-- Title Block -->
+                <div>
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="bg-brand-accent text-brand-primary text-[10px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wider">NEW VERSION v2</span>
+                    </div>
+                    <h1 class="text-xl sm:text-2xl font-extrabold tracking-tight">Plantive IoT Moisture Probe</h1>
+                    <p class="text-xs text-gray-400 mt-1">Model: PL-IOT-M2</p>
+                </div>
+
+                <!-- Pricing & Availability -->
+                <div class="flex items-baseline gap-2">
+                    <span class="text-3xl font-black text-brand-dark">$39.99</span>
+                    <span class="text-xs text-gray-400 line-through">$49.99</span>
+                </div>
+
+                <!-- Interactive Configuration Panel -->
+                <div class="space-y-4">
+                    <!-- Color Picker Mock -->
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold uppercase tracking-wider text-gray-400">Probe Color</label>
+                        <div class="flex items-center gap-2">
+                            <button class="w-6 h-6 rounded-full bg-brand-primary ring-2 ring-brand-primary/30 border-2 border-white"></button>
+                            <button class="w-6 h-6 rounded-full bg-brand-dark border-2 border-white hover:ring-2 hover:ring-brand-dark/20 transition-all"></button>
+                            <button class="w-6 h-6 rounded-full bg-slate-300 border-2 border-white hover:ring-2 hover:ring-slate-300/20 transition-all"></button>
+                        </div>
+                    </div>
+
+                    <!-- Quantity Counter -->
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold uppercase tracking-wider text-gray-400">Quantity</label>
+                        <div class="inline-flex items-center border border-gray-100 rounded-xl bg-gray-50/50 p-1">
+                            <button class="p-2 hover:bg-white rounded-lg transition-colors text-gray-500 hover:text-brand-dark">
+                                <i data-lucide="minus" class="w-4 h-4"></i>
+                            </button>
+                            <span class="px-4 text-sm font-bold">1</span>
+                            <button class="p-2 hover:bg-white rounded-lg transition-colors text-gray-500 hover:text-brand-dark">
+                                <i data-lucide="plus" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="border-gray-50" />
+
+                <!-- Quick Shipping Info Box -->
+                <div class="space-y-3">
+                    <div class="flex items-start gap-2 text-xs">
+                        <i data-lucide="truck" class="w-4 h-4 text-brand-primary shrink-0 mt-0.5"></i>
+                        <div>
+                            <span class="font-bold">Free Expedited Delivery</span>
+                            <p class="text-gray-400 mt-0.5">Arrives within 2-3 business days.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-2 text-xs">
+                        <i data-lucide="rotate-ccw" class="w-4 h-4 text-brand-primary shrink-0 mt-0.5"></i>
+                        <div>
+                            <span class="font-bold">30-Day Evaluation Window</span>
+                            <p class="text-gray-400 mt-0.5">Return the device undamaged for a full rebate.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Checkout Action Area -->
+            <div class="pt-8 space-y-3">
+                <button class="w-full bg-brand-primary hover:bg-brand-dark text-white py-3 rounded-xl text-sm font-bold shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2">
+                    <i data-lucide="shopping-cart" class="w-4 h-4"></i> Add to Garden Cart
+                </button>
+                <p class="text-[10px] text-gray-400 text-center uppercase tracking-widest font-semibold">Protected checkout via Stripe</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- JavaScript interactions -->
+    <script>
+        lucide.createIcons();
+
+        // Responsive Sidebar Drawer toggle
+        const mobileToggle = document.getElementById('mobile-sidebar-toggle');
+        const sidebar = document.getElementById('sidebar');
+
+        mobileToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('hidden');
+            sidebar.classList.toggle('fixed');
+            sidebar.classList.toggle('inset-y-0');
+            sidebar.classList.toggle('left-0');
+            sidebar.classList.toggle('z-50');
+            sidebar.classList.toggle('flex');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Your Account - Plantive</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            primary: '#2E7D32',    /* Deep Forest Green */
+                            secondary: '#66BB6A',  /* Leaf Green */
+                            accent: '#E8F5E9',     /* Soft Mint */
+                            bg: '#F7FAF5',         /* Warm Off-White Nature Background */
+                            dark: '#1B3A1E'        /* Deep Midnight Green */
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght=300;400;500;600;700&display=swap');
+    </style>
+</head>
+<body class="bg-brand-bg text-brand-dark font-sans antialiased h-full flex flex-col md:flex-row">
+
+    <section class="hidden md:flex md:w-[55%] lg:w-[60%] bg-gradient-to-br from-brand-dark via-emerald-950 to-brand-primary p-12 lg:p-16 flex-col justify-between relative overflow-hidden h-full">
+        <div class="absolute top-1/4 -right-10 w-96 h-96 bg-brand-secondary/10 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-10 left-1/4 w-80 h-80 bg-brand-accent/5 rounded-full blur-2xl"></div>
+
+        <div class="relative z-10">
+            <a href="index.html" class="inline-flex items-center gap-2.5 group">
+                <div class="bg-white/10 text-brand-accent backdrop-blur-md p-2 rounded-xl group-hover:bg-white/20 transition-all">
+                    <i data-lucide="sprout" class="w-6 h-6"></i>
+                </div>
+                <span class="text-xl font-bold tracking-tight text-white">Plantive</span>
+            </a>
+        </div>
+
+        <div class="relative z-10 max-w-lg my-auto space-y-10">
+            <div class="space-y-4">
+                <h1 class="text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight">
+                    Start growing smarter today.
+                </h1>
+                <p class="text-brand-accent/80 text-lg leading-relaxed">
+                    Set up your free account in less than a minute and unlock custom care guides, scheduling tools, and instant AI diagnosis.
+                </p>
+            </div>
+
+            <div class="space-y-4">
+                <div class="flex items-start gap-3">
+                    <div class="bg-brand-secondary/20 text-brand-secondary p-1 rounded-lg shrink-0 mt-0.5">
+                        <i data-lucide="check" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-white text-sm font-semibold">Free Unlimited Gardens</h4>
+                        <p class="text-brand-accent/60 text-xs mt-0.5">Organize as many indoor or outdoor zones as you need.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-3">
+                    <div class="bg-brand-secondary/20 text-brand-secondary p-1 rounded-lg shrink-0 mt-0.5">
+                        <i data-lucide="check" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-white text-sm font-semibold">Instant AI Diagnosis scans</h4>
+                        <p class="text-brand-accent/60 text-xs mt-0.5">Troubleshoot leaf yellowing or pests with your phone camera.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-3">
+                    <div class="bg-brand-secondary/20 text-brand-secondary p-1 rounded-lg shrink-0 mt-0.5">
+                        <i data-lucide="check" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-white text-sm font-semibold">Smart Meteorological Triggers</h4>
+                        <p class="text-brand-accent/60 text-xs mt-0.5">Watering thresholds shift automatically based on localized climate data.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="relative z-10 text-xs text-brand-accent/40">
+            <span>&copy; 2026 Plantive Technologies. All rights reserved.</span>
+        </div>
+    </section>
+
+    <main class="w-full md:w-[45%] lg:w-[40%] flex flex-col justify-center px-6 py-12 sm:px-12 lg:px-16 xl:px-20 bg-white h-full overflow-y-auto">
+        
+        <div class="md:hidden flex justify-center mb-8">
+            <a href="index.html" class="flex items-center gap-2">
+                <div class="bg-brand-primary text-white p-2 rounded-xl">
+                    <i data-lucide="sprout" class="w-5 h-5"></i>
+                </div>
+                <span class="text-xl font-bold tracking-tight text-brand-dark">Plantive</span>
+            </a>
+        </div>
+
+        <div class="mx-auto w-full max-w-md space-y-8">
+            <div class="space-y-2 text-center md:text-left">
+                <h2 class="text-3xl font-extrabold text-brand-dark tracking-tight">Create Account</h2>
+                <p class="text-sm text-gray-500">
+                    Already have an account? 
+                    <a href="login.html" class="font-semibold text-brand-primary hover:text-brand-dark transition-colors">Log in instead</a>
+                </p>
+            </div>
+
+            <button class="w-full flex items-center justify-center gap-3 px-4 py-3 border border-gray-200 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors shadow-sm">
+                <svg class="w-5 h-5" viewBox="0 0 24 24">
+                    <path fill="#EA4335" d="M12.24 10.285V14.4h6.887c-.275 1.565-1.88 4.604-6.887 4.604-4.33 0-7.859-3.578-7.859-8s3.53-8 7.859-8c2.46 0 4.105 1.025 5.047 1.926l3.227-3.11C18.281 1.05 15.404 0 12.24 0 5.58 0 0 5.37 0 12s5.58 12 12.24 12c6.96 0 11.57-4.83 11.57-11.64 0-.81-.08-1.41-.23-2.075H12.24z"/>
+                </svg>
+                Sign up with Google
+            </button>
+
+            <div class="relative flex py-2 items-center">
+                <div class="flex-grow border-t border-gray-200"></div>
+                <span class="flex-shrink mx-4 text-xs text-gray-400 font-medium uppercase tracking-wider">or sign up with email</span>
+                <div class="flex-grow border-t border-gray-200"></div>
+            </div>
+
+            <form action="dashboard.html" method="GET" class="space-y-5">
+                <div class="space-y-1.5">
+                    <label for="name" class="text-xs font-semibold text-gray-600 uppercase tracking-wider">Full Name</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
+                            <i data-lucide="user" class="w-4 h-4"></i>
+                        </div>
+                        <input id="name" name="name" type="text" autocomplete="name" required 
+                            class="block w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl text-sm bg-gray-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary transition-all placeholder-gray-400"
+                            placeholder="Alex Thorne">
+                    </div>
+                </div>
+
+                <div class="space-y-1.5">
+                    <label for="email" class="text-xs font-semibold text-gray-600 uppercase tracking-wider">Email Address</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
+                            <i data-lucide="mail" class="w-4 h-4"></i>
+                        </div>
+                        <input id="email" name="email" type="email" autocomplete="email" required 
+                            class="block w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl text-sm bg-gray-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary transition-all placeholder-gray-400"
+                            placeholder="you@example.com">
+                    </div>
+                </div>
+
+                <div class="space-y-1.5">
+                    <label for="password" class="text-xs font-semibold text-gray-600 uppercase tracking-wider">Password</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
+                            <i data-lucide="lock" class="w-4 h-4"></i>
+                        </div>
+                        <input id="password" name="password" type="password" autocomplete="new-password" required 
+                            class="block w-full pl-10 pr-12 py-3 border border-gray-200 rounded-xl text-sm bg-gray-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary transition-all placeholder-gray-400"
+                            placeholder="Minimum 8 characters">
+                        <button type="button" class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-gray-400 hover:text-gray-600" aria-label="Toggle password visibility">
+                            <i data-lucide="eye" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="flex items-start">
+                    <input id="terms" name="terms" type="checkbox" required
+                        class="h-4 w-4 mt-0.5 rounded border-gray-300 text-brand-primary focus:ring-brand-primary/20 accent-brand-primary cursor-pointer">
+                    <label for="terms" class="ml-2 block text-xs text-gray-500 cursor-pointer select-none leading-relaxed">
+                        I agree to the 
+                        <a href="#" class="font-semibold text-brand-primary hover:text-brand-dark transition-colors underline">Terms of Service</a> 
+                        and 
+                        <a href="#" class="font-semibold text-brand-primary hover:text-brand-dark transition-colors underline">Privacy Policy</a>.
+                    </label>
+                </div>
+
+                <button type="submit" 
+                    class="w-full flex justify-center items-center gap-2 py-3.5 px-4 border border-transparent rounded-xl text-sm font-semibold text-white bg-brand-primary hover:bg-brand-dark shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-primary transition-all duration-200">
+                    Create My Account
+                    <i data-lucide="sparkles" class="w-4 h-4"></i>
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
