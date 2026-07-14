@@ -1,0 +1,18 @@
+info:
+  name: refresh_token
+  type: http
+  seq: 3
+
+http:
+  method: POST
+  url: "{{AUTH_URL}}/refresh"
+  headers:
+    - name: Authorization
+      value: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYTAyMWVjYS1kMDFjLTQ0MDktYjMyNi05MmY3OTQwZmJmNTkiLCJ0eXBlIjoicmVmcmVzaCIsImlhdCI6MTc4MzkzMDY1NSwiZXhwIjoxNzg1Mzk5NDU1LCJqdGkiOiI4NWE3Yzg5MS1hN2NiLTQ5ODItYTE0ZC1hZmQ2NzA1NjExMjciLCJpc3MiOiJwbGFudGl2ZS1hcGkiLCJhdWQiOiJ3ZWItYXBwIn0.67zdbxVsttIs_2-9ktZG4L_XlgtKq5xRN5qPsNEMjLY
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

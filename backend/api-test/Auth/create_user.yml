@@ -1,0 +1,25 @@
+info:
+  name: create_user
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{AUTH_URL}}/signup"
+  body:
+    type: json
+    data: |-
+      {
+        "first_name": "Ayesha",
+        "last_name": "Rahman",
+        "email": "ayesha.rahman@example.com",
+        "username": "ayesha_garden",
+        "password": "SecurePass@456"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

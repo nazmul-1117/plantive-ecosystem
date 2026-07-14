@@ -1,0 +1,16 @@
+[project]
+name = "backend"
+version = "0.1.0"
+description = "plantive-ecosystem, a centralized Android-based garden management platform built with FastAPI, SQLModel, and PostgreSQL to help busy users monitor plant health via simulated telemetry. It integrates an e-commerce marketplace for supplies, a social community hub, and a domain-restricted Google AI Studio assistant for localized gardening advice."
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "alembic>=1.18.5",
+    "asyncpg>=0.31.0",
+    "fastapi[standard]>=0.139.0",
+    "pwdlib[argon2]>=0.3.0",
+    "pydantic-settings>=2.14.2",
+    "pyjwt>=2.13.0",
+    "redis[hiredis]>=8.0.1",
+    "sqlmodel>=0.0.39",
+]

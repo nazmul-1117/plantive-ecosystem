@@ -37,16 +37,16 @@ Android App
      │
      │ REST API
      ▼
-Node.js Backend (API Server)
+FastAPI Backend (API Server)
      │
-     ├── Database
+     ├── Database (PostgreSQL)
      │
-     └── Python AI Service
+     └── AI Service
 ```
 
 ### Components
 
-- **Android App** – User interface and plant management
+- **Android/Web App** – User interface and plant management
 - **Backend API** – Handles authentication, plant data, and business logic
 - **AI Service** – Plant health analysis and recommendations
 - **Database** – Stores user data, plant data, and system information
@@ -66,7 +66,7 @@ Android application built using Java that allows users to:
 
 ### Backend API
 
-Backend services built using Node.js and Express responsible for:
+Backend services built using FastAPI responsible for:
 
 - Authentication and user management
 - Plant database access
@@ -96,16 +96,22 @@ A lightweight web interface used to test backend APIs during development.
 - Material UI
 
 ### Backend
-- Node.js
-- Express.js
+- FastAPI
+- SQLModel
+- PwdLib
+- PyJWT
 
 ### AI
 - Python
-- FastAPI
+- Scikit-Learn
+- Tensorflow
+- Langchain
 
 ### Database
-- PostgreSQL / MySQL
-- MongoDB
+- PostgreSQL
+- ChromaDB
+- Redis
+- Cache
 
 ### Web
 - HTML / CSS / JavaScript (API testing interface)
@@ -121,7 +127,7 @@ plantive-ecosystem
 │   └── android-app
 │
 ├── backend
-│   └── api-server
+│   └── app
 │
 ├── ai-service
 │   └── app
@@ -172,7 +178,7 @@ Initial tasks include:
 
 ## 📜 License
 
-This project is licensed under the MIT License.
+This project is licensed under the `MIT License`.
 
 ---
 

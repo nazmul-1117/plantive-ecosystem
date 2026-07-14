@@ -1,0 +1,37 @@
+info:
+  name: login
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: "{{AUTH_URL}}/login"
+  body:
+    type: json
+    data: |-
+      
+      // {
+      //   "username": "ayesha_garden",
+      //   "password": "SecurePass@456"
+      // }
+
+
+      // admin
+      {
+        "username": "nazmul_dev",
+        "password": "MyStrongPassword@123"
+      }
+
+
+      // user
+      // {
+      //   "username": "ayesha_garden",
+      //   "password": "SecurePass@456"
+      // }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
