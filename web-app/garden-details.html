@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-brand-bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garden Details - Plantive</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            primary: '#2E7D32',    /* Deep Forest Green */
+                            secondary: '#66BB6A',  /* Leaf Green */
+                            accent: '#E8F5E9',     /* Soft Mint */
+                            bg: '#F7FAF5',         /* Warm Off-White Nature Background */
+                            dark: '#1B3A1E'        /* Deep Midnight Green */
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght=300;400;500;600;700&display=swap');
+    </style>
+</head>
+<body class="text-brand-dark font-sans antialiased h-full flex flex-col md:flex-row overflow-hidden">
+
+    <!-- MOBILE HEADER (Hidden on Desktop) -->
+    <header class="md:hidden flex items-center justify-between px-6 py-4 bg-white border-b border-gray-100 shrink-0">
+        <a href="index.html" class="flex items-center gap-2">
+            <div class="bg-brand-primary text-white p-1.5 rounded-lg">
+                <i data-lucide="sprout" class="w-5 h-5"></i>
+            </div>
+            <span class="text-lg font-bold tracking-tight">Plantive</span>
+        </a>
+        <button id="mobile-sidebar-toggle" class="text-brand-dark p-1">
+            <i data-lucide="menu" class="w-6 h-6"></i>
+        </button>
+    </header>
+
+    <!-- SIDEBAR NAVIGATION -->
+    <aside id="sidebar" class="hidden md:flex flex-col w-64 lg:w-72 bg-white border-r border-gray-100 shrink-0 h-full justify-between transition-all duration-300">
+        <div class="flex flex-col pt-8 px-6 space-y-8 overflow-y-auto">
+            <!-- Brand Logo -->
+            <a href="index.html" class="flex items-center gap-2.5">
+                <div class="bg-brand-primary text-white p-2 rounded-xl">
+                    <i data-lucide="sprout" class="w-6 h-6"></i>
+                </div>
+                <span class="text-xl font-bold tracking-tight">Plantive</span>
+            </a>
+
+            <!-- User Status Profile -->
+            <div class="flex items-center gap-3 bg-brand-bg p-3.5 rounded-2xl border border-brand-primary/5">
+                <div class="w-10 h-10 rounded-xl bg-brand-secondary/20 flex items-center justify-center font-bold text-brand-primary">
+                    AT
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm leading-tight">Alex Thorne</h4>
+                    <p class="text-xs text-gray-500">Pro Botanist</p>
+                </div>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="space-y-1">
+                <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-brand-accent/50 hover:text-brand-primary font-medium text-sm transition-all">
+                    <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+                    Dashboard
+                </a>
+                <a href="gardens.html" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-brand-primary text-white font-medium text-sm transition-all shadow-md shadow-brand-primary/10">
+                    <i data-lucide="grid" class="w-4 h-4"></i>
+                    My Gardens
+                </a>
+                <a href="plants.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-brand-accent/50 hover:text-brand-primary font-medium text-sm transition-all">
+                    <i data-lucide="leaf" class="w-4 h-4"></i>
+                    Plants
+                </a>
+                <a href="ai-assistant.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-brand-accent/50 hover:text-brand-primary font-medium text-sm transition-all">
+                    <i data-lucide="bot" class="w-4 h-4"></i>
+                    AI Assistant
+                </a>
+                <a href="marketplace.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-brand-accent/50 hover:text-brand-primary font-medium text-sm transition-all">
+                    <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+                    Marketplace
+                </a>
+                <a href="community.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-brand-accent/50 hover:text-brand-primary font-medium text-sm transition-all">
+                    <i data-lucide="users" class="w-4 h-4"></i>
+                    Community
+                </a>
+            </nav>
+        </div>
+
+        <!-- Footer actions in sidebar -->
+        <div class="p-6 border-t border-gray-50 space-y-1 bg-white">
+            <a href="settings.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-brand-accent/50 hover:text-brand-primary font-medium text-sm transition-all">
+                <i data-lucide="settings" class="w-4 h-4"></i>
+                Settings
+            </a>
+            <a href="index.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-rose-600 hover:bg-rose-50 font-medium text-sm transition-all">
+                <i data-lucide="log-out" class="w-4 h-4"></i>
+                Sign Out
+            </a>
+        </div>
+    </aside>
+
+    <!-- MAIN BODY CONTENT WRAPPER -->
+    <main class="flex-1 flex flex-col lg:flex-row overflow-hidden h-full">
+
+        <!-- MIDDLE STREAM (Garden Info & Plants List) -->
+        <section class="flex-1 overflow-y-auto px-6 py-8 sm:px-8 lg:px-10 space-y-8">
+            <!-- Breadcrumb & Navigation -->
+            <div class="flex items-center gap-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                <a href="gardens.html" class="hover:text-brand-primary transition-colors">Gardens</a>
+                <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+                <span class="text-gray-600">Living Room Details</span>
+            </div>
+
+            <!-- Title & Dynamic Weather Metrics Bar -->
+            <div class="flex flex-col xl:flex-row xl:items-center justify-between gap-6">
+                <div>
+                    <div class="flex items-center gap-3">
+                        <span class="text-3xl">🛋️</span>
+                        <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Living Room Garden</h1>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-1">East-side window bay, managed under warm indirect sunlight presets.</p>
+                </div>
+                
+                <!-- Microclimate Stats Bar -->
+                <div class="flex flex-wrap gap-4 bg-white p-3 border border-gray-100 rounded-2xl shadow-sm">
+                    <div class="px-4 py-1.5 border-r border-gray-100 flex items-center gap-2">
+                        <i data-lucide="thermometer" class="w-4 h-4 text-orange-500"></i>
+                        <div>
+                            <span class="block text-[10px] text-gray-400 uppercase tracking-wider font-bold">Temp</span>
+                            <span class="text-sm font-bold">22.4°C</span>
+                        </div>
+                    </div>
+                    <div class="px-4 py-1.5 border-r border-gray-100 flex items-center gap-2">
+                        <i data-lucide="droplet" class="w-4 h-4 text-blue-500"></i>
+                        <div>
+                            <span class="block text-[10px] text-gray-400 uppercase tracking-wider font-bold">Humidity</span>
+                            <span class="text-sm font-bold">58%</span>
+                        </div>
+                    </div>
+                    <div class="px-4 py-1.5 flex items-center gap-2">
+                        <i data-lucide="sun" class="w-4 h-4 text-amber-500"></i>
+                        <div>
+                            <span class="block text-[10px] text-gray-400 uppercase tracking-wider font-bold">Light Level</span>
+                            <span class="text-sm font-bold">Medium Indirect</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Plants List inside this garden -->
+            <div class="space-y-4">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-lg font-bold">Plants in this Zone (12)</h3>
+                    <a href="plants.html" class="inline-flex items-center gap-1.5 text-xs font-bold bg-brand-primary/10 hover:bg-brand-primary/15 text-brand-primary px-3.5 py-2 rounded-xl transition-colors">
+                        <i data-lucide="plus" class="w-3.5 h-3.5"></i> Add Plant to Zone
+                    </a>
+                </div>
+
+                <!-- Plant Grid -->
+                <div class="grid sm:grid-cols-2 xl:grid-cols-3 gap-6">
+                    <!-- Plant 1 -->
+                    <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md hover:border-brand-primary/10 transition-all space-y-4 group">
+                        <div class="flex items-start justify-between">
+                            <div class="flex gap-3">
+                                <span class="w-12 h-12 bg-emerald-50 border border-emerald-100 flex items-center justify-center rounded-xl text-xl shrink-0">🌿</span>
+                                <div>
+                                    <h4 class="font-bold text-sm leading-snug group-hover:text-brand-primary transition-colors">Monstera Deliciosa</h4>
+                                    <p class="text-xs text-gray-400 italic">Swiss Cheese Plant</p>
+                                </div>
+                            </div>
+                            <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full">Optimal</span>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-xs text-gray-400">
+                                <span>Soil Water</span>
+                                <span class="font-semibold text-brand-dark">68%</span>
+                            </div>
+                            <div class="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
+                                <div class="bg-brand-primary h-full rounded-full" style="width: 68%"></div>
+                            </div>
+                        </div>
+                        <div class="pt-3 border-t border-gray-50 flex items-center justify-between text-xs text-gray-500">
+                            <span class="flex items-center gap-1"><i data-lucide="calendar" class="w-3.5 h-3.5"></i> Water in 2d</span>
+                            <a href="plant-details.html" class="font-semibold text-brand-primary hover:underline">Details &rarr;</a>
+                        </div>
+                    </div>
+
+                    <!-- Plant 2 -->
+                    <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md hover:border-brand-primary/10 transition-all space-y-4 group">
+                        <div class="flex items-start justify-between">
+                            <div class="flex gap-3">
+                                <span class="w-12 h-12 bg-amber-50 border border-amber-100 flex items-center justify-center rounded-xl text-xl shrink-0">🪴</span>
+                                <div>
+                                    <h4 class="font-bold text-sm leading-snug group-hover:text-brand-primary transition-colors">Fiddle Leaf Fig</h4>
+                                    <p class="text-xs text-gray-400 italic">Ficus Lyrata</p>
+                                </div>
+                            </div>
+                            <span class="bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded-full">Thirsty</span>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-xs text-gray-400">
+                                <span>Soil Water</span>
+                                <span class="font-semibold text-amber-600">34%</span>
+                            </div>
+                            <div class="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
+                                <div class="bg-amber-500 h-full rounded-full" style="width: 34%"></div>
+                            </div>
+                        </div>
+                        <div class="pt-3 border-t border-gray-50 flex items-center justify-between text-xs text-gray-500">
+                            <span class="flex items-center gap-1 text-amber-600"><i data-lucide="alert-triangle" class="w-3.5 h-3.5"></i> Water Overdue</span>
+                            <a href="plant-details.html" class="font-semibold text-brand-primary hover:underline">Details &rarr;</a>
+                        </div>
+                    </div>
+
+                    <!-- Plant 3 -->
+                    <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md hover:border-brand-primary/10 transition-all space-y-4 group">
+                        <div class="flex items-start justify-between">
+                            <div class="flex gap-3">
+                                <span class="w-12 h-12 bg-emerald-50 border border-emerald-100 flex items-center justify-center rounded-xl text-xl shrink-0">🌵</span>
+                                <div>
+                                    <h4 class="font-bold text-sm leading-snug group-hover:text-brand-primary transition-colors">Snake Plant</h4>
+                                    <p class="text-xs text-gray-400 italic">Sansevieria Trifasciata</p>
+                                </div>
+                            </div>
+                            <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full">Optimal</span>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-xs text-gray-400">
+                                <span>Soil Water</span>
+                                <span class="font-semibold text-brand-dark">82%</span>
+                            </div>
+                            <div class="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
+                                <div class="bg-brand-primary h-full rounded-full" style="width: 82%"></div>
+                            </div>
+                        </div>
+                        <div class="pt-3 border-t border-gray-50 flex items-center justify-between text-xs text-gray-500">
+                            <span class="flex items-center gap-1"><i data-lucide="calendar" class="w-3.5 h-3.5"></i> Water in 12d</span>
+                            <a href="plant-details.html" class="font-semibold text-brand-primary hover:underline">Details &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RIGHT PANEL (Garden Analytics & Zone Settings Panel) -->
+        <section class="w-full lg:w-80 xl:w-96 bg-white border-l border-gray-100 p-6 sm:p-8 flex flex-col justify-between h-full overflow-y-auto shrink-0">
+            <div class="space-y-8">
+                <!-- Zone Actions -->
+                <div class="space-y-3">
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-gray-400">Zone Actions</h3>
+                    <div class="space-y-2">
+                        <button class="w-full flex items-center gap-3 px-4 py-3 border border-gray-100 hover:bg-brand-accent/30 rounded-xl text-left text-xs font-semibold text-gray-700 hover:text-brand-primary transition-all">
+                            <i data-lucide="droplet" class="w-4 h-4 text-blue-500"></i> Mark Whole Zone Watered
+                        </button>
+                        <button class="w-full flex items-center gap-3 px-4 py-3 border border-gray-100 hover:bg-brand-accent/30 rounded-xl text-left text-xs font-semibold text-gray-700 hover:text-brand-primary transition-all">
+                            <i data-lucide="sliders" class="w-4 h-4 text-brand-primary"></i> Edit Microclimate Specs
+                        </button>
+                        <button class="w-full flex items-center gap-3 px-4 py-3 border border-gray-100 hover:bg-rose-50 rounded-xl text-left text-xs font-semibold text-rose-600 transition-all">
+                            <i data-lucide="trash-2" class="w-4 h-4"></i> Delete Garden Zone
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Climate Alerts -->
+                <div class="space-y-4">
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-gray-400">Recent Warnings</h3>
+                    <div class="space-y-3">
+                        <div class="bg-amber-50 border border-amber-100 p-4 rounded-xl flex items-start gap-3">
+                            <i data-lucide="alert-circle" class="w-4.5 h-4.5 text-amber-500 mt-0.5 shrink-0"></i>
+                            <div>
+                                <h4 class="text-xs font-bold text-amber-900">Low Ambient Humidity</h4>
+                                <p class="text-[10px] text-amber-700 leading-relaxed mt-0.5">Humidity dipped below 50% last night. Spray swiss cheese plant leaves to optimize ambient health.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botanical Summary -->
+                <div class="space-y-3 bg-brand-bg/50 border border-brand-primary/5 rounded-2xl p-4">
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-gray-400">Botanical Summary</h4>
+                    <div class="space-y-2 text-xs">
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Sun Profile:</span>
+                            <span class="font-bold">Partial Shade</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Species Types:</span>
+                            <span class="font-bold">Tropical Mix</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Smart Water Cycle:</span>
+                            <span class="font-bold">Dynamic AI-driven</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer micro branding -->
+            <div class="pt-8 border-t border-gray-50 hidden lg:block">
+                <p class="text-[10px] text-gray-400 text-center uppercase tracking-widest font-semibold">Plantive Zone Analytics</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Sidebar Navigation Drawer Toggle Logic -->
+    <script>
+        lucide.createIcons();
+
+        const mobileToggle = document.getElementById('mobile-sidebar-toggle');
+        const sidebar = document.getElementById('sidebar');
+
+        mobileToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('hidden');
+            sidebar.classList.toggle('fixed');
+            sidebar.classList.toggle('inset-y-0');
+            sidebar.classList.toggle('left-0');
+            sidebar.classList.toggle('z-50');
+            sidebar.classList.toggle('flex');
+        });
+    </script>
+</body>
+</html>

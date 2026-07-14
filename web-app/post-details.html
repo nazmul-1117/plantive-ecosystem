@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-brand-bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browning Tips on Calathea Ornata - Community Feed - Plantive</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            primary: '#2E7D32',    /* Deep Forest Green */
+                            secondary: '#66BB6A',  /* Leaf Green */
+                            accent: '#E8F5E9',     /* Soft Mint */
+                            bg: '#F7FAF5',         /* Warm Off-White Nature Background */
+                            dark: '#1B3A1E'        /* Deep Midnight Green */
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght=300;400;500;600;700;800&display=swap');
+    </style>
+</head>
+<body class="text-brand-dark font-sans antialiased h-full flex flex-col md:flex-row overflow-hidden">
+
+    <!-- MOBILE HEADER (Hidden on Desktop) -->
+    <header class="md:hidden flex items-center justify-between px-6 py-4 bg-white border-b border-gray-100 shrink-0">
+        <a href="index.html" class="flex items-center gap-2">
+            <div class="bg-brand-primary text-white p-1.5 rounded-lg">
+                <i data-lucide="sprout" class="w-5 h-5"></i>
+            </div>
+            <span class="text-lg font-bold tracking-tight">Plantive</span>
+        </a>
+        <button id="mobile-sidebar-toggle" class="text-brand-dark p-1">
+            <i data-lucide="menu" class="w-6 h-6"></i>
+        </button>
+    </header>
+
+    <!-- SIDEBAR NAVIGATION -->
+    <aside id="sidebar" class="hidden md:flex flex-col w-64 lg:w-72 bg-white border-r border-gray-100 shrink-0 h-full justify-between transition-all duration-300">
+        <div class="flex flex-col pt-8 px-6 space-y-8 overflow-y-auto">
+            <!-- Brand Logo -->
+            <a href="index.html" class="flex items-center gap-2.5">
+                <div class="bg-brand-primary text-white p-2 rounded-xl">
+                    <i data-lucide="sprout" class="w-6 h-6"></i>
+                </div>
+                <span class="text-xl font-bold tracking-tight">Plantive</span>
+            </a>
+
+            <!-- User Status Profile -->
+            <div class="flex items-center gap-3 bg-brand-bg p-3.5 rounded-2xl border border-brand-primary/5">
+                <div class="w-10 h-10 rounded-xl bg-brand-secondary/20 flex items-center justify-center font-bold text-brand-primary">
+                    AT
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm leading-tight">Alex Thorne</h4>
+                    <p class="text-xs text-gray-500">Pro Botanist</p>
+                </div>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="space-y-1">
+                <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-brand-accent/50 hover:text-brand-primary font-medium text-sm transition-all">
+                    <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+                    Dashboard
+                </a>
+                <a href="gardens.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-brand-accent/50 hover:text-brand-primary font-medium text-sm transition-all">
+                    <i data-lucide="grid" class="w-4 h-4"></i>
+                    My Gardens
+                </a>
+                <a href="plants.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-brand-accent/50 hover:text-brand-primary font-medium text-sm transition-all">
+                    <i data-lucide="leaf" class="w-4 h-4"></i>
+                    Plants
+                </a>
+                <a href="ai-assistant.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-brand-accent/50 hover:text-brand-primary font-medium text-sm transition-all">
+                    <i data-lucide="bot" class="w-4 h-4"></i>
+                    AI Assistant
+                </a>
+                <a href="marketplace.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-brand-accent/50 hover:text-brand-primary font-medium text-sm transition-all">
+                    <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+                    Marketplace
+                </a>
+                <a href="community.html" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-brand-primary text-white font-medium text-sm transition-all shadow-md shadow-brand-primary/10">
+                    <i data-lucide="users" class="w-4 h-4"></i>
+                    Community
+                </a>
+            </nav>
+        </div>
+
+        <!-- Footer actions in sidebar -->
+        <div class="p-6 border-t border-gray-50 space-y-1 bg-white">
+            <a href="settings.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-brand-accent/50 hover:text-brand-primary font-medium text-sm transition-all">
+                <i data-lucide="settings" class="w-4 h-4"></i>
+                Settings
+            </a>
+            <a href="index.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-rose-600 hover:bg-rose-50 font-medium text-sm transition-all">
+                <i data-lucide="log-out" class="w-4 h-4"></i>
+                Sign Out
+            </a>
+        </div>
+    </aside>
+
+    <!-- MAIN BODY CONTENT WRAPPER -->
+    <main class="flex-1 flex flex-col lg:flex-row overflow-hidden h-full">
+
+        <!-- MIDDLE STREAM (Discussion Thread & Nested Replies) -->
+        <section class="flex-1 overflow-y-auto px-6 py-8 sm:px-8 lg:px-10 space-y-6">
+            <!-- Breadcrumbs -->
+            <div class="flex items-center gap-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                <a href="community.html" class="hover:text-brand-primary transition-colors">Community</a>
+                <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+                <a href="#" class="hover:text-brand-primary transition-colors">Diagnostics Help</a>
+                <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+                <span class="text-gray-600">Thread #49120</span>
+            </div>
+
+            <!-- Original Post Spotlight -->
+            <div class="bg-white p-6 sm:p-8 rounded-3xl border border-gray-100 shadow-sm space-y-6">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-2xl bg-amber-500/10 flex items-center justify-center font-extrabold text-amber-700 text-lg">
+                            DB
+                        </div>
+                        <div>
+                            <h3 class="font-extrabold text-sm sm:text-base">David Bennett</h3>
+                            <p class="text-xs text-gray-400">Casual Hobbyist • Posted July 13, 2026</p>
+                        </div>
+                    </div>
+                    <span class="bg-amber-100 text-amber-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Diagnostics Help</span>
+                </div>
+
+                <div class="space-y-4">
+                    <h1 class="text-xl sm:text-2xl font-black text-brand-dark leading-snug">Browning tips on my Calathea Ornata - overwatering or lack of pure water? ⚠️</h1>
+                    <p class="text-sm text-gray-600 leading-relaxed">
+                        Hey everyone, I’m running into issues with my Calathea Ornata. My integrated sensor logs show constant soil hydration levels around <strong>78%</strong>, which seems stable, but the lower margins of the leaves are crisping up dramatically. 
+                    </p>
+                    <p class="text-sm text-gray-600 leading-relaxed">
+                        Could this be mineral shock from using local tap water, or is my ambient household humidity (currently fluctuating near 45%) simply too low for this delicate foliage? I've attached my live IoT telemetry widget below for reference. Let me know what you think!
+                    </p>
+                </div>
+
+                <!-- Attached Telemetry Metadata -->
+                <div class="bg-brand-bg/50 border border-brand-primary/5 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                        <span class="p-2.5 bg-brand-primary text-white rounded-xl"><i data-lucide="activity" class="w-5 h-5"></i></span>
+                        <div>
+                            <h4 class="text-xs font-bold text-brand-dark">David's Live Ornata Telemetry</h4>
+                            <p class="text-[10px] text-gray-400">Sync status: Active (15m ago)</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4 text-xs font-semibold">
+                        <div class="text-center">
+                            <span class="text-gray-400 text-[10px] uppercase block">Soil Moist.</span>
+                            <span class="text-brand-dark font-extrabold text-sm">78%</span>
+                        </div>
+                        <div class="text-center border-l border-gray-100 pl-4">
+                            <span class="text-gray-400 text-[10px] uppercase block">Humid.</span>
+                            <span class="text-amber-600 font-extrabold text-sm">45%</span>
+                        </div>
+                        <div class="text-center border-l border-gray-100 pl-4">
+                            <span class="text-gray-400 text-[10px] uppercase block">Temp.</span>
+                            <span class="text-brand-dark font-extrabold text-sm">21.8°C</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4 text-gray-400 text-xs font-semibold pt-2 border-t border-gray-50">
+                    <button class="flex items-center gap-1.5 hover:text-brand-primary transition-colors text-brand-primary">
+                        <i data-lucide="thumbs-up" class="w-4 h-4"></i> Upvote (32)
+                    </button>
+                    <span class="text-gray-200">|</span>
+                    <span class="flex items-center gap-1.5"><i data-lucide="message-square" class="w-4 h-4"></i> 2 Solutions Listed</span>
+                </div>
+            </div>
+
+            <!-- Comment Stream Section -->
+            <div class="space-y-4">
+                <h3 class="font-bold text-sm uppercase tracking-wider text-gray-400">Solutions & Discussion</h3>
+
+                <!-- Expert Reply 1 (Accepted/Top Answer) -->
+                <div class="bg-white p-6 rounded-2xl border-l-4 border-brand-primary border-y border-r border-gray-100 shadow-sm space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-9 h-9 rounded-xl bg-brand-primary text-white flex items-center justify-center font-bold text-xs">
+                                MG
+                            </div>
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <h4 class="font-bold text-xs sm:text-sm">Dr. Martha Green</h4>
+                                    <span class="bg-brand-accent text-brand-primary text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Botanist Pro</span>
+                                </div>
+                                <p class="text-[10px] text-gray-400">Replied 18 hours ago</p>
+                            </div>
+                        </div>
+                        <span class="text-emerald-600 bg-emerald-50 border border-emerald-100 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider flex items-center gap-1">
+                            <i data-lucide="check" class="w-3.5 h-3.5"></i> Accepted Solution
+                        </span>
+                    </div>
+
+                    <p class="text-xs sm:text-sm text-gray-600 leading-relaxed">
+                        David, you hit the nail on the head. Calatheas are notorious for being fluoride and chlorine sensitive. Tap water chemical buildups manifest as crisping margins. Additionally, 45% ambient humidity is simply too low for Calathea Ornata—they thrive in 60%+ ranges. Swap to distilled water or rainwater, and run a dedicated humidifier in that zone!
+                    </p>
+
+                    <div class="flex items-center gap-3 text-xs text-gray-400 pt-2">
+                        <button class="flex items-center gap-1 hover:text-brand-primary font-bold"><i data-lucide="thumbs-up" class="w-3.5 h-3.5"></i> 18 Upvotes</button>
+                        <span>•</span>
+                        <button class="hover:underline font-semibold">Reply</button>
+                    </div>
+                </div>
+
+                <!-- Regular Reply 2 -->
+                <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm space-y-4">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-9 h-9 rounded-xl bg-brand-secondary/20 text-brand-primary flex items-center justify-center font-bold text-xs">
+                            EM
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-1.5">
+                                <h4 class="font-bold text-xs sm:text-sm">Elena Moss</h4>
+                                <span class="bg-gray-100 text-gray-600 text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Contributor</span>
+                            </div>
+                            <p class="text-[10px] text-gray-400">Replied 1 day ago</p>
+                        </div>
+                    </div>
+
+                    <p class="text-xs sm:text-sm text-gray-600 leading-relaxed">
+                        I experienced the exact same thing! Once I started misting the leaves every morning and switched over to leftover distilled water, the new growth came out completely green without any brown tips. Best of luck!
+                    </p>
+
+                    <div class="flex items-center gap-3 text-xs text-gray-400 pt-2">
+                        <button class="flex items-center gap-1 hover:text-brand-primary font-bold"><i data-lucide="thumbs-up" class="w-3.5 h-3.5"></i> 4 Upvotes</button>
+                        <span>•</span>
+                        <button class="hover:underline font-semibold">Reply</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RIGHT PANEL (Quick Reply & Sidebar Metadata) -->
+        <section class="w-full lg:w-80 xl:w-96 bg-white border-l border-gray-100 p-6 sm:p-8 flex flex-col justify-between h-full overflow-y-auto shrink-0">
+            <div class="space-y-8">
+                <!-- Reply Input Block -->
+                <div class="space-y-4">
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-gray-400">Add to Discussion</h3>
+                    <form action="#" class="space-y-3">
+                        <textarea rows="5" placeholder="Share your insights, telemetry advice, or solution..." required
+                            class="block w-full px-4 py-3 border border-gray-200 rounded-xl text-xs bg-gray-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary transition-all resize-none"></textarea>
+                        <button type="submit" class="w-full bg-brand-primary hover:bg-brand-dark text-white py-3 rounded-xl text-xs font-bold shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2">
+                            <i data-lucide="send" class="w-3.5 h-3.5"></i> Submit Solution
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Guidelines Rules Panel -->
+                <div class="bg-brand-accent/30 rounded-2xl p-5 border border-brand-primary/10 space-y-3 text-xs leading-relaxed">
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="info" class="w-4 h-4 text-brand-primary shrink-0"></i>
+                        <h4 class="font-bold text-brand-dark">Diagnostics Advice Rules</h4>
+                    </div>
+                    <p class="text-gray-500">
+                        When providing assistance, reference physical telemetry readouts or botanical science where possible. Avoid promoting unverified home remedies.
+                    </p>
+                </div>
+
+                <!-- Related Posts -->
+                <div class="space-y-3">
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-gray-400">Related Discussions</h4>
+                    <div class="space-y-2.5">
+                        <a href="#" class="block p-3 rounded-xl border border-gray-50 hover:bg-gray-50 transition-colors text-xs">
+                            <span class="font-bold text-brand-dark block hover:text-brand-primary transition-colors">Alternative watering resources for apartments</span>
+                            <span class="text-[10px] text-gray-400 mt-0.5 block">14 Comments • 3 Days Ago</span>
+                        </a>
+                        <a href="#" class="block p-3 rounded-xl border border-gray-50 hover:bg-gray-50 transition-colors text-xs">
+                            <span class="font-bold text-brand-dark block hover:text-brand-primary transition-colors">How to scale ambient room humidity easily</span>
+                            <span class="text-[10px] text-gray-400 mt-0.5 block">8 Comments • Last Week</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Meta tag -->
+            <div class="pt-8 border-t border-gray-50 hidden lg:block">
+                <p class="text-[10px] text-gray-400 text-center uppercase tracking-widest font-semibold">Plantive Community Network • 2026</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Scripting Interactions -->
+    <script>
+        lucide.createIcons();
+
+        // Responsive Sidebar Drawer Toggle
+        const mobileToggle = document.getElementById('mobile-sidebar-toggle');
+        const sidebar = document.getElementById('sidebar');
+
+        mobileToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('hidden');
+            sidebar.classList.toggle('fixed');
+            sidebar.classList.toggle('inset-y-0');
+            sidebar.classList.toggle('left-0');
+            sidebar.classList.toggle('z-50');
+            sidebar.classList.toggle('flex');
+        });
+    </script>
+</body>
+</html>

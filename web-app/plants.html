@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-brand-bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Plants - Plantive</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            primary: '#2E7D32',    /* Deep Forest Green */
+                            secondary: '#66BB6A',  /* Leaf Green */
+                            accent: '#E8F5E9',     /* Soft Mint */
+                            bg: '#F7FAF5',         /* Warm Off-White Nature Background */
+                            dark: '#1B3A1E'        /* Deep Midnight Green */
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    </style>
+</head>
+<body class="text-brand-dark font-sans antialiased h-full flex flex-col md:flex-row overflow-hidden">
+
+    <!-- MOBILE HEADER (Hidden on Desktop) -->
+    <header class="md:hidden flex items-center justify-between px-6 py-4 bg-white border-b border-gray-100 shrink-0">
+        <a href="index.html" class="flex items-center gap-2">
+            <div class="bg-brand-primary text-white p-1.5 rounded-lg">
+                <i data-lucide="sprout" class="w-5 h-5"></i>
+            </div>
+            <span class="text-lg font-bold tracking-tight">Plantive</span>
+        </a>
+        <button id="mobile-sidebar-toggle" class="text-brand-dark p-1">
+            <i data-lucide="menu" class="w-6 h-6"></i>
+        </button>
+    </header>
+
+    <!-- SIDEBAR NAVIGATION -->
+    <aside id="sidebar" class="hidden md:flex flex-col w-64 lg:w-72 bg-white border-r border-gray-100 shrink-0 h-full justify-between transition-all duration-300">
+        <div class="flex flex-col pt-8 px-6 space-y-8 overflow-y-auto">
+            <!-- Brand Logo -->
+            <a href="index.html" class="flex items-center gap-2.5">
+                <div class="bg-brand-primary text-white p-2 rounded-xl">
+                    <i data-lucide="sprout" class="w-6 h-6"></i>
+                </div>
+                <span class="text-xl font-bold tracking-tight">Plantive</span>
+            </a>
+
+            <!-- User Status Profile -->
+            <div class="flex items-center gap-3 bg-brand-bg p-3.5 rounded-2xl border border-brand-primary/5">
+                <div class="w-10 h-10 rounded-xl bg-brand-secondary/20 flex items-center justify-center font-bold text-brand-primary">
+                    AT
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm leading-tight">Alex Thorne</h4>
+                    <p class="text-xs text-gray-500">Pro Botanist</p>
+                </div>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="space-y-1">
+                <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-brand-accent/50 hover:text-brand-primary font-medium text-sm transition-all">
+                    <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+                    Dashboard
+                </a>
+                <a href="gardens.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-brand-accent/50 hover:text-brand-primary font-medium text-sm transition-all">
+                    <i data-lucide="grid" class="w-4 h-4"></i>
+                    My Gardens
+                </a>
+                <a href="plants.html" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-brand-primary text-white font-medium text-sm transition-all shadow-md shadow-brand-primary/10">
+                    <i data-lucide="leaf" class="w-4 h-4"></i>
+                    Plants
+                </a>
+                <a href="ai-assistant.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-brand-accent/50 hover:text-brand-primary font-medium text-sm transition-all">
+                    <i data-lucide="bot" class="w-4 h-4"></i>
+                    AI Assistant
+                </a>
+                <a href="marketplace.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-brand-accent/50 hover:text-brand-primary font-medium text-sm transition-all">
+                    <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+                    Marketplace
+                </a>
+                <a href="community.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-brand-accent/50 hover:text-brand-primary font-medium text-sm transition-all">
+                    <i data-lucide="users" class="w-4 h-4"></i>
+                    Community
+                </a>
+            </nav>
+        </div>
+
+        <!-- Footer actions in sidebar -->
+        <div class="p-6 border-t border-gray-50 space-y-1 bg-white">
+            <a href="settings.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-brand-accent/50 hover:text-brand-primary font-medium text-sm transition-all">
+                <i data-lucide="settings" class="w-4 h-4"></i>
+                Settings
+            </a>
+            <a href="index.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-rose-600 hover:bg-rose-50 font-medium text-sm transition-all">
+                <i data-lucide="log-out" class="w-4 h-4"></i>
+                Sign Out
+            </a>
+        </div>
+    </aside>
+
+    <!-- MAIN BODY CONTENT WRAPPER -->
+    <main class="flex-1 flex flex-col lg:flex-row overflow-hidden h-full">
+
+        <!-- MIDDLE STREAM (Plants Directory) -->
+        <section class="flex-1 overflow-y-auto px-6 py-8 sm:px-8 lg:px-10 space-y-8">
+            <!-- Header and Direct Actions -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                    <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight">My Plants</h1>
+                    <p class="text-sm text-gray-500">Log, track, and optimize the individual life cycles of your greens.</p>
+                </div>
+                <!-- Action Button -->
+                <button onclick="toggleAddPlantModal(true)" class="inline-flex items-center gap-2 bg-brand-primary hover:bg-brand-dark text-white px-5 py-2.5 rounded-xl text-sm font-semibold shadow-md hover:shadow-lg transition-all self-start">
+                    <i data-lucide="plus" class="w-4 h-4"></i> Add New Plant
+                </button>
+            </div>
+
+            <!-- Search and Filter Bar -->
+            <div class="flex flex-col md:flex-row gap-4 justify-between items-stretch md:items-center bg-white p-4 rounded-2xl border border-gray-100 shadow-sm">
+                <!-- Search Input -->
+                <div class="relative flex-1 max-w-md">
+                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
+                        <i data-lucide="search" class="w-4 h-4"></i>
+                    </div>
+                    <input type="text" placeholder="Search plants by name, species..." 
+                        class="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-xl text-sm bg-gray-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-primary/15 focus:border-brand-primary transition-all">
+                </div>
+
+                <!-- Filters -->
+                <div class="flex flex-wrap items-center gap-2">
+                    <button class="px-3.5 py-1.5 rounded-lg bg-brand-primary text-white text-xs font-semibold">All Plants</button>
+                    <button class="px-3.5 py-1.5 rounded-lg hover:bg-brand-accent/50 text-gray-600 hover:text-brand-primary text-xs font-semibold transition-all">Needs Attention</button>
+                    <button class="px-3.5 py-1.5 rounded-lg hover:bg-brand-accent/50 text-gray-600 hover:text-brand-primary text-xs font-semibold transition-all">Living Room</button>
+                    <button class="px-3.5 py-1.5 rounded-lg hover:bg-brand-accent/50 text-gray-600 hover:text-brand-primary text-xs font-semibold transition-all">Balcony</button>
+                </div>
+            </div>
+
+            <!-- Plants Dynamic Grid (High fidelity, scales gorgeously on a 23" monitor) -->
+            <div class="grid sm:grid-cols-2 xl:grid-cols-3 gap-6">
+                <!-- Plant Card 1 -->
+                <div class="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all overflow-hidden flex flex-col justify-between group">
+                    <div class="p-6 space-y-4">
+                        <div class="flex items-start justify-between">
+                            <div class="flex gap-3">
+                                <span class="w-12 h-12 bg-emerald-50 border border-emerald-100 flex items-center justify-center rounded-xl text-xl shrink-0">🌿</span>
+                                <div>
+                                    <h3 class="font-bold text-sm leading-snug group-hover:text-brand-primary transition-colors">Monstera Deliciosa</h3>
+                                    <p class="text-xs text-gray-400">Living Room • Swiss Cheese Plant</p>
+                                </div>
+                            </div>
+                            <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Optimal</span>
+                        </div>
+                        
+                        <!-- Soil Water Meter -->
+                        <div class="space-y-1.5">
+                            <div class="flex justify-between text-xs font-semibold">
+                                <span class="text-gray-400">Soil Moisture</span>
+                                <span class="text-brand-dark">68%</span>
+                            </div>
+                            <div class="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
+                                <div class="bg-brand-primary h-full rounded-full" style="width: 68%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="p-4 bg-gray-50 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
+                        <span class="flex items-center gap-1.5 font-medium"><i data-lucide="droplet" class="w-3.5 h-3.5 text-blue-400"></i> Water in 2 days</span>
+                        <a href="plant-details.html" class="font-bold text-brand-primary hover:underline flex items-center gap-0.5">Details <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i></a>
+                    </div>
+                </div>
+
+                <!-- Plant Card 2 -->
+                <div class="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all overflow-hidden flex flex-col justify-between group">
+                    <div class="p-6 space-y-4">
+                        <div class="flex items-start justify-between">
+                            <div class="flex gap-3">
+                                <span class="w-12 h-12 bg-amber-50 border border-amber-100 flex items-center justify-center rounded-xl text-xl shrink-0">🪴</span>
+                                <div>
+                                    <h3 class="font-bold text-sm leading-snug group-hover:text-brand-primary transition-colors">Fiddle Leaf Fig</h3>
+                                    <p class="text-xs text-gray-400">Living Room • Ficus Lyrata</p>
+                                </div>
+                            </div>
+                            <span class="bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Thirsty</span>
+                        </div>
+                        
+                        <!-- Soil Water Meter -->
+                        <div class="space-y-1.5">
+                            <div class="flex justify-between text-xs font-semibold">
+                                <span class="text-gray-400">Soil Moisture</span>
+                                <span class="text-amber-600">34%</span>
+                            </div>
+                            <div class="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
+                                <div class="bg-amber-500 h-full rounded-full" style="width: 34%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="p-4 bg-gray-50 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
+                        <span class="flex items-center gap-1.5 font-medium text-amber-600"><i data-lucide="alert-triangle" class="w-3.5 h-3.5"></i> Water Overdue!</span>
+                        <a href="plant-details.html" class="font-bold text-brand-primary hover:underline flex items-center gap-0.5">Details <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i></a>
+                    </div>
+                </div>
+
+                <!-- Plant Card 3 -->
+                <div class="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all overflow-hidden flex flex-col justify-between group">
+                    <div class="p-6 space-y-4">
+                        <div class="flex items-start justify-between">
+                            <div class="flex gap-3">
+                                <span class="w-12 h-12 bg-emerald-50 border border-emerald-100 flex items-center justify-center rounded-xl text-xl shrink-0">🌵</span>
+                                <div>
+                                    <h3 class="font-bold text-sm leading-snug group-hover:text-brand-primary transition-colors">Snake Plant</h3>
+                                    <p class="text-xs text-gray-400">Balcony Retreat • Sansevieria</p>
+                                </div>
+                            </div>
+                            <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Optimal</span>
+                        </div>
+                        
+                        <!-- Soil Water Meter -->
+                        <div class="space-y-1.5">
+                            <div class="flex justify-between text-xs font-semibold">
+                                <span class="text-gray-400">Soil Moisture</span>
+                                <span class="text-brand-dark">82%</span>
+                            </div>
+                            <div class="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
+                                <div class="bg-brand-primary h-full rounded-full" style="width: 82%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="p-4 bg-gray-50 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
+                        <span class="flex items-center gap-1.5 font-medium"><i data-lucide="droplet" class="w-3.5 h-3.5 text-blue-400"></i> Water in 12 days</span>
+                        <a href="plant-details.html" class="font-bold text-brand-primary hover:underline flex items-center gap-0.5">Details <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RIGHT PANEL (Quick Insights & Catalog Statistics) -->
+        <section class="w-full lg:w-80 xl:w-96 bg-white border-l border-gray-100 p-6 sm:p-8 flex flex-col justify-between h-full overflow-y-auto shrink-0">
+            <div class="space-y-8">
+                <!-- Database Lookup Widget -->
+                <div class="bg-brand-accent/40 rounded-2xl p-5 border border-brand-primary/10 space-y-4">
+                    <div class="flex items-center gap-2">
+                        <div class="p-1.5 bg-brand-primary text-white rounded-lg">
+                            <i data-lucide="search" class="w-4 h-4"></i>
+                        </div>
+                        <h4 class="font-bold text-xs">Care Library Database</h4>
+                    </div>
+                    <p class="text-xs text-gray-600 leading-relaxed">
+                        Don't know how to care for a new species? Search the global database to auto-fill metrics:
+                    </p>
+                    <div class="relative">
+                        <input type="text" placeholder="Search care profiles..." 
+                            class="w-full px-3 py-2 border border-gray-200 rounded-xl text-xs bg-white focus:outline-none focus:ring-2 focus:ring-brand-primary/20">
+                    </div>
+                </div>
+
+                <!-- Catalog Diversity Statistics -->
+                <div class="space-y-4">
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-gray-400">Ecosystem Health</h4>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center text-xs border-b border-gray-50 pb-2">
+                            <span class="text-gray-500">Hydrated Base</span>
+                            <span class="font-bold text-emerald-600">92% Optimal</span>
+                        </div>
+                        <div class="flex justify-between items-center text-xs border-b border-gray-50 pb-2">
+                            <span class="text-gray-500">Dry Soil Warning</span>
+                            <span class="font-bold text-amber-600">1 Plant</span>
+                        </div>
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="text-gray-500">Ecosystem Count</span>
+                            <span class="font-bold">24 Plants Registered</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botanical Tag -->
+            <div class="pt-8 border-t border-gray-50 hidden lg:block">
+                <p class="text-[10px] text-gray-400 text-center uppercase tracking-widest font-semibold">Plantive Plant Index</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- ADD PLANT MODAL -->
+    <div id="add-plant-modal" class="hidden fixed inset-0 z-50 bg-brand-dark/40 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl w-full max-w-md p-6 sm:p-8 space-y-6 shadow-2xl border border-gray-100 transform scale-95 transition-all">
+            <div class="flex items-center justify-between">
+                <h3 class="text-lg font-bold">Register New Plant</h3>
+                <button onclick="toggleAddPlantModal(false)" class="p-1 hover:bg-gray-100 rounded-lg transition-colors text-gray-400 hover:text-gray-600">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <form action="#" class="space-y-4">
+                <div class="space-y-1.5">
+                    <label class="text-xs font-semibold text-gray-600 uppercase tracking-wider">Plant Custom Nickname</label>
+                    <input type="text" placeholder="e.g. Big Monstera, Office Succulent" required
+                        class="block w-full px-4 py-3 border border-gray-200 rounded-xl text-sm bg-gray-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary transition-all">
+                </div>
+
+                <div class="space-y-1.5">
+                    <label class="text-xs font-semibold text-gray-600 uppercase tracking-wider">Species Name</label>
+                    <input type="text" placeholder="e.g. Monstera Deliciosa, Snake Plant" required
+                        class="block w-full px-4 py-3 border border-gray-200 rounded-xl text-sm bg-gray-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary transition-all">
+                </div>
+
+                <div class="space-y-1.5">
+                    <label class="text-xs font-semibold text-gray-600 uppercase tracking-wider">Select Garden Zone</label>
+                    <select class="block w-full px-4 py-3 border border-gray-200 rounded-xl text-sm bg-white focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary transition-all">
+                        <option>Living Room Garden</option>
+                        <option>Balcony Retreat</option>
+                        <option>Backyard Veggie Patch</option>
+                    </select>
+                </div>
+
+                <div class="flex gap-3 pt-2">
+                    <button type="button" onclick="toggleAddPlantModal(false)" class="flex-1 py-3 px-4 rounded-xl border border-gray-200 text-sm font-semibold hover:bg-gray-50 transition-colors">
+                        Cancel
+                    </button>
+                    <button type="submit" class="flex-1 py-3 px-4 rounded-xl bg-brand-primary hover:bg-brand-dark text-white text-sm font-semibold shadow-md transition-colors">
+                        Save Plant
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripting Support -->
+    <script>
+        lucide.createIcons();
+
+        // Responsive sidebar toggler for mobile devices
+        const mobileToggle = document.getElementById('mobile-sidebar-toggle');
+        const sidebar = document.getElementById('sidebar');
+
+        mobileToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('hidden');
+            sidebar.classList.toggle('fixed');
+            sidebar.classList.toggle('inset-y-0');
+            sidebar.classList.toggle('left-0');
+            sidebar.classList.toggle('z-50');
+            sidebar.classList.toggle('flex');
+        });
+
+        // Modal triggers for adding a new plant
+        const addPlantModal = document.getElementById('add-plant-modal');
+
+        function toggleAddPlantModal(show) {
+            if (show) {
+                addPlantModal.classList.remove('hidden');
+            } else {
+                addPlantModal.classList.add('hidden');
+            }
+        }
+    </script>
+</body>
+</html>
