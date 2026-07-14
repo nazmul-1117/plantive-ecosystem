@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Plantive</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            primary: '#2E7D32',    /* Deep Forest Green */
+                            secondary: '#66BB6A',  /* Leaf Green */
+                            accent: '#E8F5E9',     /* Soft Mint */
+                            bg: '#F7FAF5',         /* Warm Off-White Nature Background */
+                            dark: '#1B3A1E'        /* Deep Midnight Green */
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    </style>
+</head>
+
+<body class="bg-brand-bg text-brand-dark font-sans antialiased h-full flex flex-col md:flex-row">
+
+    <section
+        class="hidden md:flex md:w-[55%] lg:w-[60%] bg-gradient-to-br from-brand-dark via-emerald-950 to-brand-primary p-12 lg:p-16 flex-col justify-between relative overflow-hidden h-full">
+        <div class="absolute top-1/4 -right-10 w-96 h-96 bg-brand-secondary/10 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-10 left-1/4 w-80 h-80 bg-brand-accent/5 rounded-full blur-2xl"></div>
+
+        <div class="relative z-10">
+            <a href="index.html" class="inline-flex items-center gap-2.5 group">
+                <div
+                    class="bg-white/10 text-brand-accent backdrop-blur-md p-2 rounded-xl group-hover:bg-white/20 transition-all">
+                    <i data-lucide="sprout" class="w-6 h-6"></i>
+                </div>
+                <span class="text-xl font-bold tracking-tight text-white">Plantive</span>
+            </a>
+        </div>
+
+        <div class="relative z-10 max-w-lg my-auto space-y-8">
+            <h1 class="text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight">
+                Welcome back to <br />your digital garden.
+            </h1>
+            <p class="text-brand-accent/80 text-lg leading-relaxed">
+                "The love of gardening is a seed once sown that never dies." Log in to check your soil diagnostics,
+                update growth charts, or chat with the AI assistant.
+            </p>
+
+            <div class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-5 space-y-4 shadow-2xl">
+                <div
+                    class="flex justify-between items-center text-xs text-brand-accent/60 font-semibold tracking-wider uppercase">
+                    <span>Garden Health Index</span>
+                    <span class="text-brand-secondary flex items-center gap-1">
+                        <span class="h-2 w-2 rounded-full bg-brand-secondary animate-pulse"></span> Optimal
+                    </span>
+                </div>
+                <div class="grid grid-cols-3 gap-4 text-white">
+                    <div class="bg-white/5 p-3.5 rounded-xl border border-white/5">
+                        <p class="text-xs text-brand-accent/60 mb-1">Active Plants</p>
+                        <p class="text-2xl font-bold">24</p>
+                    </div>
+                    <div class="bg-white/5 p-3.5 rounded-xl border border-white/5">
+                        <p class="text-xs text-brand-accent/60 mb-1">Water Need</p>
+                        <p class="text-2xl font-bold text-amber-300">2</p>
+                    </div>
+                    <div class="bg-white/5 p-3.5 rounded-xl border border-white/5">
+                        <p class="text-xs text-brand-accent/60 mb-1">AI Diagnostics</p>
+                        <p class="text-2xl font-bold text-emerald-300">100%</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="relative z-10 text-xs text-brand-accent/40">
+            <span>&copy; 2026 Plantive Technologies. All rights reserved.</span>
+        </div>
+    </section>
+
+    <main
+        class="w-full md:w-[45%] lg:w-[40%] flex flex-col justify-center px-6 py-12 sm:px-12 lg:px-16 xl:px-20 bg-white h-full overflow-y-auto">
+
+        <div class="md:hidden flex justify-center mb-8">
+            <a href="index.html" class="flex items-center gap-2">
+                <div class="bg-brand-primary text-white p-2 rounded-xl">
+                    <i data-lucide="sprout" class="w-5 h-5"></i>
+                </div>
+                <span class="text-xl font-bold tracking-tight text-brand-dark">Plantive</span>
+            </a>
+        </div>
+
+        <div class="mx-auto w-full max-w-md space-y-8">
+            <div class="space-y-2 text-center md:text-left">
+                <h2 class="text-3xl font-extrabold text-brand-dark tracking-tight">Sign In</h2>
+                <p class="text-sm text-gray-500">
+                    Don't have an account?
+                    <a href="register.html"
+                        class="font-semibold text-brand-primary hover:text-brand-dark transition-colors">Sign up for
+                        free</a>
+                </p>
+            </div>
+
+            <button
+                class="w-full flex items-center justify-center gap-3 px-4 py-3 border border-gray-200 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors shadow-sm">
+                <svg class="w-5 h-5" viewBox="0 0 24 24">
+                    <path fill="#EA4335"
+                        d="M12.24 10.285V14.4h6.887c-.275 1.565-1.88 4.604-6.887 4.604-4.33 0-7.859-3.578-7.859-8s3.53-8 7.859-8c2.46 0 4.105 1.025 5.047 1.926l3.227-3.11C18.281 1.05 15.404 0 12.24 0 5.58 0 0 5.37 0 12s5.58 12 12.24 12c6.96 0 11.57-4.83 11.57-11.64 0-.81-.08-1.41-.23-2.075H12.24z" />
+                </svg>
+                Continue with Google
+            </button>
+
+            <div class="relative flex py-2 items-center">
+                <div class="flex-grow border-t border-gray-200"></div>
+                <span class="flex-shrink mx-4 text-xs text-gray-400 font-medium uppercase tracking-wider">or email
+                    login</span>
+                <div class="flex-grow border-t border-gray-200"></div>
+            </div>
+
+            <div id="error-container"
+                class="hidden p-4 bg-rose-50 border border-rose-200 text-rose-800 rounded-xl flex items-start gap-3 text-sm">
+                <i data-lucide="alert-circle" class="w-5 h-5 shrink-0 mt-0.5"></i>
+                <div>
+                    <span class="font-bold">Authentication Refused:</span>
+                    <p id="error-message" class="text-xs mt-1">Please check your network connection or try again.</p>
+                </div>
+            </div>
+
+            <form id="login-form" class="space-y-5">
+                <div class="space-y-1.5">
+                    <label for="username"
+                        class="text-xs font-semibold text-gray-600 uppercase tracking-wider">Username</label>
+                    <div class="relative">
+                        <div
+                            class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
+                            <i data-lucide="user" class="w-4 h-4"></i>
+                        </div>
+                        <input id="username" name="username" type="text" autocomplete="username" required
+                            class="block w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl text-sm bg-gray-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary transition-all placeholder-gray-400"
+                            placeholder="your_username">
+                    </div>
+                </div>
+
+                <div class="space-y-1.5">
+                    <div class="flex items-center justify-between">
+                        <label for="password"
+                            class="text-xs font-semibold text-gray-600 uppercase tracking-wider">Password</label>
+                        <a href="#"
+                            class="text-xs font-semibold text-brand-primary hover:text-brand-dark transition-colors">Forgot
+                            password?</a>
+                    </div>
+                    <div class="relative">
+                        <div
+                            class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
+                            <i data-lucide="lock" class="w-4 h-4"></i>
+                        </div>
+                        <input id="password" name="password" type="password" autocomplete="current-password" required
+                            class="block w-full pl-10 pr-12 py-3 border border-gray-200 rounded-xl text-sm bg-gray-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary transition-all placeholder-gray-400"
+                            placeholder="••••••••">
+                        <button type="button" id="password-toggle"
+                            class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-gray-400 hover:text-gray-600"
+                            aria-label="Toggle password visibility">
+                            <i id="password-toggle-icon" data-lucide="eye" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="flex items-center">
+                    <input id="remember-me" name="remember-me" type="checkbox"
+                        class="h-4 w-4 rounded border-gray-300 text-brand-primary focus:ring-brand-primary/20 accent-brand-primary cursor-pointer">
+                    <label for="remember-me"
+                        class="ml-2 block text-sm text-gray-600 cursor-pointer select-none">Remember this
+                        browser</label>
+                </div>
+
+                <button type="submit" id="submit-btn"
+                    class="w-full flex justify-center items-center gap-2 py-3.5 px-4 border border-transparent rounded-xl text-sm font-semibold text-white bg-brand-primary hover:bg-brand-dark shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-primary transition-all duration-200">
+                    <span id="submit-text" class="flex items-center gap-2">
+                        Sign In
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </span>
+                </button>
+            </form>
+        </div>
+    </main>
+
+
+    <script>
+        // 1. Initialize Lucide Icons globally
+        lucide.createIcons();
+
+        // 2. Select interactive DOM elements with explicit fallback strategies
+        const form = document.getElementById('login-form');
+        const passwordInput = document.getElementById('password');
+        const passwordToggle = document.getElementById('password-toggle');
+        const passwordToggleIcon = document.getElementById('password-toggle-icon');
+        const submitBtn = document.getElementById('submit-btn');
+        const submitText = document.getElementById('submit-text');
+        const errorContainer = document.getElementById('error-container');
+        const errorMessage = document.getElementById('error-message');
+
+        // 3. Robust Target Selection for the Identity Field (Username/Email)
+        // This safeguards against null elements if the ID is changed in the HTML structure
+        const getIdentityInput = () => {
+            return document.getElementById('username') ||
+                document.getElementById('email') ||
+                document.querySelector('input[type="text"]') ||
+                document.querySelector('input[type="email"]');
+        };
+
+        // 4. Feature: Toggle Password Field Visibility
+        if (passwordToggle && passwordInput && passwordToggleIcon) {
+            passwordToggle.addEventListener('click', () => {
+                const isPassword = passwordInput.getAttribute('type') === 'password';
+                passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
+                passwordToggleIcon.setAttribute('data-lucide', isPassword ? 'eye-off' : 'eye');
+                lucide.createIcons();
+            });
+        }
+
+        // 5. Feature: Form Submission Intercept & Backend API Connection
+        if (form) {
+            form.addEventListener('submit', async (event) => {
+                event.preventDefault(); // Stop standard browser page reloads
+
+                // Reset UI states defensively
+                if (errorContainer) errorContainer.classList.add('hidden');
+
+                const identityInput = getIdentityInput();
+
+                // Runtime check to prevent "Cannot read properties of null" crashes
+                if (!identityInput || !passwordInput) {
+                    console.error("Critical Authentication UI elements missing.");
+                    if (errorContainer && errorMessage) {
+                        errorMessage.innerText = "Form initialization failed. Missing vital input fields.";
+                        errorContainer.classList.remove('hidden');
+                    }
+                    return;
+                }
+
+                // Set Loading UI button state
+                submitBtn.disabled = true;
+                submitBtn.classList.add('opacity-75', 'cursor-not-allowed');
+                submitText.innerHTML = `
+                <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Contacting Garden Center...
+            `;
+
+                // Setup payload exact mapping matching FastAPI LoginRequest schema
+                const payload = {
+                    username: identityInput.value.trim(),
+                    email: identityInput.value.includes('@') ? identityInput.value.trim() : null,
+                    password: passwordInput.value
+                };
+
+                try {
+                    const API_ENDPOINT = "http://127.0.0.1:8000/api/v1/auth/login";
+
+                    const response = await fetch(API_ENDPOINT, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(payload)
+                    });
+
+                    const data = await response.json();
+                    console.log(data);
+
+                    if (response.ok) {
+                        // Success State: Persist tokens locally in user's client browser context
+                        localStorage.setItem("access_token", data.access_token);
+                        localStorage.setItem("refresh_token", data.refresh_token);
+                        localStorage.setItem("user_profile", JSON.stringify(data.user));
+
+                        // Route validated session straight into the dashboard layout page
+                        window.location.href = "dashboard.html";
+                    } else {
+                        // Rejection State: extract error data or fallback to generic text
+                        throw new Error(data.detail || "Credentials could not be verified by server.");
+                    }
+
+                } catch (error) {
+                    // Handle UI Error Display gracefully
+                    if (errorContainer && errorMessage) {
+                        errorMessage.innerText = error.message || "Unable to establish communication with the backend servers.";
+                        errorContainer.classList.remove('hidden');
+                    }
+
+                    // Restore button submission UI properties back to stable working states
+                    submitBtn.disabled = false;
+                    submitBtn.classList.remove('opacity-75', 'cursor-not-allowed');
+                    submitText.innerHTML = `
+                    Sign In
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                `;
+                    lucide.createIcons();
+                }
+            });
+        }
+    </script>
+
+</body>
+
+</html>
