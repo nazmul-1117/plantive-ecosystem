@@ -46,18 +46,63 @@ Plantive aims to be an all-in-one platform for plant lovers, gardeners, and smar
 backend/
 │
 ├── app/
-│   ├── routers/          # API endpoints
-│   ├── controllers/      # Request orchestration
-│   ├── services/         # Business logic
-│   ├── models/           # SQLModel models
-│   ├── schemas/          # Request & response schemas
-│   ├── middleware/       # Authentication & exception handlers
-│   └── config/           # Settings, database, security
+│   ├── routers/          # API route definitions (HTTP endpoints)
+│   ├── controllers/      # Request orchestration and response handling
+│   ├── services/         # Business logic and application rules
+│   ├── repositories/     # Database access layer (CRUD operations)
+│   ├── models/           # SQLModel database models (tables)
+│   ├── schemas/          # Pydantic request and response schemas
+│   ├── dependencies/     # Reusable FastAPI dependencies
+│   ├── middleware/       # Custom middleware (authentication, logging, etc.)
+│   ├── exceptions/       # Custom exceptions and global exception handlers
+│   ├── core/             # Core configuration (settings, database, security)
+│   └── __init__.py
 │
-├── migrations/           # Database migrations
-├── main.py               # Application entry point
-└── pyproject.toml
+├── migrations/           # Alembic database migration files
+├── .env.example          # Example environment variables
+├── alembic.ini           # Alembic configuration
+├── main.py               # FastAPI application entry point
+├── pyproject.toml        # Project dependencies and configuration
+└── README.md             # Project documentation
 ```
+
+---
+
+## 🏗️ Application Flow
+
+```text
+Client Request
+      │
+      ▼
+Router
+      │
+      ▼
+Controller
+      │
+      ▼
+Service
+      │
+      ▼
+Repository
+      │
+      ▼
+PostgreSQL Database
+```
+
+### Layer Responsibilities
+
+| Layer | Responsibility |
+|--------|----------------|
+| **Router** | Defines API endpoints and delegates requests to controllers. |
+| **Controller** | Coordinates request handling and prepares responses. |
+| **Service** | Contains business logic and application rules. |
+| **Repository** | Handles all database operations using SQLModel. |
+| **Models** | SQLModel table definitions mapped to PostgreSQL. |
+| **Schemas** | Pydantic models for request validation and API responses. |
+| **Dependencies** | Reusable dependency injection (e.g., database sessions, authentication). |
+| **Middleware** | Processes requests/responses globally (authentication, logging, CORS, etc.). |
+| **Exceptions** | Custom exceptions and centralized error handling. |
+| **Core** | Application configuration, security, database, and shared utilities. |
 
 ---
 

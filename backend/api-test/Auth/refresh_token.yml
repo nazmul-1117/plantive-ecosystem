@@ -8,7 +8,7 @@ http:
   url: "{{AUTH_URL}}/refresh"
   headers:
     - name: Authorization
-      value: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYTAyMWVjYS1kMDFjLTQ0MDktYjMyNi05MmY3OTQwZmJmNTkiLCJ0eXBlIjoicmVmcmVzaCIsImlhdCI6MTc4MzY2NjA2OSwiZXhwIjoxNzg1MTM0ODY5LCJqdGkiOiI4NDBjY2UyYy0xMTY1LTRhYzMtYmU0ZC1hMzU3MzhkZTUwOWIifQ.nH29Squ_3c1HL48JVy4JW_ua6V98cGGVEUfmkwCHM60
+      value: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYTAyMWVjYS1kMDFjLTQ0MDktYjMyNi05MmY3OTQwZmJmNTkiLCJ0eXBlIjoicmVmcmVzaCIsImlhdCI6MTc4MzkzMDY1NSwiZXhwIjoxNzg1Mzk5NDU1LCJqdGkiOiI4NWE3Yzg5MS1hN2NiLTQ5ODItYTE0ZC1hZmQ2NzA1NjExMjciLCJpc3MiOiJwbGFudGl2ZS1hcGkiLCJhdWQiOiJ3ZWItYXBwIn0.67zdbxVsttIs_2-9ktZG4L_XlgtKq5xRN5qPsNEMjLY
   auth: inherit
 
 settings:

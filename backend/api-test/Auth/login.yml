@@ -17,17 +17,17 @@ http:
 
 
       // admin
-      // {
-      //   "username": "nazmul_dev",
-      //   "password": "MyStrongPassword@123"
-      // }
+      {
+        "username": "nazmul_dev",
+        "password": "MyStrongPassword@123"
+      }
 
 
       // user
-      {
-        "username": "ayesha_garden",
-        "password": "SecurePass@456"
-      }
+      // {
+      //   "username": "ayesha_garden",
+      //   "password": "SecurePass@456"
+      // }
   auth: inherit
 
 settings:
