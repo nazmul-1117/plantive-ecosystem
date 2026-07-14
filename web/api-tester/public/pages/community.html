@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Community - Plantive</title>
+
+    <link rel="stylesheet" href="../../css/styles.css">
+
+    <style>
+        /* Smooth page transition */
+
+        body {
+            opacity: 0;
+            animation: fadePage .35s ease forwards;
+        }
+
+        @keyframes fadePage {
+            from {
+                opacity: 0;
+                transform: translateX(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Community post styles */
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .post-image {
+            width: 100%;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .create-post textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            resize: none;
+            margin-bottom: 10px;
+        }
+
+        .create-post input {
+            margin-bottom: 10px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="app">
+
+        <!-- Header -->
+
+        <header>
+            <h2>🌿 Plantive Community</h2>
+        </header>
+
+
+        <!-- Main Content -->
+
+        <main>
+
+            <!-- Create Post -->
+
+            <div class="card create-post">
+
+                <h3>Share with the community</h3>
+
+                <textarea rows="3" placeholder="Ask a question or share your plant..."></textarea>
+
+                <input type="file" accept="image/*">
+
+                <button class="primary">Post</button>
+
+            </div>
+
+
+            <!-- Post 1 -->
+
+            <div class="card">
+
+                <div class="post-header">
+
+                    <div class="avatar">🌱</div>
+
+                    <div>
+                        <strong>Aisha</strong>
+                        <p style="font-size:12px;color:#777;">2 hours ago</p>
+                    </div>
+
+                </div>
+
+                <p>
+                    My tomato plant leaves are turning yellow.
+                    Does anyone know what might be wrong?
+                </p>
+
+                <img src="https://images.unsplash.com/photo-1598514982841-5c1c1f1c7c7c" class="post-image">
+
+                <div class="post-actions">
+                    <span>❤️ 12</span>
+                    <span>💬 5</span>
+                    <span>🤝 Help</span>
+                </div>
+
+            </div>
+
+
+            <!-- Post 2 -->
+
+            <div class="card">
+
+                <div class="post-header">
+
+                    <div class="avatar">🌿</div>
+
+                    <div>
+                        <strong>Rahim</strong>
+                        <p style="font-size:12px;color:#777;">5 hours ago</p>
+                    </div>
+
+                </div>
+
+                <p>
+                    My basil plant is growing really well this season! 🌿
+                    Any tips to keep it healthy longer?
+                </p>
+
+                <img src="https://images.unsplash.com/photo-1615484477778-ca3b77940c25" class="post-image">
+
+                <div class="post-actions">
+                    <span>❤️ 8</span>
+                    <span>💬 3</span>
+                    <span>🤝 Help</span>
+                </div>
+
+            </div>
+
+
+            <!-- Post 3 -->
+
+            <div class="card">
+
+                <div class="post-header">
+
+                    <div class="avatar">🪴</div>
+
+                    <div>
+                        <strong>Nadia</strong>
+                        <p style="font-size:12px;color:#777;">1 day ago</p>
+                    </div>
+
+                </div>
+
+                <p>
+                    What fertilizer works best for chili plants?
+                    I'm trying organic options.
+                </p>
+
+                <div class="post-actions">
+                    <span>❤️ 5</span>
+                    <span>💬 7</span>
+                    <span>🤝 Help</span>
+                </div>
+
+            </div>
+
+
+        </main>
+
+
+
+        <!-- Bottom Navigation -->
+
+        <nav class="bottom-nav">
+
+            <button class="nav-item" onclick="location.href='../index.html'">
+                <span>🏠</span>
+                <p>Home</p>
+            </button>
+
+            <button class="nav-item" onclick="location.href='../index.html#garden'">
+                <span>🌿</span>
+                <p>Garden</p>
+            </button>
+
+            <button class="nav-item" onclick="location.href='../index.html#ai'">
+                <span>🤖</span>
+                <p>AI</p>
+            </button>
+
+            <button class="nav-item" onclick="location.href='../index.html#market'">
+                <span>🛒</span>
+                <p>Market</p>
+            </button>
+
+            <button class="nav-item" onclick="location.href='../index.html#profile'">
+                <span>👤</span>
+                <p>Profile</p>
+            </button>
+
+        </nav>
+
+    </div>
+
+</body>
+
+</html>

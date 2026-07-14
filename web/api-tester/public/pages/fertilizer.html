@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Fertilizer Info - Plantive</title>
+
+    <link rel="stylesheet" href="../../css/styles.css">
+
+    <style>
+        /* Page animation */
+        body {
+            opacity: 0;
+            animation: fadePage .35s ease forwards;
+            background: #f6f8fb;
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+        }
+
+        @keyframes fadePage {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Card upgrade */
+        .card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 18px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            border: 1px solid #eef0f3;
+        }
+
+        /* Form layout */
+        #fertilizerForm {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* Labels */
+        label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #444;
+            margin-top: 6px;
+        }
+
+        /* Inputs + selects */
+        input,
+        select {
+            padding: 12px 14px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            outline: none;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            background: #fff;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #4CAF50;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.15);
+        }
+
+        /* Button */
+        button[type="submit"] {
+            margin-top: 10px;
+            padding: 12px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #4CAF50, #2E7D32);
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        button[type="submit"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(76, 175, 80, 0.25);
+        }
+
+        button[type="submit"]:active {
+            transform: scale(0.98);
+        }
+
+        /* Result cards */
+        #result .card {
+            margin-top: 12px;
+            padding: 14px;
+            border-left: 5px solid #4CAF50;
+            animation: popIn 0.25s ease;
+        }
+
+        @keyframes popIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Header polish */
+        header h2 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #2e7d32;
+        }
+
+        /* Small UI polish */
+        .card h3 {
+            margin-bottom: 10px;
+            color: #222;
+        }
+
+        p {
+            color: #555;
+            line-height: 1.5;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="app">
+
+        <header>
+            <h2>💩 Fertilizer Guide</h2>
+        </header>
+
+        <main>
+
+            <!-- ✅ FORM CARD -->
+            <div class="card">
+                <h3>🤖 AI Fertilizer Assistant</h3>
+
+                <form id="fertilizerForm">
+
+                    <label>Plant Type:</label>
+                    <select id="plant_type" required>
+                        <option value="Flower Plant">Flower Plant</option>
+                        <option value="Vegetable Plant">Vegetable Plant</option>
+                        <option value="Fruit Plant">Fruit Plant</option>
+                        <option value="Herb">Herb</option>
+                    </select>
+
+                    <label>Location:</label>
+                    <select id="location" required>
+                        <option value="Rooftop">Rooftop</option>
+                        <option value="Garden">Garden</option>
+                        <option value="Indoor">Indoor</option>
+                        <option value="Greenhouse">Greenhouse</option>
+                    </select>
+
+                    <label>Sunlight:</label>
+                    <select id="sunlight" required>
+                        <option value="Low">Low</option>
+                        <option value="Medium">Medium</option>
+                        <option value="High">High</option>
+                    </select>
+
+                    <label>Soil Type:</label>
+                    <select id="soil_type" required>
+                        <option value="Loamy">Loamy</option>
+                        <option value="Sandy">Sandy</option>
+                        <option value="Clay">Clay</option>
+                        <option value="Peaty">Peaty</option>
+                        <option value="Silty">Silty</option>
+                    </select>
+
+                    <label>Soil Moisture:</label>
+                    <select id="soil_moisture" required>
+                        <option value="Low">Low</option>
+                        <option value="Medium">Medium</option>
+                        <option value="High">High</option>
+                    </select>
+
+                    <label>Nitrogen (N):</label>
+                    <input type="number" id="nitrogen" required>
+
+                    <label>Phosphorus (P):</label>
+                    <input type="number" id="phosphorus" required>
+
+                    <label>Potassium (K):</label>
+                    <input type="number" id="potassium" required>
+
+                    <label>Soil pH:</label>
+                    <input type="number" step="0.1" id="soil_ph" required>
+
+                    <button type="submit" class="primary">Get Recommendation</button>
+                </form>
+
+                <!-- ✅ RESULT DIV (THIS WAS MISSING) -->
+                <div id="result"></div>
+            </div>
+
+
+            <!-- INFO CARDS -->
+
+            <div class="card">
+                <h3>🌱 Why Fertilizer Matters</h3>
+                <p>
+                    Fertilizers provide essential nutrients that plants need to grow strong and healthy.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>🧪 Types of Fertilizer</h3>
+                <ul>
+                    <li>🌿 Organic Fertilizer</li>
+                    <li>⚗️ Chemical Fertilizer</li>
+                    <li>🍌 Compost</li>
+                    <li>🐄 Manure</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>📅 Fertilizing Schedule</h3>
+                <ul>
+                    <li>🌿 Leafy Plants — Every 2 weeks</li>
+                    <li>🍅 Vegetables — Every 10 days</li>
+                    <li>🌸 Flowers — Weekly</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>⚠️ Tips</h3>
+                <p>
+                    Do not over-fertilize. Water after applying. Prefer organic.
+                </p>
+            </div>
+
+        </main>
+
+        <nav class="bottom-nav">
+            <button onclick="location.href='../index.html'">🏠 Home</button>
+            <button onclick="location.href='../index.html#garden'">🌿 Garden</button>
+            <button onclick="location.href='../index.html#ai'">🤖 AI</button>
+        </nav>
+
+    </div>
+
+    <!-- ✅ FIXED SCRIPT -->
+    <script type="module">
+
+        import { API_BASE_URL } from "../../config/api.js";
+
+        document.addEventListener("DOMContentLoaded", () => {
+
+            const form = document.getElementById('fertilizerForm');
+            const resultDiv = document.getElementById('result');
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                resultDiv.innerHTML = "⏳ Getting recommendations...";
+
+                const data = {
+                    plant_type: document.getElementById('plant_type').value,
+                    location: document.getElementById('location').value,
+                    sunlight: document.getElementById('sunlight').value,
+                    soil_type: document.getElementById('soil_type').value,
+                    soil_moisture: document.getElementById('soil_moisture').value,
+                    nitrogen: parseFloat(document.getElementById('nitrogen').value),
+                    phosphorus: parseFloat(document.getElementById('phosphorus').value),
+                    potassium: parseFloat(document.getElementById('potassium').value),
+                    soil_ph: parseFloat(document.getElementById('soil_ph').value)
+                };
+
+                try {
+                    const response = await fetch(`${API_BASE_URL}/ai/fertilizer/`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(data)
+                    });
+
+                    const result = await response.json();
+
+                    resultDiv.innerHTML = "";
+
+                    if (result.recommendations?.length > 0) {
+                        result.recommendations.forEach(r => {
+                            const div = document.createElement('div');
+                            div.classList.add('card');
+
+                            div.innerHTML = `
+                                <h4>🌿 ${r.name}</h4>
+                                <p><strong>Confidence:</strong> ${r.probability.toFixed(2)}%</p>
+                                <p>${r.description}</p>
+                            `;
+
+                            resultDiv.appendChild(div);
+                        });
+                    } else {
+                        resultDiv.innerHTML = "❌ No recommendations found.";
+                    }
+
+                } catch (error) {
+                    resultDiv.innerHTML = `❌ Error: ${error.message}`;
+                }
+            });
+
+        });
+    </script>
+
+</body>
+
+</html>

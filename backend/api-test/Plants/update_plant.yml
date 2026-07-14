@@ -1,0 +1,22 @@
+info:
+  name: update_plant
+  type: http
+  seq: 6
+
+http:
+  method: PATCH
+  url: "{{PLANTS_URL}}/090ac188-a515-4b75-82a1-6e86df2e1040"
+  body:
+    type: json
+    data: |-
+      {
+        "price": 200,
+        "stock": 5
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

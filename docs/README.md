@@ -1,161 +1,197 @@
 # 📚 Plantive Ecosystem Documentation
 
-This directory contains all the **technical documentation, system designs, and reference materials** for the **Plantive Ecosystem** project.
+Welcome to the **Plantive** documentation.
 
-The purpose of this folder is to provide clear documentation of the system architecture, database structure, API design, and development workflow so that team members and contributors can easily understand and work on the project.
+This directory contains the technical documentation for the Plantive project, including system architecture, API references, database design, development guides, diagrams, and AI development resources.
+
+The documentation is intended for developers, contributors, and maintainers to better understand, develop, and maintain the project.
 
 ---
 
-## 📂 Documentation Structure
+# 🚀 Quick Links
 
-```
+- [System Architecture](architecture/system-architecture.md)
+- [Service Communication](architecture/service-communication.md)
+- [API Overview](api/api-overview.md)
+- [Database Design](database/database-design.md)
+- [Development Setup](development/setup-guide.md)
+- [Coding Standards](development/coding-standards.md)
+- [Git Workflow](development/git-workflow.md)
+
+---
+
+# 📂 Documentation Structure
+
+```text
 docs/
 │
 ├── architecture/
 │   ├── system-architecture.md
-│   ├── service-communication.md
+│   └── service-communication.md
 │
 ├── diagrams/
 │   ├── architecture-diagram.png
 │   ├── er-diagram.png
 │   ├── dfd-level-0.png
-│   ├── dfd-level-1.png
+│   └── dfd-level-1.png
 │
 ├── api/
 │   ├── api-overview.md
 │   ├── authentication-api.md
 │   ├── plant-api.md
 │   ├── garden-api.md
-│   ├── ai-api.md
+│   └── ai-api.md
 │
 ├── database/
 │   ├── database-design.md
-│   ├── table-descriptions.md
+│   └── table-descriptions.md
 │
 ├── development/
 │   ├── setup-guide.md
 │   ├── coding-standards.md
-│   ├── git-workflow.md
-│
-├── master-prompts/
-│   ├── ai-service-prompt.md
-│   ├── backend-prompt.md
-│   ├── database-prompt.md
-│   ├── web-prompt.md
+│   └── git-workflow.md
 │
 └── README.md
 ```
 
 ---
 
-## 🏗 System Architecture Documentation
+# 📖 Documentation Overview
 
-The **architecture** documentation explains how the different components of the Plantive Ecosystem interact with each other.
-
-Main components include:
-
-* Android Mobile Application
-* Backend API Server
-* AI Service
-* PostgreSQL Database
-* Web API Testing Interface
-
-These documents describe the **data flow, service communication, and system design decisions**.
+| Directory | Description |
+|-----------|-------------|
+| **architecture/** | System architecture, design decisions, and service communication. |
+| **diagrams/** | Architecture, ER, DFD, and other system diagrams. |
+| **api/** | Backend API documentation, request/response formats, and examples. |
+| **database/** | Database schema, relationships, and design documentation. |
+| **development/** | Project setup, coding standards, and development workflow. |
 
 ---
 
-## 📊 Diagrams
+# 🏗 System Overview
 
-This folder contains important system diagrams including:
+Plantive is built around a layered backend architecture that separates responsibilities across multiple layers to improve maintainability, scalability, and testability.
 
-* **System Architecture Diagram**
-* **Entity Relationship (ER) Diagram**
-* **Data Flow Diagrams (DFD)**
-* **Service Interaction Diagrams**
+The primary system components include:
 
-These diagrams help visualize how the system works internally.
+- Android Mobile Application
+- FastAPI Backend API
+- PostgreSQL Database
+- AI Gardening Assistant
+- Web API Testing Interface
 
----
-
-## 🔌 API Documentation
-
-The API documentation describes the backend endpoints used by:
-
-* Android mobile application
-* Web API tester
-* AI service communication
-
-Each API document includes:
-
-* Endpoint description
-* Request format
-* Response format
-* Example usage
+These components communicate through well-defined APIs and documented workflows.
 
 ---
 
-## 🗄 Database Documentation
+# 📊 Diagrams
 
-This section describes the database structure including:
+The **diagrams/** directory contains visual representations of the system, including:
 
-* Table relationships
-* Table fields
-* Data types
-* Foreign key relationships
-* Database design decisions
+- System Architecture Diagram
+- Entity Relationship (ER) Diagram
+- Data Flow Diagrams (DFD)
+- Service Interaction Diagrams
+
+Diagrams should be updated whenever significant architectural or database changes are introduced.
 
 ---
 
-## 🛠 Development Guides
+# 🔌 API Documentation
 
-Development documentation helps contributors set up and work on the project.
+The **api/** directory documents every backend endpoint.
+
+Each API document should include:
+
+- Endpoint URL
+- HTTP Method
+- Purpose
+- Request Parameters
+- Request Body
+- Response Schema
+- Error Responses
+- Authentication Requirements
+- Example Requests and Responses
+
+---
+
+# 🗄 Database Documentation
+
+The **database/** directory documents the PostgreSQL database structure.
+
+Documentation should include:
+
+- Table descriptions
+- Relationships
+- Primary and foreign keys
+- Constraints
+- Indexes
+- Design decisions
+- Migration notes (when applicable)
+
+---
+
+# 🛠 Development Guides
+
+The **development/** directory provides guidance for contributors working on the project.
 
 Topics include:
 
-* Project setup instructions
-* Coding standards
-* Git workflow
-* Development best practices
+- Local development setup
+- Project structure
+- Coding standards
+- Git workflow
+- Best practices
 
 ---
 
-## 🤖 AI Master Prompts
+# 🤖 AI Development Resources
 
-The **master-prompts** folder contains reusable prompts used to guide AI tools in building different parts of the system.
+The **master-prompts/** directory contains reusable prompts used during AI-assisted development.
 
-Prompts are provided for:
+These prompts help maintain consistency across:
 
-* AI service development
-* Backend API development
-* Database schema design
-* Web API testing interface
-
-These prompts ensure consistent development across the entire project.
+- Backend development
+- Database design
+- AI service development
+- Web API testing
 
 ---
 
-## 📌 Purpose of This Documentation
+# 📖 Documentation Principles
 
-The documentation exists to:
+Documentation should always be:
 
-* Help new developers understand the system
-* Maintain consistent architecture
-* Document important design decisions
-* Provide references for development and testing
-
-Keeping documentation updated is important as the project evolves.
+- Accurate
+- Up-to-date
+- Easy to understand
+- Version controlled
+- Written in Markdown
+- Updated alongside code changes
 
 ---
 
-## ✏️ Contributing to Documentation
+# ✏️ Keeping Documentation Updated
 
-When adding new features to the project, please update the relevant documentation files to ensure the system documentation remains accurate.
+Whenever a feature is added, modified, or removed, update the relevant documentation.
 
-Recommended updates include:
+Examples include:
 
-* Updating API documentation when endpoints change
-* Updating database documentation when tables are modified
-* Adding diagrams for new system components
+- Add new API endpoints to the API documentation.
+- Update database documentation after schema changes.
+- Update architecture diagrams when the system design changes.
+- Record important design decisions.
+- Update setup instructions if dependencies or workflows change.
+
+Keeping documentation synchronized with the codebase helps ensure the project remains maintainable and easy to understand.
+
+---
+
+# 🤝 Contributing
+
+All contributors are encouraged to improve the documentation alongside code changes.
+
+Well-maintained documentation makes onboarding easier, improves collaboration, and helps ensure the long-term maintainability of the Plantive project.
 
 ---
 
