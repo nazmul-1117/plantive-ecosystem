@@ -1,7 +1,5 @@
 
 import time
-from sqlmodel.ext.asyncio.session import AsyncSession
-from redis.asyncio import Redis
 
 from app.schemas.auth_schema import LoginRequest, LoginResponse
 from app.schemas.token_schema import AccessTokenResponse
