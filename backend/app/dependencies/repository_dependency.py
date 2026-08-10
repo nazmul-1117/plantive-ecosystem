@@ -6,6 +6,7 @@ from fastapi import Depends
 from app.repositories.user_repository import UserRepository
 from app.repositories.role_repository import RoleRepository
 from app.repositories.user_role_repository import UserRoleRepository
+from app.repositories.verification_token_repository import VerificationTokenRepository
 
 from app.core.database import get_session
 
@@ -34,3 +35,11 @@ def get_user_role_repository(
     return UserRoleRepository(
         session=session
     ) 
+
+def get_verification_token_repository(
+        session: SessionDeps
+) -> VerificationTokenRepository:
+
+    return VerificationTokenRepository(
+        session = session
+    )

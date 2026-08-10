@@ -8,27 +8,37 @@ from app.services.auth_service import AuthService
 from app.services.token_service import TokenService
 from app.services.role_service import RoleService
 from app.services.plant_service import PlantService
+from app.services.email_service import EmailService
 
 from app.repositories.role_repository import RoleRepository
 from app.repositories.user_repository import UserRepository
 from app.repositories.user_role_repository import UserRoleRepository
+from app.repositories.verification_token_repository import VerificationTokenRepository
 
-from app.dependencies.repository_dependency import get_role_repository, get_user_repository, get_user_role_repository
+from app.dependencies.repository_dependency import get_role_repository, get_user_repository, get_user_role_repository, get_verification_token_repository
 from app.dependencies.redis_dependency import get_redis
 
 from app.core.database import get_session
+
+
+def get_email_service() -> EmailService:
+    return EmailService()
 
 
 def get_user_service(
         role_repository: Annotated[RoleRepository , Depends(get_role_repository)],
         user_repository: Annotated[UserRepository , Depends(get_user_repository)],
         user_role_repository: Annotated[UserRoleRepository , Depends(get_user_role_repository)],
+        verification_token_repository: Annotated[VerificationTokenRepository, Depends(get_verification_token_repository)],
+        email_service: Annotated[EmailService, Depends(get_email_service)]
 ) -> UserService:
     
     return UserService(
-        user_repository=user_repository,
-        role_repository=role_repository,
-        user_role_repository=user_role_repository,
+        user_repository = user_repository,
+        role_repository = role_repository,
+        user_role_repository = user_role_repository,
+        verification_token_repository = verification_token_repository,
+        email_service = email_service,
     )
 
 def get_token_service(

@@ -36,9 +36,22 @@ class Settings(BaseSettings):
     ]
 
 
+    # Email Configuration
+    SMTP_HOST: str
+    SMTP_PORT: int
+    SMTP_USERNAME: str
+    SMTP_PASSWORD: str
+    SMTP_FROM_EMAIL: str
+    SMTP_FROM_NAME: str
+
+
+    BACKEND_PUBLIC_URL: str
+
+
     model_config = SettingsConfigDict(
         title="Settings Config Dict",
         env_file=".env",
+        env_file_encoding="utf-8",
         extra="ignore"
     )
 
