@@ -1,3 +1,6 @@
+
+from uuid import UUID
+
 from sqlmodel.ext.asyncio.session import AsyncSession
 from sqlmodel import select, exists
 from sqlmodel.ext.asyncio.session import AsyncSession
@@ -25,12 +28,19 @@ class UserRepository:
     async def delete():
         pass
 
-    async def update():
-        pass
+    async def update(
+            self,
+            user: User
+    ) -> User | None:
+        
+        self.session.add(user)
+        await self.session.flush()
+
+        return user
 
     async def get_by_uid(
             self,
-            user_uid: str,
+            user_uid: UUID,
     ) -> User | None:
         
         statement = select(User).where(User.user_uid == user_uid)
@@ -59,6 +69,7 @@ class UserRepository:
             self,
             email: str,
     ) -> bool:
+        
         statement = select(
             exists().
             where(User.email == email)

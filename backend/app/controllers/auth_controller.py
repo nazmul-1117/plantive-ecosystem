@@ -1,4 +1,4 @@
-from fastapi import Depends
+from fastapi import Depends, Query
 from typing import Annotated
 
 from app.dependencies.auth_dependency import get_refresh_token_payload, get_access_token_payload
@@ -9,8 +9,11 @@ from app.services.user_service import UserService
 
 from app.models.auth_model import User
 
-from app.schemas.auth_schema import UserCreate, LoginRequest, LoginResponse, UserResponse, UserRead, LogoutResponse
+from app.schemas.auth_schema import UserCreate, LoginRequest, LoginResponse, UserResponse, UserRead, LogoutResponse, EmailVerificationResponse
 from app.schemas.token_schema import AccessTokenResponse, TokenPayload
+
+import logging
+logger = logging.getLogger(__name__)
 
 
 async def register_user(
@@ -54,4 +57,17 @@ async def logout_user(
     
     return await auth_service.logout(
         token_payload=token_payload,
+    )
+
+
+async def verify_email(
+        user_service: Annotated[UserService, Depends(get_user_service)],
+        token: str = Query(..., description="The raw verification token from the email link"),
+) -> EmailVerificationResponse:
+    
+    user: User = await user_service.verify_email(token)
+    
+    return EmailVerificationResponse(
+        message="Email Verified Successfully",
+        email=user.email
     )

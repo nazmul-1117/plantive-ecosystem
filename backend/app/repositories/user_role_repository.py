@@ -9,7 +9,7 @@ class UserRoleRepository:
             self,
             session: AsyncSession
     ):
-        session = session
+        self.session = session
     
     async def assign_role(
             self,

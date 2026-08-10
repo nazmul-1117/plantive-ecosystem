@@ -1,29 +1,44 @@
-from sqlmodel import SQLModel, Field, Column, String, DateTime, Relationship, text
 import uuid
-import sqlalchemy.dialects.postgresql as pg
 from datetime import datetime, timezone
-from typing import Optional
+# from typing import Optional
+
+import sqlalchemy.dialects.postgresql as pg
+from sqlmodel import SQLModel, Field, Column, String, DateTime, Relationship, text, ForeignKey
 
 
 class UserRole(SQLModel, table=True):
     __tablename__ = "user_roles"
 
     user_uid: uuid.UUID = Field(
-        foreign_key="users.user_uid",
-        primary_key=True
+        sa_column=Column(
+            pg.UUID(as_uuid=True),
+            ForeignKey(
+                "users.user_uid",
+                ondelete="CASCADE"
+            ),
+            primary_key=True,
+            nullable=False,
+        )
     )
 
     role_uid: uuid.UUID = Field(
-        foreign_key="roles.role_uid",
-        primary_key=True
+        sa_column=Column(
+            pg.UUID(as_uuid=True),
+            ForeignKey(
+                "roles.role_uid",
+                ondelete="CASCADE"
+            ),
+            primary_key=True,
+            nullable=False,
+        )
     )
 
     assigned_at: datetime = Field(
         default_factory=lambda: datetime.now(timezone.utc),
         sa_column=Column(
             DateTime(timezone=True),
-            nullable=False
-        )
+            nullable=False,
+        ),
     )
 
     def __repr__(self) -> str:
@@ -53,11 +68,12 @@ class User(SQLModel, table=True):
         )
     )
 
-    last_name: str = Field(
+    last_name: str | None = Field(
+        default=None,
         sa_column=Column(
             pg.VARCHAR(50),
-            nullable=True
-        )
+            nullable=True,
+        ),
     )
     
     email: str = Field(
@@ -65,11 +81,12 @@ class User(SQLModel, table=True):
             String,
             unique=True,
             nullable=False,
-            index=True
-        )
+            index=True,
+        ),
     )
     
     username: str = Field(
+        max_length=16,
         sa_column=Column(
             String,
             unique=True,
@@ -78,7 +95,7 @@ class User(SQLModel, table=True):
         )
     )
     
-    password_hash: Optional[str] = Field(
+    password_hash: str | None = Field(
         default=None,
         sa_column=Column(
             pg.TEXT,
@@ -94,7 +111,7 @@ class User(SQLModel, table=True):
         )
     )
 
-    avatar_url: Optional[str] = Field(
+    avatar_url: str | None = Field(
         default=None,
         sa_column=Column(
             pg.VARCHAR(255),
@@ -102,7 +119,7 @@ class User(SQLModel, table=True):
         )
     )
     
-    bio: Optional[str] = Field(
+    bio: str | None = Field(
         default=None,
         sa_column=Column(
             pg.TEXT,
@@ -122,8 +139,8 @@ class User(SQLModel, table=True):
         default_factory=lambda: datetime.now(timezone.utc),
         sa_column=Column(
             DateTime(timezone=True),
-            nullable=False
-        )
+            nullable=False,
+        ),
     )
     
     updated_at: datetime = Field(
@@ -164,13 +181,13 @@ class Role(SQLModel, table=True):
     )
 
     name: str = Field(
-        max_length=50,
+        max_length=16,
         unique=True,
         index=True,
         nullable=False
     )
 
-    description: Optional[str] = Field(
+    description: str | None = Field(
         default=None,
         sa_column=Column(
             pg.TEXT,

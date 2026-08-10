@@ -134,3 +134,41 @@ class RevokedAccessToken(AppException):
             status_code=status.HTTP_401_UNAUTHORIZED,
         )
 
+
+class InvalidVerificationTokenError(AppException):
+    """
+    Invalid Email Verification Token Error
+    """
+
+    def __init__(self):
+        super().__init__(
+            message="Invalid Verification Token.",
+            error_code="INVALID_VERIFICATION_TOKEN",
+            status_code=status.HTTP_401_UNAUTHORIZED,
+        )
+
+class VerificationTokenExpiredError(AppException):
+    """
+    Verification  Token Expired
+    """
+
+    def __init__(self):
+        super().__init__(
+            message="Verification Token Expired",
+            error_code="VERIFICATION_TOKEN_EXPIRED",
+            status_code=status.HTTP_401_UNAUTHORIZED,
+        )
+
+class VerificationTokenAlreadyUsedError(AppException):
+
+    """
+    Verification Token Already Used
+    """
+
+    def __init__(self):
+        super().__init__(
+            message="Verification Token Already Used",
+            error_code="VERIFICATION_TOKEN_ALREADY_USED",
+            status_code=status.HTTP_401_UNAUTHORIZED,
+        )
+
