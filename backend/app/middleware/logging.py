@@ -16,7 +16,7 @@ async def logging_middleware(request: Request, call_next):
     response = await call_next(request)
 
     elapsed_time: float = time.perf_counter()  - start_time
-    request_uid: str = request.state.request_uid
+    request_uid: str = str(request.state.request_uid)
 
     response_code = response.status_code
 

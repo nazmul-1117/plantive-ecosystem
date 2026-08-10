@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict, EmailStr
 from datetime import datetime
 import uuid
 from sqlmodel import Field
@@ -42,9 +42,12 @@ class UserCreate(BaseModel):
     password: str
 
 class UserRead(BaseModel):
+
+    model_config = ConfigDict(from_attributes=True)
+
     user_uid: uuid.UUID
 
-    ftrst_name: str
+    first_name: str
     last_name: str | None = None
 
     email: str
@@ -139,3 +142,9 @@ class UserRoleRead(BaseModel):
 
 class UserRoleUpdate(BaseModel):
     pass
+
+
+# Original Auth Model
+class EmailVerificationResponse(BaseModel):
+    message: str
+    email: EmailStr

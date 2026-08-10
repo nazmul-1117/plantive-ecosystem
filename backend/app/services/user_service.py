@@ -1,20 +1,36 @@
+
+from datetime import datetime, timezone, timedelta
+
 from sqlalchemy.exc import SQLAlchemyError
 
 from app.schemas.auth_schema import UserCreate
 from app.models.auth_model import User
+from app.models.verification_token_model import VerificationToken
+
 from app.core.security import generate_hash_password
+from app.core.tokens import hash_token, generate_verification_token
+from app.core.config import settings
 
 from app.repositories.user_repository import UserRepository
 from app.repositories.role_repository import RoleRepository
 from app.repositories.user_role_repository import UserRoleRepository
+from app.repositories.verification_token_repository import VerificationTokenRepository
 
 from app.exceptions.user_exception import (
     EmailAlreadyExists,
-    UsernameAlreadyExists
+    UsernameAlreadyExists,
+    UserNotFound
 )
 from app.exceptions.role_exception import RoleNotFound
+from app.exceptions.auth_exception import (
+    InvalidVerificationTokenError,
+    VerificationTokenExpiredError,
+    VerificationTokenAlreadyUsedError
+)
 
 from app.constants.roles_constant import RoleConstant
+
+from app.services.email_service import EmailService
 
 
 # UserService
@@ -33,29 +49,33 @@ class UserService:
             self,
             user_repository: UserRepository,
             role_repository: RoleRepository,
-            user_role_repository: UserRoleRepository
+            user_role_repository: UserRoleRepository,
+            verification_token_repository: VerificationTokenRepository,
+            email_service: EmailService
     ):
         self.user_repository = user_repository
         self.role_repository = role_repository
         self.user_role_repository = user_role_repository
+        self.verification_token_repository = verification_token_repository
+        self.email_service = email_service
     
     async def register_user(
             self,
             user_data: UserCreate,
     ) -> User:
         
-        user = await self.user_repository.get_by_email(
+        existing_user = await self.user_repository.get_by_email(
             email=user_data.email,
         )
         
-        if user is not None:
+        if existing_user is not None:
             raise EmailAlreadyExists()
 
-        user = await self.user_repository.get_by_username(
+        existing_user = await self.user_repository.get_by_username(
             username=user_data.username,
         )
 
-        if user is not None:
+        if existing_user is not None:
             raise UsernameAlreadyExists()
         
         # user_data.password = generate_hash_password(user_data.password)
@@ -85,6 +105,22 @@ class UserService:
             role_uid=role_table.role_uid,
         )
 
+        # Generate row token
+        raw_token, token_hash = generate_verification_token()
+
+        verification_token = VerificationToken(
+            user_uid = user_table.user_uid,
+            token_hash = token_hash,
+            expires_at = (
+                datetime.now(timezone.utc)
+                + timedelta(minutes=30)
+            ),
+        )
+
+        await self.verification_token_repository.create_token(
+            db_token=verification_token
+        )
+
         try:
             await self.user_repository.commit()
             await self.user_repository.refresh(user_table)
@@ -92,6 +128,18 @@ class UserService:
         except SQLAlchemyError:
             await self.user_repository.rollback()
             raise
+
+        verification_url = (
+            f"{settings.BACKEND_PUBLIC_URL}"
+            f"/api/{settings.API_VERSION}/auth/verify"
+            f"?token={raw_token}"
+            # f"http://127.0.0.1:8000/api/v1/auth/verify"
+        )
+
+        await self.email_service.send_verification_email(
+            email = user_table.email,
+            verification_url = verification_url
+        )
 
         return user_table
     
@@ -112,3 +160,67 @@ class UserService:
 
     async def change_password():
         pass
+
+    async def verify_email(
+            self,
+            raw_token: str
+    ) -> User:
+
+        """
+        Verifies a user's email using provided raw token.
+        Enforce single-use protection and expiration checks.
+        """
+
+        # 1. compute hash to query
+        token_hash: str = hash_token(raw_token)
+        db_token: VerificationToken | None = await self.verification_token_repository.get_by_hash(token_hash)
+
+        # 2. check token exist or not
+        if db_token is None:
+            raise InvalidVerificationTokenError()
+
+        # 3. check expiration
+        now = datetime.now(timezone.utc)
+
+        if db_token.revoked_at is not None:
+            raise VerificationTokenExpiredError()
+
+        if db_token.used_at is not None:
+            raise VerificationTokenAlreadyUsedError()
+
+        if db_token.expires_at <= now:
+            raise VerificationTokenExpiredError()
+
+        # 5. Fetch assosiate user
+        user: User = await self.user_repository.get_by_uid(
+            user_uid = db_token.user_uid
+        )
+
+        if not user:
+            raise UserNotFound()
+
+        # 5. ALready verified or not
+        if user.is_verified:
+            db_token.used_at = now
+
+            await self.verification_token_repository.update(db_token)
+            await self.verification_token_repository.commit()
+
+            return user
+
+        # 6. Update userstate
+        user.is_verified = True
+        db_token.used_at = now
+        
+        try: 
+            await self.user_repository.update(user)
+            await self.verification_token_repository.update(db_token)
+
+            await self.user_repository.commit()
+            await self.user_repository.refresh(user)
+
+        except SQLAlchemyError:
+            await self.user_repository.rollback()
+            raise
+
+        return user
