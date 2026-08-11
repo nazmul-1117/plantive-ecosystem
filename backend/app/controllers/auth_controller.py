@@ -1,11 +1,12 @@
-from fastapi import Depends, Query
+from fastapi import Depends, Query, BackgroundTasks
 from typing import Annotated
 
 from app.dependencies.auth_dependency import get_refresh_token_payload, get_access_token_payload
-from app.dependencies.service_dependency import get_auth_service, get_user_service
+from app.dependencies.service_dependency import get_auth_service, get_user_service, get_email_service
 
 from app.services.auth_service import AuthService
 from app.services.user_service import UserService
+from app.services.email_service import EmailService
 
 from app.models.auth_model import User
 
@@ -18,18 +19,25 @@ logger = logging.getLogger(__name__)
 
 
 async def register_user(
+        background_task: BackgroundTasks,
         user_data: UserCreate,
-        user_service: Annotated[UserService, Depends(get_user_service)]
+        user_service: Annotated[UserService, Depends(get_user_service)],
+        email_service: Annotated[EmailService, Depends(get_email_service)],
 ) -> UserResponse:
     
-    user: User = await user_service.register_user(user_data)
+    user, verification_url = await user_service.register_user(user_data)
 
+    background_task.add_task(
+        email_service.send_verification_email,
+        email=user.email,
+        verification_url=verification_url
+    )
+    
     return UserResponse(
         success=True,
         message="User created successfully",
         data=UserRead.model_validate(user)
     )
-
 
 async def login_user(
         login_data: LoginRequest,
@@ -40,7 +48,6 @@ async def login_user(
         login_credentials=login_data,
     )
 
-
 async def refresh_access_token(
         token_payload: Annotated[TokenPayload, Depends(get_refresh_token_payload)],
         auth_service: Annotated[AuthService, Depends(get_auth_service)]
@@ -50,7 +57,6 @@ async def refresh_access_token(
         token_payload=token_payload,
     )
 
-
 async def logout_user(
     token_payload: Annotated[TokenPayload, Depends(get_access_token_payload)],
     auth_service: Annotated[AuthService, Depends(get_auth_service)]
@@ -59,7 +65,6 @@ async def logout_user(
     return await auth_service.logout(
         token_payload=token_payload,
     )
-
 
 async def verify_email(
         user_service: Annotated[UserService, Depends(get_user_service)],
@@ -73,18 +78,26 @@ async def verify_email(
         email=user.email
     )
 
-
 async def forgot_password(
+        background_task: BackgroundTasks,
         user_service: Annotated[UserService, Depends(get_user_service)],
         auth_service: Annotated[AuthService, Depends(get_auth_service)],
+        email_service: Annotated[EmailService, Depends(get_email_service)],
         forgot_data: ForgotPasswordRequestSchema,
 ) -> ForgotPasswordResponseSchema:
     
     email: str = forgot_data.email
     user: User = await user_service.get_by_email(email)
 
-    return await auth_service.forgot_password(user)
+    response, reset_url = await auth_service.forgot_password(user)
 
+    background_task.add_task(
+        email_service.send_password_reset_email,
+        email=email,
+        reset_url=reset_url
+    )
+
+    return response
 
 async def reset_password(
         auth_service: Annotated[AuthService, Depends(get_auth_service)],

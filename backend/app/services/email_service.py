@@ -30,7 +30,6 @@ class EmailService:
             autoescape = True
         )
 
-
     async def _send_raw_email(
             self,
             recipient: str,
@@ -101,7 +100,6 @@ class EmailService:
 
             raise RuntimeError(f"Unnable to connect to mail server: {exc}") from exc
         
-
     async def send_verification_email(
             self,
             email: str,
@@ -133,6 +131,32 @@ class EmailService:
 
         text_template = self.template_env.get_template("verify_email.txt")
         html_template = self.template_env.get_template("verify_email.html")
+
+        text_content = text_template.render(context)
+        html_content = html_template.render(context)
+
+        return await self._send_raw_email(
+            recipient=email,
+            subject=subject,
+            text_content=text_content,
+            html_content=html_content
+        )
+
+    async def send_password_reset_email(
+            self,
+            email: str,
+            reset_url: str,
+    ) -> bool:
+
+        subject = f"Reset your {self.from_name} password"
+
+        context = {
+            "project_name": self.from_name,
+            "reset_url": reset_url
+        }
+
+        text_template = self.template_env.get_template("password_reset.txt")
+        html_template = self.template_env.get_template("password_reset.html")
 
         text_content = text_template.render(context)
         html_content = html_template.render(context)
