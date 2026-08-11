@@ -14,14 +14,13 @@ from app.middleware.register import register_middleware
 #context manager
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+
     print(">>>Server Started Successfully =====>")
-    
     await init_redis(app)
 
     yield
 
     await app.state.redis.aclose()
-
     print(">>>Server Ended successfully =====>")
 
 #app metadata
@@ -44,31 +43,27 @@ register_middleware(app)
 
 
 #routers
+
+## auth router
 app.include_router(
     router=auth_router.auth_router,
     prefix=f"{API_PREFIX}/auth",
     tags=['Auth']
 )
 
+## Plant router
 app.include_router(
     router = plant_router.router,
     prefix = f"{API_PREFIX}/plants",
     tags = ["Plants"]
 )
 
-
-
-
+# Root Endpoint
 @app.get('/', status_code = status.HTTP_200_OK)
-def root() -> dict:
-
-    # print()
-    
+async def root() -> dict[str, str | int]:
     return {
-        "status": 200,
-        "extra-data": settings.DATABASE_URL,
-        "message": "Welcome to Plative Ecosystem, This is landing page ......",
+        "status": status.HTTP_200_OK,
+        "application": "Plantive",
+        "message": "Welcome to the Plantive Ecosystem",
+        "version": settings.API_VERSION,
     }
-
-
-

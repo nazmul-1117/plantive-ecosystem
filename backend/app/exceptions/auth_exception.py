@@ -134,7 +134,6 @@ class RevokedAccessToken(AppException):
             status_code=status.HTTP_401_UNAUTHORIZED,
         )
 
-
 class InvalidVerificationTokenError(AppException):
     """
     Invalid Email Verification Token Error
