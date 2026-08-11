@@ -1,7 +1,7 @@
 import secrets
 import hashlib
 
-def generate_verification_token() -> tuple[str, str]:
+def generate_secret_token() -> tuple[str, str]:
     """
     Generates a secure random verification token.
     

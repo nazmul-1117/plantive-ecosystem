@@ -1,7 +1,6 @@
 from fastapi import Depends
 from typing import Annotated
 from redis.asyncio import Redis
-from sqlmodel.ext.asyncio.session import AsyncSession
 
 from app.services.user_service import UserService
 from app.services.auth_service import AuthService
@@ -14,16 +13,17 @@ from app.repositories.role_repository import RoleRepository
 from app.repositories.user_repository import UserRepository
 from app.repositories.user_role_repository import UserRoleRepository
 from app.repositories.verification_token_repository import VerificationTokenRepository
+from app.repositories.password_reset_token_repository import PasswordResetTokenRepository
 
-from app.dependencies.repository_dependency import get_role_repository, get_user_repository, get_user_role_repository, get_verification_token_repository
+from app.dependencies.repository_dependency import (
+    get_role_repository, get_user_repository, get_user_role_repository,
+    get_verification_token_repository, get_password_reset_token_repository
+)
 from app.dependencies.redis_dependency import get_redis
-
-from app.core.database import get_session
 
 
 def get_email_service() -> EmailService:
     return EmailService()
-
 
 def get_user_service(
         role_repository: Annotated[RoleRepository , Depends(get_role_repository)],
@@ -52,11 +52,15 @@ def get_token_service(
 def get_auth_service(
         token_service: Annotated[TokenService , Depends(get_token_service)],
         user_repository: Annotated[UserRepository , Depends(get_user_repository)],
+        password_reset_token_repository: Annotated[PasswordResetTokenRepository, Depends(get_password_reset_token_repository)],
+        email_service: Annotated[EmailService, Depends(get_email_service)],
 ) -> AuthService:
     
     return AuthService(
         token_service=token_service,
-        user_repository=user_repository
+        user_repository=user_repository,
+        password_reset_token_repository = password_reset_token_repository,
+        email_service = email_service
     )
 
 def get_role_service(

@@ -8,7 +8,7 @@ from app.models.auth_model import User
 from app.models.verification_token_model import VerificationToken
 
 from app.core.security import generate_hash_password
-from app.core.tokens import hash_token, generate_verification_token
+from app.core.tokens import hash_token, generate_secret_token
 from app.core.config import settings
 
 from app.repositories.user_repository import UserRepository
@@ -106,7 +106,7 @@ class UserService:
         )
 
         # Generate row token
-        raw_token, token_hash = generate_verification_token()
+        raw_token, token_hash = generate_secret_token()
 
         verification_token = VerificationToken(
             user_uid = user_table.user_uid,
@@ -152,6 +152,30 @@ class UserService:
             user_uid=user_uid,
         )
 
+    async def get_by_email(
+            self,
+            email: str
+    ) -> User:
+
+        user: User | None = await self.user_repository.get_by_email(email)
+
+        if user is None:
+            raise UserNotFound()
+
+        return user
+
+    async def get_by_username(
+            self,
+            username: str
+    ) -> User | None:
+
+        user: User | None = await self.user_repository.get_by_username(username)
+
+        if user is None:
+            raise UserNotFound()
+
+        return user
+        
     async def update_profile():
         pass
 

@@ -9,8 +9,9 @@ from app.services.user_service import UserService
 
 from app.models.auth_model import User
 
-from app.schemas.auth_schema import UserCreate, LoginRequest, LoginResponse, UserResponse, UserRead, LogoutResponse, EmailVerificationResponse
 from app.schemas.token_schema import AccessTokenResponse, TokenPayload
+from app.schemas.auth_schema import UserCreate, LoginRequest, LoginResponse, UserResponse, UserRead, LogoutResponse, EmailVerificationResponse
+from app.schemas.password_reset_schema import ResetPasswordRequestSchema, ForgotPasswordRequestSchema, ForgotPasswordResponseSchema, ResetPasswordResponseSchema
 
 import logging
 logger = logging.getLogger(__name__)
@@ -71,3 +72,30 @@ async def verify_email(
         message="Email Verified Successfully",
         email=user.email
     )
+
+
+async def forgot_password(
+        user_service: Annotated[UserService, Depends(get_user_service)],
+        auth_service: Annotated[AuthService, Depends(get_auth_service)],
+        forgot_data: ForgotPasswordRequestSchema,
+) -> ForgotPasswordResponseSchema:
+    
+    email: str = forgot_data.email
+    user: User = await user_service.get_by_email(email)
+
+    return await auth_service.forgot_password(user)
+
+
+async def reset_password(
+        auth_service: Annotated[AuthService, Depends(get_auth_service)],
+        reset_data: ResetPasswordRequestSchema,
+        token: str = Query(..., description="Raw password reset token from the email link"),
+) -> ResetPasswordResponseSchema:
+    
+    return await auth_service.reset_password(
+        reset_data=reset_data,
+        raw_token=token
+    )
+
+
+    

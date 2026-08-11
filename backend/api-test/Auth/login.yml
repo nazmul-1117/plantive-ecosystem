@@ -9,17 +9,17 @@ http:
   body:
     type: json
     data: |-
-      
+      // admin
       // {
-      //   "username": "ayesha_garden",
-      //   "password": "SecurePass@456"
+      //   "username": "nazmul_dev",
+      //   "password": "MyStrongPassword@123"
       // }
 
 
-      // admin
+      // user
       {
-        "username": "nazmul_dev",
-        "password": "MyStrongPassword@123"
+        "username": "riya_rp",
+        "password": "plantive124"
       }
 
 
