@@ -1,21 +1,18 @@
 from fastapi import Depends, Query, BackgroundTasks
 from typing import Annotated
 
-from app.dependencies.auth_dependency import get_refresh_token_payload, get_access_token_payload
+from app.dependencies.auth_dependency import get_refresh_token_payload, get_access_token_payload, get_current_active_user
 from app.dependencies.service_dependency import get_auth_service, get_user_service, get_email_service, get_token_service
 
 from app.services.auth_service import AuthService
 from app.services.user_service import UserService
 from app.services.email_service import EmailService
-from app.services.token_service import TokenService
 
 from app.models.auth_model import User
 
 from app.schemas.token_schema import AccessTokenResponse, TokenPayload
 from app.schemas.auth_schema import UserCreate, LoginRequest, LoginResponse, UserResponse, UserRead, LogoutResponse, EmailVerificationResponse, ChangePasswordRequest, ChangePasswordResponse
 from app.schemas.password_reset_schema import ResetPasswordRequestSchema, ForgotPasswordRequestSchema, ForgotPasswordResponseSchema, ResetPasswordResponseSchema
-
-from app.exceptions.auth_exception import RevokedAccessToken
 
 import logging
 logger = logging.getLogger(__name__)
@@ -124,3 +121,8 @@ async def change_password(
         user_uid = token_payload.sub,
     )
     
+async def get_me(
+        current_user: Annotated[User, Depends(get_current_active_user)],
+) -> UserRead:
+
+    return UserRead.model_validate(current_user)
