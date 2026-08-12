@@ -51,18 +51,16 @@ class UserService:
             role_repository: RoleRepository,
             user_role_repository: UserRoleRepository,
             verification_token_repository: VerificationTokenRepository,
-            email_service: EmailService
     ):
         self.user_repository = user_repository
         self.role_repository = role_repository
         self.user_role_repository = user_role_repository
         self.verification_token_repository = verification_token_repository
-        self.email_service = email_service
     
     async def register_user(
             self,
             user_data: UserCreate,
-    ) -> User:
+    ) -> tuple[User, str]:
         
         existing_user = await self.user_repository.get_by_email(
             email=user_data.email,
@@ -130,18 +128,12 @@ class UserService:
             raise
 
         verification_url = (
-            f"{settings.BACKEND_PUBLIC_URL}"
-            f"/api/{settings.API_VERSION}/auth/verify"
+            f"{settings.FRONTEND_PUBLIC_URL}"
+            f"/verify-email"
             f"?token={raw_token}"
-            # f"http://127.0.0.1:8000/api/v1/auth/verify"
         )
 
-        await self.email_service.send_verification_email(
-            email = user_table.email,
-            verification_url = verification_url
-        )
-
-        return user_table
+        return user_table, verification_url
     
     async def get_by_uid(
             self,

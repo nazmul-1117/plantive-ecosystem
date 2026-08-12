@@ -29,8 +29,7 @@ def get_user_service(
         role_repository: Annotated[RoleRepository , Depends(get_role_repository)],
         user_repository: Annotated[UserRepository , Depends(get_user_repository)],
         user_role_repository: Annotated[UserRoleRepository , Depends(get_user_role_repository)],
-        verification_token_repository: Annotated[VerificationTokenRepository, Depends(get_verification_token_repository)],
-        email_service: Annotated[EmailService, Depends(get_email_service)]
+        verification_token_repository: Annotated[VerificationTokenRepository, Depends(get_verification_token_repository)]
 ) -> UserService:
     
     return UserService(
@@ -38,7 +37,6 @@ def get_user_service(
         role_repository = role_repository,
         user_role_repository = user_role_repository,
         verification_token_repository = verification_token_repository,
-        email_service = email_service,
     )
 
 def get_token_service(
@@ -53,14 +51,12 @@ def get_auth_service(
         token_service: Annotated[TokenService , Depends(get_token_service)],
         user_repository: Annotated[UserRepository , Depends(get_user_repository)],
         password_reset_token_repository: Annotated[PasswordResetTokenRepository, Depends(get_password_reset_token_repository)],
-        email_service: Annotated[EmailService, Depends(get_email_service)],
 ) -> AuthService:
     
     return AuthService(
         token_service=token_service,
         user_repository=user_repository,
         password_reset_token_repository = password_reset_token_repository,
-        email_service = email_service
     )
 
 def get_role_service(

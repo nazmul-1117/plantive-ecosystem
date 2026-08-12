@@ -5,16 +5,16 @@ info:
 
 http:
   method: POST
-  url: "{{AUTH_URL}}/signup"
+  url: "{{AUTH_URL}}/register"
   body:
     type: json
     data: |-
       {
-        "first_name": "Ayesha",
-        "last_name": "Rahman",
-        "email": "ayesha.rahman@example.com",
-        "username": "ayesha_garden",
-        "password": "SecurePass@456"
+        "first_name": "Nadia",
+        "last_name": "Karim",
+        "email": "rires35516@rpaintel.com",
+        "username": "nadia_karim82",
+        "password": "NadiaTest@8274"
       }
   auth: inherit
 
