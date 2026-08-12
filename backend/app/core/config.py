@@ -45,7 +45,7 @@ class Settings(BaseSettings):
     SMTP_FROM_NAME: str
 
 
-    BACKEND_PUBLIC_URL: str
+    FRONTEND_PUBLIC_URL: str
 
 
     model_config = SettingsConfigDict(

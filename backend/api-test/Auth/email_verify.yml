@@ -5,7 +5,11 @@ info:
 
 http:
   method: GET
-  url: "{{AUTH_URL}}/verify"
+  url: "{{AUTH_URL}}/verify-email?token=Xsd-8llhnFtByay70JiJvYH6xleZaDK1GHR_plqDRHA"
+  params:
+    - name: token
+      value: Xsd-8llhnFtByay70JiJvYH6xleZaDK1GHR_plqDRHA
+      type: query
   auth: inherit
 
 settings:

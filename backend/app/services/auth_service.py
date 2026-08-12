@@ -9,7 +9,6 @@ from app.schemas.token_schema import AccessTokenResponse, TokenPayload
 from app.schemas.password_reset_schema import ForgotPasswordResponseSchema, ResetPasswordResponseSchema, ResetPasswordRequestSchema
 
 from app.services.token_service import TokenService
-from app.services.email_service import EmailService
 
 from app.repositories.user_repository import UserRepository
 from app.repositories.password_reset_token_repository import PasswordResetTokenRepository
@@ -41,12 +40,10 @@ class AuthService:
             token_service: TokenService,
             user_repository: UserRepository,
             password_reset_token_repository: PasswordResetTokenRepository,
-            email_service: EmailService
     ):
         self.token_service = token_service
         self.user_repository = user_repository
         self.password_reset_token_repository = password_reset_token_repository
-        self.email_service = email_service
     
     async def login(
             self,
@@ -118,7 +115,7 @@ class AuthService:
     async def forgot_password(
             self,
             user: User,
-    ) -> ForgotPasswordResponseSchema:
+    ) -> tuple[ForgotPasswordResponseSchema | str]:
         
         if not user.is_active:
             raise UserInactive() 
@@ -149,21 +146,20 @@ class AuthService:
             raise
 
         reset_url = (
-            f"{settings.BACKEND_PUBLIC_URL}"
-            f"/api/{settings.API_VERSION}/auth"
+            f"{settings.FRONTEND_PUBLIC_URL}"
             f"/reset-password"
             f"?token={raw_token}"
         )
 
-        await self.email_service.send_verification_email(
-            email = user.email,
-            verification_url = reset_url
+        response = ForgotPasswordResponseSchema(
+            status=True,
+            details=(
+                "If an account exists with this email, "
+                "a password reset link has been sent."
+            )
         )
 
-        return ForgotPasswordResponseSchema(
-            status=True,
-            details="Forgot Password verification link send to your email",
-        )
+        return response, reset_url
 
     async def reset_password(
             self,
