@@ -8,7 +8,7 @@ class ForgotPasswordResponseSchema(BaseModel):
     details: str
 
 class ResetPasswordRequestSchema(BaseModel):
-    new_password: str = Field(min_length=6)
+    new_password: str = Field(min_length=8)
     confirm_new_password: str
 
     @model_validator(mode="after")

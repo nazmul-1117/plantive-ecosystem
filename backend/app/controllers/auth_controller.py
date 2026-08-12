@@ -2,7 +2,7 @@ from fastapi import Depends, Query, BackgroundTasks
 from typing import Annotated
 
 from app.dependencies.auth_dependency import get_refresh_token_payload, get_access_token_payload, get_current_active_user
-from app.dependencies.service_dependency import get_auth_service, get_user_service, get_email_service, get_token_service
+from app.dependencies.service_dependency import get_auth_service, get_user_service, get_email_service
 
 from app.services.auth_service import AuthService
 from app.services.user_service import UserService
@@ -11,7 +11,9 @@ from app.services.email_service import EmailService
 from app.models.auth_model import User
 
 from app.schemas.token_schema import AccessTokenResponse, TokenPayload
-from app.schemas.auth_schema import UserCreate, LoginRequest, LoginResponse, UserResponse, UserRead, LogoutResponse, EmailVerificationResponse, ChangePasswordRequest, ChangePasswordResponse
+from app.schemas.auth_schema import LoginRequest, LoginResponse, LogoutResponse, EmailVerificationResponse
+from app.schemas.password_schema import ChangePasswordRequest, ChangePasswordResponse
+from app.schemas.user_schema import UserCreateRequest, UserResponse, UserReadResponse
 from app.schemas.password_reset_schema import ResetPasswordRequestSchema, ForgotPasswordRequestSchema, ForgotPasswordResponseSchema, ResetPasswordResponseSchema
 
 import logging
@@ -20,7 +22,7 @@ logger = logging.getLogger(__name__)
 
 async def register_user(
         background_task: BackgroundTasks,
-        user_data: UserCreate,
+        user_data: UserCreateRequest,
         user_service: Annotated[UserService, Depends(get_user_service)],
         email_service: Annotated[EmailService, Depends(get_email_service)],
 ) -> UserResponse:
@@ -36,7 +38,7 @@ async def register_user(
     return UserResponse(
         success=True,
         message="User created successfully",
-        data=UserRead.model_validate(user)
+        data=UserReadResponse.model_validate(user)
     )
 
 async def login_user(
@@ -123,6 +125,6 @@ async def change_password(
     
 async def get_me(
         current_user: Annotated[User, Depends(get_current_active_user)],
-) -> UserRead:
+) -> UserReadResponse:
 
-    return UserRead.model_validate(current_user)
+    return UserReadResponse.model_validate(current_user)

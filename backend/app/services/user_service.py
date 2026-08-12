@@ -4,9 +4,8 @@ from datetime import datetime, timezone, timedelta
 
 from sqlalchemy.exc import SQLAlchemyError
 
-from app.schemas.auth_schema import UserCreate
-from app.schemas.auth_schema import ChangePasswordRequest, ChangePasswordResponse
-from app.schemas.token_schema import TokenPayload
+from app.schemas.user_schema import UserCreateRequest
+from app.schemas.password_schema import ChangePasswordRequest, ChangePasswordResponse
 
 from app.models.auth_model import User
 from app.models.verification_token_model import VerificationToken
@@ -14,7 +13,6 @@ from app.models.verification_token_model import VerificationToken
 from app.core.security import generate_hash_password, verify_hashed_password
 from app.core.tokens import hash_token, generate_secret_token
 from app.core.config import settings
-from app.core.jwt import decode_token
 
 from app.repositories.user_repository import UserRepository
 from app.repositories.role_repository import RoleRepository
@@ -63,7 +61,7 @@ class UserService:
     
     async def register_user(
             self,
-            user_data: UserCreate,
+            user_data: UserCreateRequest,
     ) -> tuple[User, str]:
         
         existing_user = await self.user_repository.get_by_email(
