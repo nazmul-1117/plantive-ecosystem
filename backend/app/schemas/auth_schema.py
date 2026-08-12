@@ -1,4 +1,4 @@
-from pydantic import BaseModel, ConfigDict, EmailStr
+from pydantic import BaseModel, ConfigDict, EmailStr, model_validator
 from datetime import datetime
 import uuid
 from sqlmodel import Field
@@ -148,3 +148,25 @@ class UserRoleUpdate(BaseModel):
 class EmailVerificationResponse(BaseModel):
     message: str
     email: EmailStr
+
+class ChangePasswordRequest(BaseModel):
+    old_password: str = Field(min_length=8)
+    new_password: str = Field(min_length=8)
+    confirm_new_password: str
+
+    @model_validator(mode="after")
+    def passwords_match(self):
+       if self.new_password != self.confirm_new_password:
+           raise ValueError("New passwords do not match")
+
+       if self.old_password == self.new_password:
+           raise ValueError(
+               "New password must be different from the old password"
+           )
+
+       return self
+
+
+class ChangePasswordResponse(BaseModel):
+    status: bool
+    details: str

@@ -1,6 +1,6 @@
 from fastapi import APIRouter, status
 from app.schemas.token_schema import AccessTokenResponse
-from app.schemas.auth_schema import LoginResponse, LogoutResponse, UserResponse, EmailVerificationResponse
+from app.schemas.auth_schema import LoginResponse, LogoutResponse, UserResponse, EmailVerificationResponse, ChangePasswordResponse
 from app.schemas.password_reset_schema import ForgotPasswordResponseSchema, ResetPasswordResponseSchema
 
 from app.controllers.auth_controller import (
@@ -10,7 +10,8 @@ from app.controllers.auth_controller import (
     logout_user,
     verify_email,
     forgot_password,
-    reset_password
+    reset_password,
+    change_password
 )
 
 auth_router = APIRouter()
@@ -53,6 +54,14 @@ auth_router.get(
     response_model=EmailVerificationResponse,
     summary="Verify account email address"
 )(verify_email)
+
+
+auth_router.post(
+    path="/change-password",
+    status_code=status.HTTP_200_OK,
+    response_model=ChangePasswordResponse,
+    summary="Endpoint for changing password"
+)(change_password)
 
 
 auth_router.post(

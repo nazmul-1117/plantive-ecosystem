@@ -3,11 +3,11 @@ from typing import Literal
 from pydantic import BaseModel
 
 class TokenPayload(BaseModel):
-    sub: UUID
-    jti: UUID
-    type: Literal["access", "refresh"]
-    exp: int
-    iat: int
+    sub: UUID   # user uid
+    jti: UUID   # random payload uid
+    type: Literal["access", "refresh"]  # token type
+    exp: int    # expire time
+    iat: int    # issue time
     iss: str | None = None # Issuer -> Who created (plantive-api)
     aud: str | None = None # Audience -> Who is allowed to use this token? (mobile-app, web-app, admin-panel)
 

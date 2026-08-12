@@ -1,15 +1,20 @@
 
+from uuid import UUID
 from datetime import datetime, timezone, timedelta
 
 from sqlalchemy.exc import SQLAlchemyError
 
 from app.schemas.auth_schema import UserCreate
+from app.schemas.auth_schema import ChangePasswordRequest, ChangePasswordResponse
+from app.schemas.token_schema import TokenPayload
+
 from app.models.auth_model import User
 from app.models.verification_token_model import VerificationToken
 
-from app.core.security import generate_hash_password
+from app.core.security import generate_hash_password, verify_hashed_password
 from app.core.tokens import hash_token, generate_secret_token
 from app.core.config import settings
+from app.core.jwt import decode_token
 
 from app.repositories.user_repository import UserRepository
 from app.repositories.role_repository import RoleRepository
@@ -25,12 +30,11 @@ from app.exceptions.role_exception import RoleNotFound
 from app.exceptions.auth_exception import (
     InvalidVerificationTokenError,
     VerificationTokenExpiredError,
-    VerificationTokenAlreadyUsedError
+    VerificationTokenAlreadyUsedError,
+    InvalidPasswordException
 )
 
 from app.constants.roles_constant import RoleConstant
-
-from app.services.email_service import EmailService
 
 
 # UserService
@@ -137,12 +141,17 @@ class UserService:
     
     async def get_by_uid(
             self,
-            user_uid: str,
-    ) -> User | None:
+            user_uid: UUID,
+    ) -> User:
         
-        return await self.user_repository.get_by_uid(
+        user: User | None = await self.user_repository.get_by_uid(
             user_uid=user_uid,
         )
+
+        if user is None:
+            raise UserNotFound()
+
+        return user
 
     async def get_by_email(
             self,
@@ -174,9 +183,43 @@ class UserService:
     async def delete_account():
         pass
 
-    async def change_password():
-        pass
+    async def change_password(
+            self,
+            password_data: ChangePasswordRequest,
+            user_uid: UUID
+    ):
 
+        user: User = await self.get_by_uid(user_uid)
+
+        is_password_matches: bool = verify_hashed_password(
+            password = password_data.old_password,
+            hashed_password = user.password_hash,
+        )
+
+        if not is_password_matches:
+            raise InvalidPasswordException()
+
+        hash_password: str = generate_hash_password(
+            password = password_data.new_password
+        )
+
+        user.password_hash = hash_password
+
+        user = await self.user_repository.update(user)
+        
+        try:
+            await self.user_repository.commit()
+            await self.user_repository.refresh(user)
+
+        except SQLAlchemyError:
+            await self.user_repository.rollback()
+            raise
+
+        return ChangePasswordResponse(
+            status=True,
+            details="Password changed successfully."
+        )
+    
     async def verify_email(
             self,
             raw_token: str
