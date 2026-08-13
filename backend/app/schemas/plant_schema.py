@@ -2,13 +2,6 @@ from pydantic import BaseModel
 from datetime import datetime
 import uuid
 
-# schemas/user.py
-
-# UserCreate
-# UserUpdate
-# UserRead
-# UserLogin
-
 class Plant(BaseModel):
     uid: uuid.UUID
     name: str

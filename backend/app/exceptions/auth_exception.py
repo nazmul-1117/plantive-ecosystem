@@ -171,3 +171,15 @@ class VerificationTokenAlreadyUsedError(AppException):
             status_code=status.HTTP_401_UNAUTHORIZED,
         )
 
+class InvalidPasswordException(AppException):
+    """
+    Raised when the authenticated user's current password is incorrect.
+    """
+
+    def __init__(self):
+        super().__init__(
+            message="Current password is incorrect",
+            error_code="INVALID_CURRENT_PASSWORD",
+            status_code=status.HTTP_400_BAD_REQUEST,
+        )
+
