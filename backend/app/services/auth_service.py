@@ -17,7 +17,7 @@ from app.models.auth_model import User
 from app.models.verification_token_model import PasswordResetToken
 
 from app.core.jwt import create_token
-from app.core.security import verity_hashed_password, generate_hash_password
+from app.core.security import verify_hashed_password, generate_hash_password
 from app.core.tokens import generate_secret_token, hash_token
 from app.core.config import settings
 
@@ -49,12 +49,17 @@ class AuthService:
             self,
             login_credentials: LoginRequest,
     ) -> LoginResponse:
-        
-        user: User | None = await self.user_repository.get_by_username(
-            username=login_credentials.username,
-        )
 
-        if user is None or not verity_hashed_password(
+        if "@" in login_credentials.identifier:
+            user: User | None = await self.user_repository.get_by_email(
+                        email=login_credentials.identifier,
+                    )
+        else:
+            user: User | None = await self.user_repository.get_by_username(
+                username=login_credentials.identifier,
+            )
+
+        if user is None or not verify_hashed_password(
             password=login_credentials.password,
             hashed_password=user.password_hash
         ):

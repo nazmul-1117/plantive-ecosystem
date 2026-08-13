@@ -11,23 +11,28 @@ http:
     data: |-
       // admin
       // {
-      //   "username": "nazmul_dev",
+      //   "identifier": "nazmul_dev",
       //   "password": "MyStrongPassword@123"
       // }
 
 
       // user
-      {
-        "username": "nadia_karim82",
-        "password": "NadiaTest@8274"
-      }
+      // {
+      //   "identifier": "rires35516@rpaintel.com",
+      //   "password": "plantive125"
+      // }
 
 
       // user
       // {
-      //   "username": "ayesha_garden",
+      //   "identifier": "ayesha.rahman@example.com",
       //   "password": "SecurePass@456"
       // }
+
+      {
+        "identifier": "arif.hossain47@example.com",
+        "password": "ArifTest@6392"
+      }
   auth: inherit
 
 settings:

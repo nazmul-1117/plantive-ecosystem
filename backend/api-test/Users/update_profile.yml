@@ -1,0 +1,24 @@
+info:
+  name: update_profile
+  type: http
+  seq: 2
+
+http:
+  method: PATCH
+  url: "{{USERS_URL}}/me"
+  headers:
+    - name: Authorization
+      value: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4NDJhYzM4Ny0xZGRiLTRmZjAtOTRhZC1iMzk4MGUyNjMwYTYiLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzg2NTUxMzI1LCJleHAiOjE3ODY1NTU4MjUsImp0aSI6IjQxOWZhMzAxLWI4MGUtNDdkOC04OTA4LWZmY2MzOTliYjEzZCIsImlzcyI6InBsYW50aXZlLWFwaSIsImF1ZCI6IndlYi1hcHAifQ.iPle67ZZTzqPoGr0GPesqycFxrBbFGCatayxah8IjEQ
+  body:
+    type: json
+    data: |-
+      {
+        "bio": "I will be delete soon"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
