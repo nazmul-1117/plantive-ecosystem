@@ -4,7 +4,7 @@ from datetime import datetime, timezone, timedelta
 
 from sqlalchemy.exc import SQLAlchemyError
 
-from app.schemas.user_schema import UserCreateRequest
+from app.schemas.user_schema import UserCreateRequest, UserUpdateRequest, UserDeleteRequest, UserDeleteResponse
 from app.schemas.password_schema import ChangePasswordRequest, ChangePasswordResponse
 
 from app.models.auth_model import User
@@ -34,13 +34,6 @@ from app.exceptions.auth_exception import (
 
 from app.constants.roles_constant import RoleConstant
 
-
-# UserService
-
-# get_by_id()
-# update_profile()
-# delete_account()
-# change_password()
 
 class UserService:
     """
@@ -175,11 +168,72 @@ class UserService:
 
         return user
         
-    async def update_profile():
-        pass
+    async def update_profile(
+            self,
+            user: User,
+            update_data: UserUpdateRequest
+    ) -> User:
 
-    async def delete_account():
-        pass
+        update_fields: dict = update_data.model_dump(exclude_unset=True)
+
+        if not update_fields:
+            return user
+
+        if "username" in update_fields:
+            username = update_fields["username"]
+
+            if username != user.username:
+                existing_user = await self.user_repository.get_by_username(username)
+
+                if existing_user is not None:
+                    raise UsernameAlreadyExists()
+
+        for field, value in update_fields.items():
+            setattr(user, field, value)
+
+        user = await self.user_repository.update(user=user)
+
+        try:
+            await self.user_repository.commit()
+            await self.user_repository.refresh(user)
+
+        except SQLAlchemyError:
+            await self.user_repository.rollback()
+            raise
+
+        return user
+
+    async def delete_account(
+            self,
+            user: User,
+            delete_data: UserDeleteRequest
+    ) -> UserDeleteResponse:
+        
+        is_password_matches: bool = verify_hashed_password(
+            password = delete_data.password.get_secret_value(),
+            hashed_password = user.password_hash
+        )
+
+        if not is_password_matches:
+            raise InvalidPasswordException()
+
+        is_deleeted: bool = await self.user_repository.delete(
+            user_uid=user.user_uid
+        )
+
+        if not is_deleeted:
+            raise UserNotFound()
+
+        try:
+            await self.user_repository.commit()
+
+        except SQLAlchemyError:
+            await self.user_repository.rollback()
+            raise
+
+        return UserDeleteResponse(
+            status = True
+        )        
 
     async def change_password(
             self,

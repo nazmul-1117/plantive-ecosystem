@@ -9,12 +9,20 @@ http:
   body:
     type: json
     data: |-
+      // {
+      //   "first_name": "Nadia",
+      //   "last_name": "Karim",
+      //   "email": "rires35516@rpaintel.com",
+      //   "username": "nadia_karim82",
+      //   "password": "NadiaTest@8274"
+      // }
+
       {
-        "first_name": "Nadia",
-        "last_name": "Karim",
-        "email": "rires35516@rpaintel.com",
-        "username": "nadia_karim82",
-        "password": "NadiaTest@8274"
+        "first_name": "Arif",
+        "last_name": "Hossain",
+        "email": "arif.hossain47@example.com",
+        "username": "arif_hossain47",
+        "password": "ArifTest@6392"
       }
   auth: inherit
 

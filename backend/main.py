@@ -6,6 +6,8 @@ from app.core.logging import logging
 from app.core.redis import init_redis
 
 from app.routers import plant_router, auth_router
+from app.routers.user_router import user_router, admin_user_router
+
 from app.exceptions.handlers_exception import register_exception_handler
 
 from app.middleware.register import register_middleware
@@ -49,6 +51,20 @@ app.include_router(
     router=auth_router.auth_router,
     prefix=f"{API_PREFIX}/auth",
     tags=['Auth']
+)
+
+## User router
+app.include_router(
+    router = user_router,
+    prefix = f"{API_PREFIX}/users",
+    tags = ["Users"],
+)
+
+## Admin User router
+app.include_router(
+    router = admin_user_router,
+    prefix = f"{API_PREFIX}/users",
+    tags = ["Admin Users"],
 )
 
 ## Plant router

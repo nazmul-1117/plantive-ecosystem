@@ -2,7 +2,7 @@
 from uuid import UUID
 
 from sqlmodel.ext.asyncio.session import AsyncSession
-from sqlmodel import select, exists
+from sqlmodel import select, exists, delete
 from sqlmodel.ext.asyncio.session import AsyncSession
 
 from app.models.auth_model import User
@@ -25,8 +25,15 @@ class UserRepository:
 
         return user
 
-    async def delete():
-        pass
+    async def delete(
+            self,
+            user_uid: UUID
+    ) -> bool:
+        
+        statement = delete(User).where(User.user_uid == user_uid)
+        result = await self.session.exec(statement)
+
+        return result.rowcount > 0
 
     async def update(
             self,

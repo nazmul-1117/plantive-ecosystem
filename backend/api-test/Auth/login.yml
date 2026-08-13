@@ -17,10 +17,10 @@ http:
 
 
       // user
-      {
-        "identifier": "rires35516@rpaintel.com",
-        "password": "plantive125"
-      }
+      // {
+      //   "identifier": "rires35516@rpaintel.com",
+      //   "password": "plantive125"
+      // }
 
 
       // user
@@ -28,6 +28,11 @@ http:
       //   "identifier": "ayesha.rahman@example.com",
       //   "password": "SecurePass@456"
       // }
+
+      {
+        "identifier": "arif.hossain47@example.com",
+        "password": "ArifTest@6392"
+      }
   auth: inherit
 
 settings:
