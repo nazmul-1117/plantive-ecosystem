@@ -10,7 +10,8 @@ from app.controllers.user_controllers import (
     # admin
     get_users,
     get_user_by_uid,
-    update_user
+    update_user,
+    delete_user
 )
 
 user_router = APIRouter()
@@ -63,9 +64,9 @@ admin_user_router.patch(
     summary="Update user"
 )(update_user)
 
-# admin_user_router.patch(
-#     path="/{user_uid}",
-#     status_code=status.HTTP_200_OK,
-#     response_model=UserDeleteResponse,
-#     summary="Delete user"
-# )(delete_user)
+admin_user_router.delete(
+    path="/{user_uid}",
+    status_code=status.HTTP_200_OK,
+    response_model=UserDeleteResponse,
+    summary="Delete user"
+)(delete_user)

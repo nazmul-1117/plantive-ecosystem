@@ -80,3 +80,17 @@ async def update_user(
         user = user,
         update_data = update_data
     )
+
+async def delete_user(
+        user_uid: UUID,
+        delete_data: UserDeleteRequest,
+        user_service: Annotated[UserService, Depends(get_user_service)],
+        _: Annotated[User, Depends(require_roles(RoleConstant.ADMIN, RoleConstant.MODERATOR))],
+) -> UserDeleteResponse:
+
+    user: User = await user_service.get_by_uid(user_uid)
+
+    return await user_service.delete_account(
+        user=user,
+        delete_data=delete_data
+    )
