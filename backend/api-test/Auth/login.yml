@@ -10,17 +10,17 @@ http:
     type: json
     data: |-
       // admin
-      // {
-      //   "identifier": "nazmul_dev",
-      //   "password": "MyStrongPassword@123"
-      // }
+      {
+        "identifier": "nazmul_dev",
+        "password": "MyStrongPassword@123"
+      }
 
 
       // user
-      {
-        "identifier": "rires35516@rpaintel.com",
-        "password": "plantive125"
-      }
+      // {
+      //   "identifier": "rires35516@rpaintel.com",
+      //   "password": "plantive125"
+      // }
 
 
       // user

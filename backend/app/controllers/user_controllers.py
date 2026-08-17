@@ -1,3 +1,4 @@
+from uuid import UUID
 from typing import Annotated
 
 from fastapi import Depends
@@ -51,7 +52,17 @@ async def delete_me(
 # admin
 async def get_users(
         user_service: Annotated[UserService, Depends(get_user_service)],
-        _: Annotated[User, Depends(require_roles(RoleConstant.ADMIN))],
+        _: Annotated[User, Depends(require_roles(RoleConstant.ADMIN, RoleConstant.MODERATOR))],
 ) -> list[UserReadResponse]:
 
     return await user_service.get_users()
+
+async def get_user_by_uid(
+        user_uid: UUID,
+        user_service: Annotated[UserService, Depends(get_user_service)],
+        _: Annotated[User, Depends(require_roles(RoleConstant.ADMIN, RoleConstant.MODERATOR))],
+) -> UserReadResponse:
+
+    return await user_service.get_by_uid(
+        user_uid=user_uid
+    )

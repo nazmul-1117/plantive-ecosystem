@@ -7,7 +7,9 @@ from app.controllers.user_controllers import (
     update_profile,
     delete_me,
 
-    get_users
+    # admin
+    get_users,
+    get_user_by_uid
 )
 
 user_router = APIRouter()
@@ -46,12 +48,12 @@ admin_user_router.get(
     summary="Get users list"
 )(get_users)
 
-# admin_user_router.get(
-#     path="/{user_uid}",
-#     status_code=status.HTTP_200_OK,
-#     response_model=UserReadResponse,
-#     summary="Get user by UID"
-# )(get_user_by_uid)
+admin_user_router.get(
+    path="/{user_uid}",
+    status_code=status.HTTP_200_OK,
+    response_model=UserReadResponse,
+    summary="Get user by UID"
+)(get_user_by_uid)
 
 # admin_user_router.patch(
 #     path="/{user_uid}",

@@ -1,0 +1,18 @@
+info:
+  name: get_user
+  type: http
+  seq: 2
+
+http:
+  method: GET
+  url: "{{USERS_URL}}/4742e3f6-9e3d-4bcc-bf15-a55503288bb7"
+  headers:
+    - name: Authorization
+      value: bearer  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMzNiYzI2OC0zYjBkLTQ5ZGUtYmM4Zi04MTA4YWM5ZGRkZGIiLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzg2OTQ0OTc4LCJleHAiOjE3ODY5NDk0NzgsImp0aSI6IjU2NzhkYTg1LWFiYTktNGI5OC1iYjEzLTUxMTVkNDdmMDVhOCIsImlzcyI6InBsYW50aXZlLWFwaSIsImF1ZCI6IndlYi1hcHAifQ.bQiQnemJF366-eH2Zex4AS-J7RMx_07sJQlTKH0Tsv0
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
