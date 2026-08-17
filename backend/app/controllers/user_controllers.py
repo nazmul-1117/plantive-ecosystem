@@ -66,3 +66,17 @@ async def get_user_by_uid(
     return await user_service.get_by_uid(
         user_uid=user_uid
     )
+
+async def update_user(
+        user_uid: UUID,
+        update_data: UserUpdateRequest,
+        user_service: Annotated[UserService, Depends(get_user_service)],
+        _: Annotated[User, Depends(require_roles(RoleConstant.ADMIN, RoleConstant.MODERATOR))],
+) -> UserUpdateResponse:
+
+    user: User = await user_service.get_by_uid(user_uid)
+
+    return await user_service.update_profile(
+        user = user,
+        update_data = update_data
+    )
