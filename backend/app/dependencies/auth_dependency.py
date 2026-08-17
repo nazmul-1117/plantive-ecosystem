@@ -3,6 +3,7 @@ from fastapi import Depends
 from fastapi.security import OAuth2PasswordBearer
 
 import jwt
+from uuid import UUID
 
 from app.core.config import settings
 from app.core.jwt import decode_token
@@ -22,7 +23,8 @@ from app.exceptions.auth_exception import (
 )
 from app.exceptions.user_exception import(
     UserNotFound,
-    UserInactive
+    UserInactive,
+    UserNotVerified
 )
 
 from app.dependencies.service_dependency import (
@@ -108,7 +110,7 @@ async def get_current_user(
     Raise: if something wrong, raise a value exception
     """
 
-    user_uid: str = payload.sub
+    user_uid: UUID = payload.sub
     user: User | None = await user_service.get_by_uid(user_uid)
 
     if user is None:
@@ -128,4 +130,14 @@ async def get_current_active_user(
     if not current_user.is_active:
         raise UserInactive()
     
+    return current_user
+
+
+async def get_current_verified_user(
+        current_user: Annotated[User, Depends(get_current_active_user)]
+) -> User:
+
+    if not current_user.is_verified:
+        raise UserNotVerified()
+
     return current_user

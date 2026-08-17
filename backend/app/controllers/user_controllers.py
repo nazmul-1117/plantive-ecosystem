@@ -10,6 +10,9 @@ from app.schemas.user_schema import UserReadResponse, UserUpdateRequest, UserUpd
 
 from app.dependencies.auth_dependency import get_current_active_user
 from app.dependencies.service_dependency import get_user_service
+from app.dependencies.permission_dependency import require_roles
+
+from app.constants.roles_constant import RoleConstant
 
 
 async def get_me(
@@ -43,3 +46,12 @@ async def delete_me(
         user=current_user,
         delete_data=delete_data
     )
+
+
+# admin
+async def get_users(
+        user_service: Annotated[UserService, Depends(get_user_service)],
+        _: Annotated[User, Depends(require_roles(RoleConstant.ADMIN))],
+) -> list[UserReadResponse]:
+
+    return await user_service.get_users()

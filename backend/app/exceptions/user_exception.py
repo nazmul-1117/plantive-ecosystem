@@ -37,7 +37,6 @@ class UsernameAlreadyExists(AppException):
             status_code=status.HTTP_409_CONFLICT
         )
 
-
 class UserInactive(AppException):
     """
     User account is inactive
@@ -50,4 +49,15 @@ class UserInactive(AppException):
             status_code=status.HTTP_403_FORBIDDEN,
         )
 
+class UserNotVerified(AppException):
+    """
+    User account is not verified
+    """
+
+    def __init__(self):
+        super().__init__(
+            message="User account is not verified.",
+            error_code="USER_NOT_VERIFIED",
+            status_code=status.HTTP_403_FORBIDDEN,
+        )
 

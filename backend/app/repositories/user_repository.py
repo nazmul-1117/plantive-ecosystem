@@ -45,6 +45,14 @@ class UserRepository:
 
         return user
 
+    async def get_users(
+            self,
+    ) -> list[User]:
+        
+        statement = select(User)
+        result = await self.session.exec(statement)
+        return result.all()
+    
     async def get_by_uid(
             self,
             user_uid: UUID,

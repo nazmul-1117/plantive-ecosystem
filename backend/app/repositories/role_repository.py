@@ -1,7 +1,11 @@
+from uuid import UUID
+
 from sqlmodel.ext.asyncio.session import AsyncSession
 from sqlmodel import select, exists
 
 from app.models.auth_model import Role, UserRole
+
+from app.constants.roles_constant import RoleConstant
 
 class RoleRepository:
 
@@ -13,7 +17,7 @@ class RoleRepository:
 
     async def get_by_uid(
             self,
-            role_uid: str,
+            role_uid: UUID,
     ) -> Role | None:
         
         statement = select(Role).where(Role.role_uid == role_uid)
@@ -33,13 +37,13 @@ class RoleRepository:
 
     async def list_roles(
             self,
-            role_uid: str,
+            role_uid: UUID,
     ):
         pass
 
     async def get_user_role_names(
             self,
-            user_uid: str,
+            user_uid: UUID,
     ) -> list[str]:
         
         statement = (
@@ -54,8 +58,8 @@ class RoleRepository:
     
     async def has_any_role(
             self,
-            user_uid: str,
-            required_roles: tuple[str],
+            user_uid: UUID,
+            required_roles: tuple[RoleConstant, ...],
     ) -> bool:
         
         statement = (

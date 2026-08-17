@@ -1,12 +1,9 @@
+from uuid import UUID
 
 from app.models.auth_model import Role
 from app.repositories.role_repository import RoleRepository
 
-# RoleService
-# assign_role()
-# remove_role()
-# get_roles()
-# has_role()
+from app.constants.roles_constant import RoleConstant
 
 class RoleService:
 
@@ -26,7 +23,7 @@ class RoleService:
 
     async def get_role(
             self,
-            role_uid: str
+            role_uid: UUID
     ) -> Role:
         
         return await self.role_repository.get_by_uid(
@@ -35,8 +32,8 @@ class RoleService:
 
     async def has_role(
             self,
-            user_uid: str,
-            required_roles: tuple[str],
+            user_uid: UUID,
+            required_roles: tuple[RoleConstant, ...],
     ) -> bool:
         
         """
@@ -55,8 +52,8 @@ class RoleService:
 
     async def has_any_role(
             self,
-            user_uid: str,
-            required_roles: tuple[str],
+            user_uid: UUID,
+            required_roles: tuple[RoleConstant, ...],
     ) -> bool:
         
         """
@@ -71,7 +68,7 @@ class RoleService:
     
     async def get_user_role_names(
             self,
-            user_uid: str,
+            user_uid: UUID,
     ) -> list[str]:
         
         return await self.role_repository.get_user_role_names(
