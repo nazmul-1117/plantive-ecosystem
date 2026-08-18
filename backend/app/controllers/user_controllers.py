@@ -1,4 +1,6 @@
-from uuid import UUID
+
+# controllers/user_controllers.py -> user
+
 from typing import Annotated
 
 from fastapi import Depends
@@ -11,9 +13,6 @@ from app.schemas.user_schema import UserReadResponse, UserUpdateRequest, UserUpd
 
 from app.dependencies.auth_dependency import get_current_active_user
 from app.dependencies.service_dependency import get_user_service
-from app.dependencies.permission_dependency import require_roles
-
-from app.constants.roles_constant import RoleConstant
 
 
 async def get_me(
@@ -45,52 +44,5 @@ async def delete_me(
 
     return await user_service.delete_account(
         user=current_user,
-        delete_data=delete_data
-    )
-
-
-# admin
-async def get_users(
-        user_service: Annotated[UserService, Depends(get_user_service)],
-        _: Annotated[User, Depends(require_roles(RoleConstant.ADMIN, RoleConstant.MODERATOR))],
-) -> list[UserReadResponse]:
-
-    return await user_service.get_users()
-
-async def get_user_by_uid(
-        user_uid: UUID,
-        user_service: Annotated[UserService, Depends(get_user_service)],
-        _: Annotated[User, Depends(require_roles(RoleConstant.ADMIN, RoleConstant.MODERATOR))],
-) -> UserReadResponse:
-
-    return await user_service.get_by_uid(
-        user_uid=user_uid
-    )
-
-async def update_user(
-        user_uid: UUID,
-        update_data: UserUpdateRequest,
-        user_service: Annotated[UserService, Depends(get_user_service)],
-        _: Annotated[User, Depends(require_roles(RoleConstant.ADMIN, RoleConstant.MODERATOR))],
-) -> UserUpdateResponse:
-
-    user: User = await user_service.get_by_uid(user_uid)
-
-    return await user_service.update_profile(
-        user = user,
-        update_data = update_data
-    )
-
-async def delete_user(
-        user_uid: UUID,
-        delete_data: UserDeleteRequest,
-        user_service: Annotated[UserService, Depends(get_user_service)],
-        _: Annotated[User, Depends(require_roles(RoleConstant.ADMIN, RoleConstant.MODERATOR))],
-) -> UserDeleteResponse:
-
-    user: User = await user_service.get_by_uid(user_uid)
-
-    return await user_service.delete_account(
-        user=user,
         delete_data=delete_data
     )

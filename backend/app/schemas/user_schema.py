@@ -24,7 +24,11 @@ class UserInDB(BaseModel):
     created_at: datetime
     updated_at: datetime
 
+
 class UserCreateRequest(BaseModel):
+
+    model_config = ConfigDict(extra="forbid")
+
     first_name: str = Field(
         default="anonymous",
         min_length=3,
@@ -77,7 +81,16 @@ class UserReadResponse(BaseModel):
     created_at: datetime
     updated_at: datetime
 
+class UserResponse(BaseModel):
+    success: bool
+    message: str
+    data: UserReadResponse | None = None
+
+
+
 class UserUpdateRequest(BaseModel):
+
+    model_config = ConfigDict(extra="forbid")
 
     first_name: str | None = Field(
         default=None,
@@ -106,12 +119,12 @@ class UserUpdateResponse(BaseModel):
     message: str = Field(default="Profile updated successfully")
     user: UserReadResponse
 
-class UserResponse(BaseModel):
-    success: bool
-    message: str
-    data: UserReadResponse | None = None
+
 
 class UserDeleteRequest(BaseModel):
+
+    model_config = ConfigDict(extra="forbid")
+
     password: SecretStr = Field(min_length=8)
     feedback: str | None = Field(
         default=None,

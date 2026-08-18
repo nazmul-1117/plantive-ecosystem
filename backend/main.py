@@ -2,11 +2,12 @@ from fastapi import FastAPI, status
 from contextlib import asynccontextmanager
 
 from app.core.config import settings
-from app.core.logging import logging
 from app.core.redis import init_redis
 
 from app.routers import plant_router, auth_router
-from app.routers.user_router import user_router, admin_user_router
+from app.routers.user_router import router as user_router
+
+from app.routers.admin.user_router import router as admin_user_router
 
 from app.exceptions.handlers_exception import register_exception_handler
 
@@ -56,15 +57,13 @@ app.include_router(
 ## User router
 app.include_router(
     router = user_router,
-    prefix = f"{API_PREFIX}/users",
-    tags = ["Users"],
+    prefix = API_PREFIX,
 )
 
 ## Admin User router
 app.include_router(
     router = admin_user_router,
-    prefix = f"{API_PREFIX}/users",
-    tags = ["Admin Users"],
+    prefix = f"{API_PREFIX}/admin",
 )
 
 ## Plant router

@@ -9,6 +9,9 @@ from app.services.role_service import RoleService
 from app.services.plant_service import PlantService
 from app.services.email_service import EmailService
 
+from app.services.admin.user_service import AdminUserService
+from app.services.admin.user_role_service import AdminUserRoleService
+
 from app.repositories.role_repository import RoleRepository
 from app.repositories.user_repository import UserRepository
 from app.repositories.user_role_repository import UserRoleRepository
@@ -70,3 +73,22 @@ def get_role_service(
 
 def get_plant_service() -> PlantService:
     return PlantService()
+
+
+
+# admin
+def get_admin_user_service(
+        user_repository: Annotated[UserRepository , Depends(get_user_repository)],
+) -> AdminUserService:
+
+    return AdminUserService(
+        user_repository = user_repository
+    )
+
+def get_admin_user_role_service(
+        user_role_repository: Annotated[UserRoleRepository , Depends(get_user_role_repository)],
+) -> AdminUserRoleService:
+
+    return AdminUserRoleService(
+        user_role_repository=user_role_repository
+    )

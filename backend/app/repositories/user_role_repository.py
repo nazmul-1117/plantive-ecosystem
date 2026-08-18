@@ -1,7 +1,9 @@
+from uuid import UUID
+
 from sqlmodel.ext.asyncio.session import AsyncSession
 from sqlmodel import select
 
-from app.models.auth_model import UserRole
+from app.models.auth_model import UserRole, Role
 
 class UserRoleRepository:
 
@@ -13,8 +15,8 @@ class UserRoleRepository:
     
     async def assign_role(
             self,
-            user_uid: str,
-            role_uid: str,
+            user_uid: UUID,
+            role_uid: UUID,
     ):
         user_role_data = UserRole(
             user_uid=user_uid,
@@ -25,10 +27,21 @@ class UserRoleRepository:
 
     async def get_roles(
             self,
-            user_uid: str,
-    ) -> list[UserRole]:
+            *,
+            user_uid: UUID,
+    ) -> list[Role]:
         
-        statement = select(UserRole).where(UserRole.user_uid == user_uid)
+        statement = (
+            select(Role)
+            .join(
+                UserRole,
+                UserRole.role_uid == Role.role_uid,
+            )
+            .where(
+                UserRole.user_uid == user_uid,
+            )
+            .order_by(Role.name)
+        )
         result = await self.session.exec(statement)
 
         return result.all()

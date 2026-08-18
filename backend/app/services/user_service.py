@@ -336,9 +336,3 @@ class UserService:
 
         return user
 
-    async def get_users(
-            self
-    ) -> list[User]:
-
-        return await self.user_repository.get_users()
-
