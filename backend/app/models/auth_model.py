@@ -3,7 +3,18 @@ from datetime import datetime, timezone
 # from typing import Optional
 
 import sqlalchemy.dialects.postgresql as pg
-from sqlmodel import SQLModel, Field, Column, String, DateTime, Relationship, text, ForeignKey
+from sqlmodel import (
+    Boolean, 
+    ForeignKey,
+    Field, 
+    Column, 
+    String, 
+    DateTime, 
+    SQLModel, 
+    Relationship, 
+    text,
+    true
+)
 
 
 class UserRole(SQLModel, table=True):
@@ -181,7 +192,7 @@ class Role(SQLModel, table=True):
     )
 
     name: str = Field(
-        max_length=16,
+        max_length=56,
         unique=True,
         index=True,
         nullable=False
@@ -195,8 +206,13 @@ class Role(SQLModel, table=True):
         )
     )
 
-    is_active: bool = Field (
-        default=True
+    is_active: bool = Field(
+        default=True,
+        sa_column=Column(
+            Boolean,
+            nullable=False,
+            server_default=true(),
+        ),
     )
 
     created_at: datetime = Field(
