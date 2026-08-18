@@ -61,3 +61,14 @@ class UserNotVerified(AppException):
             status_code=status.HTTP_403_FORBIDDEN,
         )
 
+class UserRoleNotFound(AppException):
+    """
+    User Role is not found
+    """
+
+    def __init__(self):
+        super().__init__(
+            message="User Role is not found",
+            error_code="USER_ROLE_NOT_FOUND",
+            status_code=status.HTTP_404_NOT_FOUND,
+        )

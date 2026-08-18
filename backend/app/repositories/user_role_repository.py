@@ -1,7 +1,7 @@
 from uuid import UUID
 
 from sqlmodel.ext.asyncio.session import AsyncSession
-from sqlmodel import select
+from sqlmodel import select, delete
 
 from app.models.auth_model import UserRole, Role
 
@@ -46,8 +46,25 @@ class UserRoleRepository:
 
         return result.all()
 
-    async def remove_role():
-        pass
+    async def remove(
+            self,
+            *,
+            user_uid: UUID,
+            role_uid: UUID,
+    ) -> bool:
+
+        statement = (
+            delete(UserRole)
+            .where(
+                UserRole.user_uid == user_uid,
+                UserRole.role_uid == role_uid
+            )
+        )
+
+        result = await self.session.exec(statement)
+        await self.session.flush()
+
+        return result.rowcount > 0
 
     async def has_role():
         pass

@@ -18,7 +18,8 @@ from app.controllers.admin.user_controller import (
     delete_user,
     get_user_roles,
     assign_user_roles,
-    get_roles
+    get_roles,
+    remove_user_role
 )
 
 router = APIRouter(
@@ -79,5 +80,13 @@ router.post(
     response_model=list[AdminRoleResponse],
     summary="Assign user roles"
 )(assign_user_roles)
+
+router.delete(
+    path="/{user_uid}/roles/{role_uid}",
+    status_code=status.HTTP_204_NO_CONTENT,
+    summary="Remove user role"
+)(remove_user_role)
+
+
 
 # Authentication Management

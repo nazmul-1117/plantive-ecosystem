@@ -110,3 +110,17 @@ async def get_roles(
 ) -> list[AdminRoleReadResponse]:
     
     return await role_service.get_roles()
+
+async def remove_user_role(
+        user_uid: UUID,
+        role_uid: UUID,
+        admin_user_role_service: Annotated[AdminUserRoleService, Depends(get_admin_user_role_service)],
+        _: Annotated[User, Depends(require_roles(RoleConstant.ADMIN))],
+) -> None:
+
+    await admin_user_role_service.remove_role(
+        user_uid=user_uid,
+        role_uid=role_uid,
+    )
+
+    

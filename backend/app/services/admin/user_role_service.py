@@ -9,7 +9,8 @@ from app.repositories.role_repository import RoleRepository
 from app.models.auth_model import Role, UserRole, User
 
 from app.exceptions.user_exception import (
-    UserNotFound
+    UserNotFound,
+    UserRoleNotFound
 )
 from app.exceptions.role_exception import RoleNotFound, RoleAlreadyUsed
 
@@ -34,7 +35,7 @@ class AdminUserRoleService:
     ) -> list[Role]:
 
         # 1. Verify user exists or not
-        user = self.user_repository.get_by_uid(
+        user = await self.user_repository.get_by_uid(
             user_uid=user_uid,
         )
 
@@ -98,7 +99,27 @@ class AdminUserRoleService:
         # 7. Return resulting roles
         return roles
 
-    
+    async def remove_role(
+            self,
+            *,
+            user_uid: UUID,
+            role_uid: UUID
+    ) -> None:
+
+        removed: bool = await self.user_role_repository.remove(
+            user_uid=user_uid,
+            role_uid=role_uid
+        )
+
+        if not removed:
+            raise UserRoleNotFound()
+
+        try:
+            await self.user_role_repository.commit()
+
+        except SQLAlchemyError:
+            await self.user_repository.rollback()
+            raise
 
     async def get_roles_by_uid(
             self,
