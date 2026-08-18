@@ -4,14 +4,13 @@
 from uuid import UUID
 from typing import Annotated
 
-from fastapi import Depends, Query
+from fastapi import Depends
 
-from app.services.user_service import UserService
 from app.services.role_service import RoleService
 from app.services.admin.user_service import AdminUserService
 from app.services.admin.user_role_service import AdminUserRoleService
 
-from app.models.auth_model import User, Role, UserRole
+from app.models.auth_model import User
 
 from app.schemas.admin.user_schema import (
     AdminUserReadResponse,
@@ -19,7 +18,9 @@ from app.schemas.admin.user_schema import (
     AdminUserDeleteResponse,
     AdminUserListResponse,
     AdminUserListParams,
-    AdminRoleResponse
+    AdminRoleResponse,
+    AdminUserPasswordResetResponse,
+    AdminUserPasswordResetRequest
 )
 from app.schemas.admin.role_schema import AdminRoleReadResponse
 
@@ -123,4 +124,14 @@ async def remove_user_role(
         role_uid=role_uid,
     )
 
+async def reset_user_password(
+        user_uid: UUID,
+        password_data: AdminUserPasswordResetRequest,
+        admin_user_service: Annotated[AdminUserService, Depends(get_admin_user_service)],
+        _: Annotated[User, Depends(require_roles(RoleConstant.ADMIN))],
+) -> AdminUserPasswordResetResponse:
     
+    return await admin_user_service.reset_user_password(
+        user_uid=user_uid,
+        password_data=password_data,
+    )

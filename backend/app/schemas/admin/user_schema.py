@@ -4,7 +4,7 @@
 from uuid import UUID
 from datetime import datetime
 
-from pydantic import BaseModel, ConfigDict, EmailStr, Field, SecretStr
+from pydantic import BaseModel, ConfigDict, EmailStr, Field, model_validator, SecretStr
 
 
 # Role
@@ -59,6 +59,31 @@ class AdminUserUpdateRequest(BaseModel):
     # Verification management
     is_verified: bool | None = None
 
+class AdminUserPasswordResetRequest(BaseModel):
+
+    model_config = ConfigDict(extra="forbid")
+
+    new_password: SecretStr = Field(
+        min_length=8,
+        max_length=128,
+    )
+
+    confirm_new_password: SecretStr = Field(
+        min_length=8,
+        max_length=128,
+    )
+
+    @model_validator(mode="after")
+    def passwords_match(self):
+       if (
+           self.new_password.get_secret_value()
+           !=
+           self.confirm_new_password.get_secret_value()
+       ):
+           raise ValueError("New passwords do not match")
+
+       return self
+
 class AdminUserReadResponse(BaseModel):
 
     model_config = ConfigDict(from_attributes=True)
@@ -88,6 +113,11 @@ class AdminUserReadResponse(BaseModel):
     # Audit
     created_at: datetime
     updated_at: datetime
+
+
+class AdminUserPasswordResetResponse(BaseModel):
+    status: bool
+    details: str = "Password Reset Successfully"
 
 # class AdminUserUpdateResponse(BaseModel):
 #     message: str = Field(default="Profile updated successfully")

@@ -93,7 +93,7 @@ class AdminUserRoleService:
             await self.user_role_repository.commit()
 
         except SQLAlchemyError:
-            await self.user_repository.rollback()
+            await self.user_role_repository.rollback()
             raise
 
         # 7. Return resulting roles

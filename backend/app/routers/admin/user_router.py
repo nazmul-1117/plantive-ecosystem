@@ -4,10 +4,10 @@
 from fastapi import APIRouter, status
 from app.schemas.admin.user_schema import (
     AdminUserReadResponse,
-    AdminUserListParams,
     AdminUserListResponse,
     AdminUserDeleteResponse,
-    AdminRoleResponse
+    AdminRoleResponse,
+    AdminUserPasswordResetResponse
 )
 from app.schemas.admin.role_schema import AdminRoleReadResponse
 
@@ -19,7 +19,8 @@ from app.controllers.admin.user_controller import (
     get_user_roles,
     assign_user_roles,
     get_roles,
-    remove_user_role
+    remove_user_role,
+    reset_user_password
 )
 
 router = APIRouter(
@@ -34,6 +35,7 @@ router.get(
     response_model=list[AdminRoleReadResponse],
     summary="Get all roles"
 )(get_roles)
+
 
 
 # User Management
@@ -66,6 +68,7 @@ router.delete(
 )(delete_user)
 
 
+
 # User Roles
 router.get(
     path="/{user_uid}/roles",
@@ -90,3 +93,9 @@ router.delete(
 
 
 # Authentication Management
+router.post(
+    path="/{user_uid}/password-reset",
+    status_code=status.HTTP_200_OK,
+    response_model=AdminUserPasswordResetResponse,
+    summary="Reset user password",
+)(reset_user_password)

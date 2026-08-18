@@ -10,7 +10,9 @@ from app.schemas.admin.user_schema import (
     AdminUserUpdateRequest,
     AdminUserDeleteResponse,
     AdminUserListResponse,
-    AdminUserListParams
+    AdminUserListParams,
+    AdminUserPasswordResetResponse,
+    AdminUserPasswordResetRequest
 )
 
 from app.exceptions.user_exception import (
@@ -18,6 +20,8 @@ from app.exceptions.user_exception import (
     UsernameAlreadyExists,
     EmailAlreadyExists
 )
+
+from app.core.security import generate_hash_password
 
 
 class AdminUserService:
@@ -147,8 +151,44 @@ class AdminUserService:
         return AdminUserDeleteResponse(
             status = True
         )  
+
     async def deactivate_user():
         pass
+
     async def deactivate_user():
         pass
+
+    async def reset_user_password(
+                self,
+                *,
+                password_data: AdminUserPasswordResetRequest,
+                user_uid: UUID
+    ) -> AdminUserPasswordResetResponse:
+            
+            user = await self.user_repository.get_by_uid(
+                user_uid=user_uid
+            )
+    
+            if user is None:
+                raise UserNotFound()
+    
+            user.password_hash = generate_hash_password(
+                password = password_data.new_password.get_secret_value()
+            )
+    
+            # await self.user_repository.update(
+            #     user=user
+            # )
+    
+            try:
+                await self.user_repository.commit()
+    
+            except SQLAlchemyError:
+                await self.user_repository.rollback()
+                raise
+    
+            # 7. Return resulting roles
+            return AdminUserPasswordResetResponse(
+                status=True,
+            )
 
