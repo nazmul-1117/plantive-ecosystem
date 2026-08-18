@@ -86,9 +86,13 @@ def get_admin_user_service(
     )
 
 def get_admin_user_role_service(
+        user_repository: Annotated[UserRepository , Depends(get_user_repository)],
+        role_repository: Annotated[RoleRepository , Depends(get_role_repository)],
         user_role_repository: Annotated[UserRoleRepository , Depends(get_user_role_repository)],
 ) -> AdminUserRoleService:
 
     return AdminUserRoleService(
-        user_role_repository=user_role_repository
+        user_repository=user_repository,
+        role_repository=role_repository,
+        user_role_repository=user_role_repository,
     )

@@ -5,16 +5,26 @@ info:
 
 http:
   method: PATCH
-  url: "{{USERS_URL}}/4742e3f6-9e3d-4bcc-bf15-a55503288bb7"
+  url: "{{ADMIN_USERS_URL}}/74b2f140-7514-407a-b80c-37b24f02326c"
   headers:
     - name: Authorization
-      value: bearer  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMzNiYzI2OC0zYjBkLTQ5ZGUtYmM4Zi04MTA4YWM5ZGRkZGIiLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzg2OTQ0OTc4LCJleHAiOjE3ODY5NDk0NzgsImp0aSI6IjU2NzhkYTg1LWFiYTktNGI5OC1iYjEzLTUxMTVkNDdmMDVhOCIsImlzcyI6InBsYW50aXZlLWFwaSIsImF1ZCI6IndlYi1hcHAifQ.bQiQnemJF366-eH2Zex4AS-J7RMx_07sJQlTKH0Tsv0
+      value: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMzNiYzI2OC0zYjBkLTQ5ZGUtYmM4Zi04MTA4YWM5ZGRkZGIiLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzg3MDIzODI3LCJleHAiOjE3ODcwMjgzMjcsImp0aSI6ImQ4ODYyNGVlLTdmY2MtNDUxZi1hNzUzLWMzNmUzODNmNDI2MCIsImlzcyI6InBsYW50aXZlLWFwaSIsImF1ZCI6IndlYi1hcHAifQ.2NQeRI-rxMWJFLbNDEwu8Puc3EoATh2v67mzrvogXFY
   body:
     type: json
     data: |-
       {
-          "bio": "I love only gardening"
+          "is_verified": true
       }
+
+      // {
+      //   "first_name": "Arif",
+      //   "last_name": "Hossain",
+      //   "username": "arif_hossain47",
+      //   "email": "arif@example.com",
+      //   "bio": "Gardening enthusiast and Plantive user.",
+      //   "is_active": true,
+      //   "is_verified": true
+      // }
   auth: inherit
 
 settings:

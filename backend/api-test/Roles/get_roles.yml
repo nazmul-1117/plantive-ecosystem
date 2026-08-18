@@ -1,0 +1,18 @@
+info:
+  name: get_roles
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: "{{ADMIN_USERS_URL}}/roles"
+  headers:
+    - name: Authorization
+      value: bearer  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMzNiYzI2OC0zYjBkLTQ5ZGUtYmM4Zi04MTA4YWM5ZGRkZGIiLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzg3MDM2MDI5LCJleHAiOjE3ODcwNDA1MjksImp0aSI6IjQxNjRiMjNlLTM3NGUtNDJkYy04ZDRlLTJhNWU0Yzg0NjJiMSIsImlzcyI6InBsYW50aXZlLWFwaSIsImF1ZCI6IndlYi1hcHAifQ.4MK5-iUsk4eYcO5XKc3y02jGQnq8qlBPaysHsXGKYug
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

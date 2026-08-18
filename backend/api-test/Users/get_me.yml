@@ -8,7 +8,7 @@ http:
   url: "{{USERS_URL}}/me"
   headers:
     - name: Authorization
-      value: bearer ArifTest@6392
+      value: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI3NGIyZjE0MC03NTE0LTQwN2EtYjgwYy0zN2IyNGYwMjMyNmMiLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzg3MDIzNDk5LCJleHAiOjE3ODcwMjc5OTksImp0aSI6IjAzY2U5ZWFjLWY2ZTgtNDk0OC04NjM5LTRkMTM0YzFjZGYxNCIsImlzcyI6InBsYW50aXZlLWFwaSIsImF1ZCI6IndlYi1hcHAifQ.NZBUIo9EBNC7BKyz_jk_sWVVYWWYM_wcMrqU5QoNbDM
   auth: inherit
 
 settings:

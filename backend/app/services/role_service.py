@@ -5,6 +5,8 @@ from app.repositories.role_repository import RoleRepository
 
 from app.constants.roles_constant import RoleConstant
 
+from app.exceptions.role_exception import RoleNotFound
+
 class RoleService:
 
     def __init__(
@@ -14,14 +16,25 @@ class RoleService:
     
         self.role_repository = role_repository
         
+
+    async def get_roles(
+            self,
+    ) -> list[Role]:
         
+        roles: list[Role] | None = await self.role_repository.get_roles()
+
+        if roles is None:
+            raise RoleNotFound()
+
+        return roles
+
     async def assign_role():
         pass
 
     async def remove_role():
         pass
 
-    async def get_role(
+    async def get_by_uid(
             self,
             role_uid: UUID
     ) -> Role:
@@ -48,7 +61,6 @@ class RoleService:
             set(user_roles)
             .intersection(required_roles)
         )
-    
 
     async def has_any_role(
             self,
@@ -65,7 +77,6 @@ class RoleService:
             required_roles=required_roles,
         )
 
-    
     async def get_user_role_names(
             self,
             user_uid: UUID,

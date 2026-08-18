@@ -12,6 +12,7 @@ from app.services.admin.user_service import AdminUserService
 from app.services.admin.user_role_service import AdminUserRoleService
 
 from app.models.auth_model import User, Role, UserRole
+
 from app.schemas.admin.user_schema import (
     AdminUserReadResponse,
     AdminUserUpdateRequest,
@@ -19,6 +20,11 @@ from app.schemas.admin.user_schema import (
     AdminUserListResponse,
     AdminUserListParams,
     AdminRoleResponse
+)
+from app.schemas.admin.role_schema import AdminRoleReadResponse
+
+from app.schemas.admin.user_role_schema import (
+    AdminAssignUserRolesRequest
 )
 
 from app.dependencies.service_dependency import (
@@ -76,14 +82,31 @@ async def delete_user(
         user=user
     )
 
-
-async def get_roles(
+async def get_user_roles(
         user_uid: UUID,
         admin_user_role_service: Annotated[AdminUserRoleService, Depends(get_admin_user_role_service)],
-        _: Annotated[User, Depends(require_roles(RoleConstant.ADMIN))],
+        _: Annotated[User, Depends(require_roles(RoleConstant.ADMIN, RoleConstant.MODERATOR))],
 ) -> list[AdminRoleResponse]:
     
     return await admin_user_role_service.get_roles_by_uid(
         user_uid=user_uid
     )
 
+async def assign_user_roles(
+        user_uid: UUID,
+        request: AdminAssignUserRolesRequest,
+        admin_user_role_service: Annotated[AdminUserRoleService, Depends(get_admin_user_role_service)],
+        _: Annotated[User, Depends(require_roles(RoleConstant.ADMIN, RoleConstant.MODERATOR))],
+) -> list[AdminRoleResponse]:
+    
+    return await admin_user_role_service.assign_roles(
+        user_uid=user_uid,
+        role_uids=request.role_uids,
+    )
+
+async def get_roles(
+        role_service: Annotated[RoleService, Depends(get_role_service)],
+        _: Annotated[User, Depends(require_roles(RoleConstant.ADMIN, RoleConstant.MODERATOR))],
+) -> list[AdminRoleReadResponse]:
+    
+    return await role_service.get_roles()

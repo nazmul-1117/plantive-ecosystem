@@ -52,3 +52,25 @@ class UserRoleRepository:
     async def has_role():
         pass
 
+    async def add_many(
+            self,
+            *,
+            user_roles: list[UserRole]
+    ) -> None:
+
+        if not user_roles:
+            return
+        self.session.add_all(user_roles)
+
+        await self.session.flush()
+
+
+
+    async def commit(self) -> None:
+        await self.session.commit()
+    
+    async def rollback(self) -> None:
+        await self.session.rollback()
+    
+    async def refresh(self, obj) -> None:
+        await self.session.refresh(obj)

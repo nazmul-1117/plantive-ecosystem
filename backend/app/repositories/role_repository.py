@@ -15,6 +15,17 @@ class RoleRepository:
     ):
         self.session = session
 
+
+    async def get_roles(
+            self,
+    ) -> list[Role] | None:
+        
+        statement = select(Role)
+        result = await self.session.exec(statement)
+
+        return result.all()
+        
+
     async def get_by_uid(
             self,
             role_uid: UUID,
@@ -24,6 +35,24 @@ class RoleRepository:
         result = await self.session.exec(statement)
 
         return result.first()
+
+    async def get_by_uids(
+            self,
+            role_uids: list[UUID],
+    ) -> list[Role]:
+
+        if not role_uids:
+            return []
+        
+        statement = (
+            select(Role)
+            .where(
+                Role.role_uid.in_(role_uids)
+            )
+        )
+        result = await self.session.exec(statement)
+
+        return result.all()
 
     async def get_by_name(
             self,

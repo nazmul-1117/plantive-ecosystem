@@ -8,12 +8,13 @@ http:
   url: "{{USERS_URL}}/me"
   headers:
     - name: Authorization
-      value: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4NDJhYzM4Ny0xZGRiLTRmZjAtOTRhZC1iMzk4MGUyNjMwYTYiLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzg2NTUxMzI1LCJleHAiOjE3ODY1NTU4MjUsImp0aSI6IjQxOWZhMzAxLWI4MGUtNDdkOC04OTA4LWZmY2MzOTliYjEzZCIsImlzcyI6InBsYW50aXZlLWFwaSIsImF1ZCI6IndlYi1hcHAifQ.iPle67ZZTzqPoGr0GPesqycFxrBbFGCatayxah8IjEQ
+      value: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI3NGIyZjE0MC03NTE0LTQwN2EtYjgwYy0zN2IyNGYwMjMyNmMiLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzg3MDIzNDk5LCJleHAiOjE3ODcwMjc5OTksImp0aSI6IjAzY2U5ZWFjLWY2ZTgtNDk0OC04NjM5LTRkMTM0YzFjZGYxNCIsImlzcyI6InBsYW50aXZlLWFwaSIsImF1ZCI6IndlYi1hcHAifQ.NZBUIo9EBNC7BKyz_jk_sWVVYWWYM_wcMrqU5QoNbDM
   body:
     type: json
     data: |-
       {
-        "bio": "I will be delete soon"
+      //   "bio": "I will be delete soon"
+        "is_verified": false
       }
   auth: inherit
 

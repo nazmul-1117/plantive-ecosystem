@@ -1,0 +1,24 @@
+info:
+  name: assign_user_roles
+  type: http
+  seq: 6
+
+http:
+  method: POST
+  url: "{{ADMIN_USERS_URL}}/4742e3f6-9e3d-4bcc-bf15-a55503288bb7/roles"
+  headers:
+    - name: Authorization
+      value: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMzNiYzI2OC0zYjBkLTQ5ZGUtYmM4Zi04MTA4YWM5ZGRkZGIiLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzg3MDM0NDgzLCJleHAiOjE3ODcwMzg5ODMsImp0aSI6ImU4Y2RlMjdmLWI1ZDEtNDU4My05ZGE1LTM4NmVhMmU2MjEyYiIsImlzcyI6InBsYW50aXZlLWFwaSIsImF1ZCI6IndlYi1hcHAifQ.Q9MsUWA13sAz-bloX9k7gR3ALfSzU8fdnvszf2dv5lA
+  body:
+    type: json
+    data: |-
+      {
+        "role_uids": ["c64135b5-971b-497c-8589-ff3ff7067493"]
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

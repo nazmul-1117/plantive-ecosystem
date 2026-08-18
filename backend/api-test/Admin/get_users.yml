@@ -5,16 +5,10 @@ info:
 
 http:
   method: GET
-  url: "{{ADMIN_USERS_URL}}/"
+  url: "{{ADMIN_USERS_URL}}"
   headers:
     - name: Authorization
-      value: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMzNiYzI2OC0zYjBkLTQ5ZGUtYmM4Zi04MTA4YWM5ZGRkZGIiLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzg2OTg3ODkzLCJleHAiOjE3ODY5OTIzOTMsImp0aSI6IjIwY2NhNDFlLTA2MzAtNGIxZS1iZDk1LWNmZjg1NWE4ZmQzYyIsImlzcyI6InBsYW50aXZlLWFwaSIsImF1ZCI6IndlYi1hcHAifQ.75DE-JY5lkbxEF-U1m4AFsFzAyZA8XFlByYbzQFUTkU
-  body:
-    type: json
-    data: |-
-      {
-        "search": "ayesha"
-      }
+      value: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMzNiYzI2OC0zYjBkLTQ5ZGUtYmM4Zi04MTA4YWM5ZGRkZGIiLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzg3MDM2MDI5LCJleHAiOjE3ODcwNDA1MjksImp0aSI6IjQxNjRiMjNlLTM3NGUtNDJkYy04ZDRlLTJhNWU0Yzg0NjJiMSIsImlzcyI6InBsYW50aXZlLWFwaSIsImF1ZCI6IndlYi1hcHAifQ.4MK5-iUsk4eYcO5XKc3y02jGQnq8qlBPaysHsXGKYug
   auth: inherit
 
 settings:
