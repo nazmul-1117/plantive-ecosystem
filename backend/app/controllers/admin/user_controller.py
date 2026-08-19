@@ -20,7 +20,8 @@ from app.schemas.admin.user_schema import (
     AdminUserListParams,
     AdminRoleResponse,
     AdminUserPasswordResetResponse,
-    AdminUserPasswordResetRequest
+    AdminUserPasswordResetRequest,
+    AdminUserActivateResponse,
 )
 from app.schemas.admin.role_schema import AdminRoleReadResponse
 
@@ -134,4 +135,24 @@ async def reset_user_password(
     return await admin_user_service.reset_user_password(
         user_uid=user_uid,
         password_data=password_data,
+    )
+
+async def activate_user(
+        user_uid: UUID,
+        admin_user_service: Annotated[AdminUserService, Depends(get_admin_user_service)],
+        _: Annotated[User, Depends(require_roles(RoleConstant.ADMIN))],
+) -> AdminUserActivateResponse:
+
+    return await admin_user_service.activate_user(
+        user_uid=user_uid
+    )
+
+async def deactivate_user(
+        user_uid: UUID,
+        admin_user_service: Annotated[AdminUserService, Depends(get_admin_user_service)],
+        _: Annotated[User, Depends(require_roles(RoleConstant.ADMIN))],
+) -> AdminUserActivateResponse:
+
+    return await admin_user_service.deactivate_user(
+        user_uid=user_uid
     )

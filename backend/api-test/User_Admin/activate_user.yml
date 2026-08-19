@@ -1,0 +1,15 @@
+info:
+  name: activate_user
+  type: http
+  seq: 9
+
+http:
+  method: POST
+  url: "{{ADMIN_USERS_URL}}/activate"
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

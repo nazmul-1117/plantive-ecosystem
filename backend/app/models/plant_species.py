@@ -233,7 +233,7 @@ class PlantSpecies(SQLModel, table=True):
         link_model=PlantSpeciesCategory,
     )
 
-    care_guide: "PlantCareGuide | None" = Relationship(
+    care_guide: "PlantCareGuide" = Relationship(
         back_populates="plant_species",
     )
 

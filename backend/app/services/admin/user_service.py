@@ -152,11 +152,59 @@ class AdminUserService:
             status = True
         )  
 
-    async def deactivate_user():
-        pass
+    async def activate_user(
+            self,
+            *,
+            user_uid: UUID
+    ) -> User:
+        
+        user: User | None = await self.user_repository.get_by_uid(
+            user_uid=user_uid
+        )
 
-    async def deactivate_user():
-        pass
+        if user is None:
+            UserNotFound()
+
+        if user.is_active:
+            return user
+
+        user.is_active = True
+
+        try:
+            await self.user_repository.commit()
+
+        except SQLAlchemyError:
+            await self.user_repository.rollback()
+            raise
+
+        return user
+
+    async def deactivate_user(
+            self,
+            *,
+            user_uid: UUID
+    ) -> User:
+        
+        user: User | None = await self.user_repository.get_by_uid(
+            user_uid=user_uid
+        )
+
+        if user is None:
+            UserNotFound()
+
+        if not user.is_active:
+            return user
+
+        user.is_active = False
+
+        try:
+            await self.user_repository.commit()
+
+        except SQLAlchemyError:
+            await self.user_repository.rollback()
+            raise
+
+        return user
 
     async def reset_user_password(
                 self,
@@ -165,30 +213,30 @@ class AdminUserService:
                 user_uid: UUID
     ) -> AdminUserPasswordResetResponse:
             
-            user = await self.user_repository.get_by_uid(
-                user_uid=user_uid
-            )
-    
-            if user is None:
-                raise UserNotFound()
-    
-            user.password_hash = generate_hash_password(
-                password = password_data.new_password.get_secret_value()
-            )
-    
-            # await self.user_repository.update(
-            #     user=user
-            # )
-    
-            try:
-                await self.user_repository.commit()
-    
-            except SQLAlchemyError:
-                await self.user_repository.rollback()
-                raise
-    
-            # 7. Return resulting roles
-            return AdminUserPasswordResetResponse(
-                status=True,
-            )
+        user = await self.user_repository.get_by_uid(
+            user_uid=user_uid
+        )
+
+        if user is None:
+            raise UserNotFound()
+
+        user.password_hash = generate_hash_password(
+            password = password_data.new_password.get_secret_value()
+        )
+
+        # await self.user_repository.update(
+        #     user=user
+        # )
+
+        try:
+            await self.user_repository.commit()
+
+        except SQLAlchemyError:
+            await self.user_repository.rollback()
+            raise
+
+        # 7. Return resulting roles
+        return AdminUserPasswordResetResponse(
+            status=True,
+        )
 

@@ -3,7 +3,11 @@
 
 from fastapi import APIRouter, status
 
-from app.schemas.user_schema import UserUpdateResponse, UserReadResponse, UserDeleteResponse
+from app.schemas.user_schema import (
+    UserUpdateResponse,
+    UserReadResponse,
+    UserDeleteResponse,
+)
 
 from app.controllers.user_controllers import (
     get_me,

@@ -7,7 +7,9 @@ from app.schemas.admin.user_schema import (
     AdminUserListResponse,
     AdminUserDeleteResponse,
     AdminRoleResponse,
-    AdminUserPasswordResetResponse
+    AdminUserPasswordResetResponse,
+    AdminUserActivateResponse,
+    AdminUserDeactivateResponse,
 )
 from app.schemas.admin.role_schema import AdminRoleReadResponse
 
@@ -20,7 +22,9 @@ from app.controllers.admin.user_controller import (
     assign_user_roles,
     get_roles,
     remove_user_role,
-    reset_user_password
+    reset_user_password,
+    activate_user,
+    deactivate_user,
 )
 
 router = APIRouter(
@@ -66,6 +70,20 @@ router.delete(
     response_model=AdminUserDeleteResponse,
     summary="Delete user"
 )(delete_user)
+
+router.post(
+    path="/{user_uid}/activate",
+    status_code=status.HTTP_200_OK,
+    response_model=AdminUserActivateResponse,
+    summary="Activate user"
+)(activate_user)
+
+router.post(
+    path="/{user_uid}/deactivate",
+    status_code=status.HTTP_200_OK,
+    response_model=AdminUserDeactivateResponse,
+    summary="Deactivate user"
+)(deactivate_user)
 
 
 

@@ -158,9 +158,24 @@ class AdminUserListParams(BaseModel):
     )
 
 class AdminUserListResponse(BaseModel):
-    items: list[AdminUserReadResponse] = Field(default_factory=list)
-
+    
     page: int
     page_size: int
     total: int
     total_page: int
+
+    items: list[AdminUserReadResponse] = Field(default_factory=list)
+
+# activate-deactivate
+class AdminUserActivateResponse(BaseModel):
+
+    model_config = ConfigDict(from_attributes=True)
+
+    user_uid: UUID
+    first_name: str
+    email: EmailStr
+    username: str
+    is_active: bool
+
+class AdminUserDeactivateResponse(AdminUserActivateResponse):
+    pass
