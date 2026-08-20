@@ -1,0 +1,7 @@
+info:
+  name: Admin_Plant_Species
+  type: folder
+  seq: 7
+
+request:
+  auth: inherit

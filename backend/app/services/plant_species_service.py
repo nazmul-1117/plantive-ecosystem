@@ -37,7 +37,7 @@ class PlantSpeciesService:
             params.page - 1
         ) * params.page_size
 
-        plant_species, total =  await self.plant_species_repository.get_plants(
+        plant_species, total =  await self.plant_species_repository.list(
             search=params.search,
             category=params.category,
             sunlight_requirement=params.sunlight_requirement,

@@ -15,6 +15,7 @@ from app.services.plant_care_guide_service import PlantCareGuideService
 
 from app.services.admin.user_service import AdminUserService
 from app.services.admin.user_role_service import AdminUserRoleService
+from app.services.admin.plant_species_service import AdminPlantSpeciesService
 
 from app.repositories.role_repository import RoleRepository
 from app.repositories.user_repository import UserRepository
@@ -122,4 +123,14 @@ def get_plant_care_guide_service(
 
     return PlantCareGuideService(
         plant_care_guide_repository=plant_care_guide_repository
+    )
+
+
+# plant species admin
+def get_admin_plant_species_service(
+    plant_species_repository: Annotated[PlantSpeciesRepository, Depends(get_plant_species_repository)],
+) -> AdminPlantSpeciesService:
+
+    return AdminPlantSpeciesService(
+        plant_species_repository=plant_species_repository
     )

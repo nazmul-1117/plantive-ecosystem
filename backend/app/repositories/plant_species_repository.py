@@ -59,7 +59,7 @@ class PlantSpeciesRepository:
 
         return result.first()
 
-    async def get_plants(
+    async def list(
             self,
             *,
             search: str | None = None,
@@ -129,7 +129,8 @@ class PlantSpeciesRepository:
 
         # 5. Apply eager Loading
         statement = statement.options(
-            selectinload(PlantSpecies.categories)
+            selectinload(PlantSpecies.categories),
+            joinedload(PlantSpecies.care_guide),
         )
 
         # 6. Apply changes
