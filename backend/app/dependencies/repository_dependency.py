@@ -9,6 +9,9 @@ from app.repositories.user_role_repository import UserRoleRepository
 from app.repositories.verification_token_repository import VerificationTokenRepository
 from app.repositories.password_reset_token_repository import PasswordResetTokenRepository
 
+#plant repository
+from app.repositories.plant_species_repository import PlantSpeciesRepository
+
 from app.core.database import get_session
 
 SessionDeps = Annotated[AsyncSession, Depends(get_session)]
@@ -51,4 +54,12 @@ def get_password_reset_token_repository(
 
     return PasswordResetTokenRepository(
         session = session
+    )
+
+def get_plant_species_repository(
+        session: SessionDeps
+) -> PlantSpeciesRepository:
+
+    return PlantSpeciesRepository(
+        session=session
     )

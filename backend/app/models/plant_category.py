@@ -51,6 +51,16 @@ class PlantCategory(SQLModel, table=True):
         ),
     )
 
+    slug: str = Field(
+        max_length=50,
+        sa_column=Column(
+            String(50),
+            nullable=False,
+            unique=True,
+            index=True,
+        ),
+    )
+
     description: str | None = Field(
         default=None,
         sa_column=Column(

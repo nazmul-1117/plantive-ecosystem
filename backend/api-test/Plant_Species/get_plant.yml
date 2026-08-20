@@ -1,0 +1,39 @@
+info:
+  name: get_plant
+  type: http
+  seq: 2
+
+http:
+  method: GET
+  url: "{{PLANT_SPECIES_URL}}?category=Indoor-Plant"
+  params:
+    - name: search
+      value: herb
+      type: query
+      disabled: true
+    - name: category
+      value: Indoor-Plant
+      type: query
+    - name: sunlight_requirement
+      value: FULL_SUN
+      type: query
+      disabled: true
+    - name: sort
+      value: ""
+      type: query
+      disabled: true
+    - name: min_temp
+      value: ""
+      type: query
+      disabled: true
+    - name: max_temp
+      value: ""
+      type: query
+      disabled: true
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

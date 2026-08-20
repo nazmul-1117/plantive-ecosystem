@@ -1,0 +1,7 @@
+info:
+  name: Plant_Species
+  type: folder
+  seq: 6
+
+request:
+  auth: inherit

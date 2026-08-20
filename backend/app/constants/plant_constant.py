@@ -18,3 +18,8 @@ class SunlightRequirement(StrEnum):
     PARTIAL_SUN = "PARTIAL_SUN"
     PARTIAL_SHADE = "PARTIAL_SHADE"
     FULL_SHADE = "FULL_SHADE"
+
+class PlantSpeciesSort(StrEnum):
+    COMMON_NAME = "common_name"
+    SCIENTIFIC_NAME = "scientific_name"
+    NEWEST = "created_at"

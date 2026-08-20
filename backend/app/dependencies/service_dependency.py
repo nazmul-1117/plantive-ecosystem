@@ -9,6 +9,9 @@ from app.services.role_service import RoleService
 from app.services.plant_service import PlantService
 from app.services.email_service import EmailService
 
+#plant service
+from app.services.plant_species_service import PlantSpeciesService
+
 from app.services.admin.user_service import AdminUserService
 from app.services.admin.user_role_service import AdminUserRoleService
 
@@ -18,9 +21,13 @@ from app.repositories.user_role_repository import UserRoleRepository
 from app.repositories.verification_token_repository import VerificationTokenRepository
 from app.repositories.password_reset_token_repository import PasswordResetTokenRepository
 
+#plant repository
+from app.repositories.plant_species_repository import PlantSpeciesRepository
+
 from app.dependencies.repository_dependency import (
     get_role_repository, get_user_repository, get_user_role_repository,
-    get_verification_token_repository, get_password_reset_token_repository
+    get_verification_token_repository, get_password_reset_token_repository,
+    get_plant_species_repository
 )
 from app.dependencies.redis_dependency import get_redis
 
@@ -76,7 +83,7 @@ def get_plant_service() -> PlantService:
 
 
 
-# admin
+# user - admin
 def get_admin_user_service(
         user_repository: Annotated[UserRepository , Depends(get_user_repository)],
 ) -> AdminUserService:
@@ -95,4 +102,14 @@ def get_admin_user_role_service(
         user_repository=user_repository,
         role_repository=role_repository,
         user_role_repository=user_role_repository,
+    )
+
+
+# plant species - public
+def get_plant_species_service(
+    plant_species_repository: Annotated[PlantSpeciesRepository, Depends(get_plant_species_repository)],
+) -> PlantSpeciesService:
+
+    return PlantSpeciesService(
+        plant_species_repository=plant_species_repository
     )

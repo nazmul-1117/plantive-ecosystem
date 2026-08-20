@@ -15,6 +15,9 @@ variables:
   - name: ADMIN_USERS_URL
     value: http://127.0.0.1:8000/api/v1/admin/users
     description: ""
-  - name: ADMIN_ROLES
+  - name: ADMIN_ROLES_URL
     value: http://127.0.0.1:8000/api/v1/admin/roles
+    description: ""
+  - name: PLANT_SPECIES_URL
+    value: http://127.0.0.1:8000/api/v1/plant-species
     description: ""
