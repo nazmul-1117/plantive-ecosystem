@@ -1,7 +1,7 @@
 from fastapi import status
 from app.exceptions.base_exception import AppException
 
-class PlantNotFound(AppException):
+class PlantSpeciesNotFound(AppException):
     """
     Raised when the requested plant does not exist
     """

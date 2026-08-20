@@ -6,11 +6,12 @@ from uuid import UUID
 
 from sqlmodel.ext.asyncio.session import AsyncSession
 from sqlmodel import select, exists, delete, or_, func
-from sqlalchemy.orm import selectinload
+from sqlalchemy.orm import selectinload, joinedload
 
 from app.models.plant_species import PlantSpecies
 from app.models.plant_species_category import PlantSpeciesCategory
 from app.models.plant_category import PlantCategory
+from app.models.plant_care_guide import PlantCareGuide
 
 from app.constants.plant_constant import SunlightRequirement, PlantSpeciesSort
 
@@ -38,8 +39,25 @@ class PlantSpeciesRepository:
     ):
         pass
 
-    async def get_by_uid():
-        pass
+    async def get_by_uid(
+            self,
+            *,
+            plant_species_uid: UUID
+    ) -> PlantSpecies | None:
+        
+        statement = (
+            select(PlantSpecies)
+            .options(
+                selectinload(PlantSpecies.categories)
+            )
+            .where(
+                PlantSpecies.plant_species_uid == plant_species_uid
+            )
+        )
+
+        result = await self.session.exec(statement)
+
+        return result.first()
 
     async def get_plants(
             self,
@@ -227,7 +245,25 @@ class PlantSpeciesRepository:
             PlantSpecies.plant_species_uid.asc(),
         )
 
+    async def get_by_uid_with_care_guide(
+            self,
+            *,
+            plant_species_uid: UUID
+    ) -> PlantSpecies | None:
+        
+        statement = (
+            select(PlantSpecies)
+            .options(
+                joinedload(PlantSpecies.care_guide)
+            )
+            .where(
+                PlantSpecies.plant_species_uid == plant_species_uid
+            )
+        )
 
+        result = await self.session.exec(statement)
+
+        return result.one_or_none()
 
     async def commit(self) -> None:
         await self.session.commit()

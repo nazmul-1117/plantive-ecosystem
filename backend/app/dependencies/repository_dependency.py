@@ -11,6 +11,7 @@ from app.repositories.password_reset_token_repository import PasswordResetTokenR
 
 #plant repository
 from app.repositories.plant_species_repository import PlantSpeciesRepository
+from app.repositories.plant_care_guide_repository import PlantCareGuideRepository
 
 from app.core.database import get_session
 
@@ -61,5 +62,13 @@ def get_plant_species_repository(
 ) -> PlantSpeciesRepository:
 
     return PlantSpeciesRepository(
+        session=session
+    )
+
+def get_plant_care_guide_repository(
+        session: SessionDeps
+) -> PlantCareGuideRepository:
+
+    return PlantCareGuideRepository(
         session=session
     )

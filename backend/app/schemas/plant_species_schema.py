@@ -140,7 +140,22 @@ class PlantSpeciesReadListResponse(BaseModel):
         default_factory=list,
     )
 
-class PlantCareGuideResponse(BaseModel):
+
+# Plant care guide
+class PlantSpeciesSummary(BaseModel):
+    
+    """
+    Plant species Summary
+    """
+    model_config = ConfigDict(from_attributes=True)
+    
+    plant_species_uid: UUID
+    common_name: str
+    scientific_name: str
+
+    image_url: str | None = None
+
+class PlantCareGuideData(BaseModel):
 
     model_config = ConfigDict(from_attributes=True)
 
@@ -149,3 +164,9 @@ class PlantCareGuideResponse(BaseModel):
     pruning_guide: str | None = None
     common_problems: str | None = None
 
+class PlantCareGuideResponse(BaseModel):
+
+    model_config = ConfigDict(from_attributes=True)
+    
+    plant_species: PlantSpeciesSummary
+    care_guide: PlantCareGuideData

@@ -11,6 +11,7 @@ from app.services.email_service import EmailService
 
 #plant service
 from app.services.plant_species_service import PlantSpeciesService
+from app.services.plant_care_guide_service import PlantCareGuideService
 
 from app.services.admin.user_service import AdminUserService
 from app.services.admin.user_role_service import AdminUserRoleService
@@ -23,11 +24,12 @@ from app.repositories.password_reset_token_repository import PasswordResetTokenR
 
 #plant repository
 from app.repositories.plant_species_repository import PlantSpeciesRepository
+from app.repositories.plant_care_guide_repository import PlantCareGuideRepository
 
 from app.dependencies.repository_dependency import (
     get_role_repository, get_user_repository, get_user_role_repository,
     get_verification_token_repository, get_password_reset_token_repository,
-    get_plant_species_repository
+    get_plant_species_repository, get_plant_care_guide_repository
 )
 from app.dependencies.redis_dependency import get_redis
 
@@ -112,4 +114,12 @@ def get_plant_species_service(
 
     return PlantSpeciesService(
         plant_species_repository=plant_species_repository
+    )
+
+def get_plant_care_guide_service(
+        plant_care_guide_repository: Annotated[PlantCareGuideRepository, Depends(get_plant_care_guide_repository)],
+) -> PlantCareGuideService:
+
+    return PlantCareGuideService(
+        plant_care_guide_repository=plant_care_guide_repository
     )

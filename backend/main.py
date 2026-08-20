@@ -4,7 +4,7 @@ from contextlib import asynccontextmanager
 from app.core.config import settings
 from app.core.redis import init_redis
 
-from app.routers import plant_router, auth_router
+from app.routers import auth_router
 from app.routers.user_router import router as user_router
 from app.routers.admin.user_router import router as admin_user_router
 from app.routers.plant_species_router import router as plant_species_router

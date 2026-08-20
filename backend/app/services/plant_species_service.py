@@ -8,9 +8,17 @@ from app.repositories.plant_species_repository import PlantSpeciesRepository
 
 from app.schemas.plant_species_schema import (
     PlantSpeciesListParams,
-    PlantSpeciesReadListResponse
+    PlantSpeciesReadListResponse,
+    PlantSpeciesReadResponse,
+
+    PlantCareGuideResponse,
+    PlantSpeciesSummary,
+    PlantCareGuideData,
 )
 from app.models.plant_species import PlantSpecies
+
+from app.exceptions.plant_exception import PlantSpeciesNotFound
+from app.exceptions.plant_care_guide import PlantCareGuideNotFound
 
 class PlantSpeciesService:
 
@@ -56,3 +64,45 @@ class PlantSpeciesService:
             total=total,
             total_pages=total_pages,
         )
+
+    async def get_by_uid(
+            self,
+            plant_species_uid: UUID
+    ) -> PlantSpeciesReadResponse:
+
+        plant_species = await self.plant_species_repository.get_by_uid(
+            plant_species_uid=plant_species_uid
+        )
+
+        if plant_species is None:
+            raise PlantSpeciesNotFound()
+
+        return plant_species
+
+    async def get_by_common_name():
+        pass
+
+    async def get_by_scientific_name():
+        pass
+
+    async def get_care_guide(
+            self,
+            *,
+            plant_species_uid: UUID
+    ) -> PlantCareGuideResponse:
+        
+        plant_species = await self.plant_species_repository.get_by_uid_with_care_guide(
+            plant_species_uid=plant_species_uid
+        )
+
+        if (
+            plant_species is None
+            or plant_species.care_guide is None
+        ):
+            raise PlantCareGuideNotFound()
+
+        return PlantCareGuideResponse(
+            plant_species=PlantSpeciesSummary.model_validate(plant_species),
+            care_guide=PlantCareGuideData.model_validate(plant_species.care_guide),
+        )
+
