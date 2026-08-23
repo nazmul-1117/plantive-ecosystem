@@ -36,3 +36,27 @@ class InvalidPlantSpeciesUpdate(AppException):
             error_code="INVALID_PLANT_UPDATE",
             status_code=status.HTTP_404_NOT_FOUND
         )
+
+class PlantSpeciesAlreadyActive(AppException):
+    """
+    Raised when the plant species already active
+    """
+
+    def __init__(self):
+        super().__init__(
+            message="Plant species is already active.",
+            error_code="PLANT_SPECIES_ALREADY_ACTIVE",
+            status_code=status.HTTP_409_CONFLICT,
+        )
+
+class PlantSpeciesAlreadyInactive(AppException):
+    """
+    Raised when the plant species already inactive
+    """
+
+    def __init__(self):
+        super().__init__(
+            message="Plant species is already inactive.",
+            error_code="PLANT_SPECIES_ALREADY_INACTIVE",
+            status_code=status.HTTP_409_CONFLICT,
+        )

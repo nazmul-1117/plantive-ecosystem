@@ -5,6 +5,7 @@ from typing import List
 from app.schemas.admin.plant_species_schema import (
     AdminPlantSpeciesResponse,
     AdminPlantSpeciesListResponse,
+    AdminPlantSpeciesListItem,
 )
 
 from app.controllers.admin.plant_species_controller import (
@@ -12,6 +13,8 @@ from app.controllers.admin.plant_species_controller import (
     get_plant_species,
     create_plant_species,
     update_plant_species,
+    activate_plant_species,
+    deactivate_plant_species,
 )
 
 admin_plant_species_router = APIRouter(
@@ -48,3 +51,17 @@ admin_plant_species_router.patch(
     status_code = status.HTTP_200_OK,
     summary="Update Plant Species"
 )(update_plant_species)
+
+admin_plant_species_router.post(
+    path="/{plant_species_uid}/activate",
+    response_model = AdminPlantSpeciesListItem,
+    status_code = status.HTTP_200_OK,
+    summary="Activate Plant species"
+)(activate_plant_species)
+
+admin_plant_species_router.post(
+    path="/{plant_species_uid}/deactivate",
+    response_model = AdminPlantSpeciesListItem,
+    status_code = status.HTTP_200_OK,
+    summary="Deactivate Plant species"
+)(deactivate_plant_species)

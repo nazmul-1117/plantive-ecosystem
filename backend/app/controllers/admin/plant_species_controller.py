@@ -17,6 +17,7 @@ from app.schemas.admin.plant_species_schema import (
     AdminPlantSpeciesListParams,
     AdminPlantSpeciesListResponse,
     AdminPlantSpeciesResponse,
+    AdminPlantSpeciesListItem,
 
     AdminPlantSpeciesCreateRequest,
     AdminPlantSpeciesUpdateRequest,
@@ -103,4 +104,45 @@ async def update_plant_species(
     return await service.update_plant_species(
         plant_species_uid=plant_species_uid,
         request=request
+    )
+
+async def activate_plant_species(
+        
+        plant_species_uid: UUID,
+
+        service: Annotated[
+            AdminPlantSpeciesService,
+            Depends(get_admin_plant_species_service)
+        ],
+
+        # _: Annotated[
+        #     User,
+        #     Depends(require_roles(RoleConstant.ADMIN, RoleConstant.MODERATOR))
+        # ],
+) -> AdminPlantSpeciesListItem:
+
+    return await service.set_plant_species_active(
+        plant_species_uid=plant_species_uid,
+        is_active=True,
+    )
+
+
+async def deactivate_plant_species(
+        
+        plant_species_uid: UUID,
+
+        service: Annotated[
+            AdminPlantSpeciesService,
+            Depends(get_admin_plant_species_service)
+        ],
+
+        # _: Annotated[
+        #     User,
+        #     Depends(require_roles(RoleConstant.ADMIN, RoleConstant.MODERATOR))
+        # ],
+) -> AdminPlantSpeciesListItem:
+
+    return await service.set_plant_species_active(
+        plant_species_uid=plant_species_uid,
+        is_active=False,
     )

@@ -152,6 +152,18 @@ class AdminPlantSpeciesCreateRequest(BaseModel):
 
         return value
 
+    @field_validator("sunlight_requirement", mode="before")
+    @classmethod
+    def normalize_sunlight_requirement(
+        cls,
+        value: str | SunlightRequirement,
+    ) -> str | SunlightRequirement:
+        
+        if isinstance(value, str):
+            return value.strip().upper()
+
+        return value
+
 # Update schemas
 
 class PlantCareGuideUpdateRequest(BaseModel):
@@ -298,6 +310,18 @@ class AdminPlantSpeciesUpdateRequest(BaseModel):
 
         return value
 
+    @field_validator("sunlight_requirement", mode="before")
+    @classmethod
+    def normalize_sunlight_requirement(
+        cls,
+        value: str | SunlightRequirement,
+    ) -> str | SunlightRequirement:
+        
+        if isinstance(value, str):
+            return value.strip().upper()
+
+        return value
+
 
 
 
@@ -335,7 +359,7 @@ class AdminPlantCareGuideResponse(BaseModel):
 class AdminPlantSpeciesListItem(BaseModel):
     
     """
-    Plant species Read Response
+    Plant species Short Read Response
     """
 
     model_config = ConfigDict(from_attributes=True)

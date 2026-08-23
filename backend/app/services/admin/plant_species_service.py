@@ -1,5 +1,5 @@
 
-# app/service/plant_species_service.py
+# app/service/admin/plant_species_service.py -> admin
 
 from uuid import UUID
 from sqlalchemy.exc import SQLAlchemyError, IntegrityError
@@ -29,6 +29,8 @@ from app.exceptions.plant_species_exception import (
     PlantSpeciesNotFound,
     PlantSpeciesAlreadyExists,
     InvalidPlantSpeciesUpdate,
+    PlantSpeciesAlreadyActive,
+    PlantSpeciesAlreadyInactive,
 )
 from app.exceptions.plant_care_guide import (
     PlantCareGuideNotFound,
@@ -240,6 +242,36 @@ class AdminPlantSpeciesService:
         #     plant_species_uid=plant_species.plant_species_uid
         # )
 
+        return plant_species      
+
+    async def set_plant_species_active(
+            self,
+            *,
+            plant_species_uid: UUID,
+            is_active: bool,
+    ) -> PlantSpecies:
+
+        plant_species = await self.plant_species_repository.get_by_uid(
+            plant_species_uid=plant_species_uid,
+        )
+
+        if plant_species is None:
+            raise PlantSpeciesNotFound()
+
+        if plant_species.is_active == is_active:
+            if is_active == True:
+                raise PlantSpeciesAlreadyActive()
+            raise PlantSpeciesAlreadyInactive()
+
+        plant_species.is_active = is_active
+
+        try:
+            await self.plant_species_repository.commit()
+        except SQLAlchemyError:
+            await self.plant_species_repository.rollback()
+
+        await self.plant_species_repository.refresh(plant_species)
+
         return plant_species
 
 
@@ -378,35 +410,5 @@ class AdminPlantSpeciesService:
         )
 
         if existing is not None:
-            raise PlantSpeciesAlreadyExists()
-
-        
-
-        
-    # async def get_by_common_name():
-    #     pass
-
-    # async def get_by_scientific_name():
-    #     pass
-
-    # async def get_care_guide(
-    #         self,
-    #         *,
-    #         plant_species_uid: UUID
-    # ) -> PlantCareGuideResponse:
-        
-    #     plant_species = await self.plant_species_repository.get_by_uid_with_care_guide(
-    #         plant_species_uid=plant_species_uid
-    #     )
-
-    #     if (
-    #         plant_species is None
-    #         or plant_species.care_guide is None
-    #     ):
-    #         raise PlantCareGuideNotFound()
-
-    #     return PlantCareGuideResponse(
-    #         plant_species=PlantSpeciesSummary.model_validate(plant_species),
-    #         care_guide=PlantCareGuideData.model_validate(plant_species.care_guide),
-    #     )
+            raise PlantSpeciesAlreadyExists() 
 
