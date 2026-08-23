@@ -10,6 +10,7 @@ from app.routers.admin.user_router import router as admin_user_router
 
 from app.routers.plant_species_router import router as plant_species_router
 from app.routers.admin.plant_species_router import admin_plant_species_router
+from app.routers.admin.plant_category_router import admin_plant_category_router
 
 from app.exceptions.handlers_exception import register_exception_handler
 
@@ -79,6 +80,13 @@ app.include_router(
     router = admin_plant_species_router,
     prefix = f"{API_PREFIX}/admin",
 )
+
+## Admin - Plant Species router
+app.include_router(
+    router = admin_plant_category_router,
+    prefix = f"{API_PREFIX}/admin",
+)
+
 
 
 

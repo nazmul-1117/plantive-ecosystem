@@ -18,6 +18,8 @@ http:
           "d1f064d7-2091-48cd-96a6-745b6569a039"
         ],
         
+        "sunlight_requirement": "FULL_SuN",
+        
         "care_guide": {
       //     "watering_guide": "Hello World XYZ",
           "fertilizer_guide": "No Way. r",

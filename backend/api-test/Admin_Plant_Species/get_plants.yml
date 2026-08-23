@@ -5,11 +5,16 @@ info:
 
 http:
   method: GET
-  url: "{{PLANT_SPECIES_URL}}?search=Hibiscus"
+  url: "{{ADMIN_PLANT_SPECIES_URL}}"
   params:
+    - name: is_active
+      value: "true"
+      type: query
+      disabled: true
     - name: search
       value: Hibiscus
       type: query
+      disabled: true
     - name: category
       value: Indoor-Plant
       type: query

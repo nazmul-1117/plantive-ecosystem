@@ -9,6 +9,7 @@ from app.schemas.plant_species_schema import (
     PlantSpeciesListParams,
 
 )
+from app.schemas.admin.plant_category_schema import AdminPlantCategorySummary
 
 # schema naming vocabulary could be
 """
@@ -325,20 +326,7 @@ class AdminPlantSpeciesUpdateRequest(BaseModel):
 
 
 
-class AdminPlantCategorySummary(BaseModel):
 
-    model_config = ConfigDict(from_attributes=True)
-
-    plant_category_uid: UUID
-    name: str
-    slug: str
-
-    description: str | None = None
-    image_url: str | None = None
-
-    is_active: bool
-    created_at: datetime
-    updated_at: datetime
 
 class AdminPlantCareGuideResponse(BaseModel):
 

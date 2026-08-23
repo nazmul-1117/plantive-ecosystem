@@ -1,0 +1,19 @@
+info:
+  name: get_categories
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: "{{ADMIN_PLANT_CATEGORIES_URL}}?search=indoor"
+  params:
+    - name: search
+      value: indoor
+      type: query
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

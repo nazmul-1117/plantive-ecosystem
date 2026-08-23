@@ -4,8 +4,8 @@ info:
   seq: 6
 
 http:
-  method: POST
-  url: "{{ADMIN_PLANT_SPECIES_URL}}/04b4f43a-1b34-447e-9ff5-27ce896d61f7/activate"
+  method: GET
+  url: "{{ADMIN_PLANT_CATEGORIES_URL}}/"
   auth: inherit
 
 settings:
