@@ -1,0 +1,42 @@
+info:
+  name: create_plant
+  type: http
+  seq: 3
+
+http:
+  method: POST
+  url: "{{ADMIN_PLANT_SPECIES_URL}}"
+  body:
+    type: json
+    data: |-
+      {
+        "common_name": "Hibiscus",
+        "scientific_name": "Hibiscus rosa-sinensis",
+        "description": "A tropical flowering shrub known for its large, colorful flowers and glossy green foliage. Hibiscus grows well in warm conditions with plenty of sunlight, consistent moisture, and good drainage.",
+        "ideal_temp_min_c": 18.0,
+        "ideal_temp_max_c": 30.0,
+        "ideal_humidity_min_percent": 50.0,
+        "ideal_humidity_max_percent": 80.0,
+        "ideal_soil_moisture_min_percent": 45.0,
+        "ideal_soil_moisture_max_percent": 70.0,
+        "sunlight_requirement": "FULL_SUN",
+        "watering_frequency_days": 2,
+        "image_url": "https://images.unsplash.com/photo-1597848212624-e4e3c3e5f7f8",
+        "plant_category_uids": [
+          "8ce8027f-1c97-41e2-ad8f-cab4c9a594d8",
+          "72c6ea31-6bf5-4fb7-b934-71ee895bfb16"
+        ],
+        "care_guide": {
+          "watering_guide": "Water the hibiscus when the upper layer of soil begins to dry. Keep the soil consistently moist but not waterlogged. During hot and dry weather, check the soil more frequently and increase watering when necessary.",
+          "fertilizer_guide": "Feed the plant with a balanced fertilizer during the active growing season. A fertilizer formulated for flowering plants can be applied according to the manufacturer's recommended dosage. Avoid excessive fertilizer application.",
+          "pruning_guide": "Prune lightly to maintain the desired shape and encourage branching. Remove dead, damaged, or diseased branches and trim excessively long growth when necessary. Regular pruning can encourage more flowering shoots.",
+          "common_problems": "Common problems include aphids, whiteflies, spider mites, leaf yellowing, and fungal problems caused by excessive moisture or poor air circulation. Inspect the leaves regularly and avoid keeping the soil continuously waterlogged."
+        }
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

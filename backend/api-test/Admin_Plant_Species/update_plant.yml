@@ -1,0 +1,33 @@
+info:
+  name: update_plant
+  type: http
+  seq: 4
+
+http:
+  method: PATCH
+  url: "{{ADMIN_PLANT_SPECIES_URL}}/04b4f43a-1b34-447e-9ff5-27ce896d61f7"
+  body:
+    type: json
+    data: |-
+      {
+        "image_url": "https://imgs.search.brave.com/Ap35P33jKhofBGSF_LGPLOfNIH1zPDmyLZa-hwiQq_4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zdGF0/aWMudmVjdGVlenku/Y29tL3N5c3RlbS9y/ZXNvdXJjZXMvdGh1/bWJuYWlscy8wMTIv/ODg0LzU3MC9zbWFs/bC93aGl0ZS1oaWJp/c2N1cy1mbG93ZXIt/d2l0aC1ncmVlbi10/cm9waWNhbC1nYXJk/ZW4tYmx1cnJlZC1i/YWNrZ3JvdW5kLXBo/b3RvLmpwZw",
+        
+          "watering_frequency_days": 7,
+        
+        "plant_category_uids": [
+          "d1f064d7-2091-48cd-96a6-745b6569a039"
+        ],
+        
+        "care_guide": {
+      //     "watering_guide": "Hello World XYZ",
+          "fertilizer_guide": "No Way. r",
+          "pruning_guide": "hola pruning r"
+        }
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

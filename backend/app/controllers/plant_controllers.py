@@ -15,7 +15,7 @@ from app.dependencies.auth_dependency import get_current_user, get_access_token_
 from app.dependencies.permission_dependency import require_roles
 from app.dependencies.service_dependency import get_plant_service
 
-from app.exceptions.plant_exception import PlantNotFound
+from app.exceptions.plant_species_exception import PlantNotFound
 
 from app.constants.roles_constant import RoleConstant
 

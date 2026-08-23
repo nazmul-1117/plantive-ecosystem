@@ -1,0 +1,18 @@
+info:
+  name: get_plant
+  type: http
+  seq: 2
+
+http:
+  method: GET
+  url: "{{ADMIN_PLANT_SPECIES_URL}}/04b4f43a-1b34-447e-9ff5-27ce896d61f7"
+  body:
+    type: json
+    data: ""
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

@@ -5,12 +5,11 @@ info:
 
 http:
   method: GET
-  url: "{{PLANT_SPECIES_URL}}"
+  url: "{{PLANT_SPECIES_URL}}?search=Hibiscus"
   params:
     - name: search
-      value: herb
+      value: Hibiscus
       type: query
-      disabled: true
     - name: category
       value: Indoor-Plant
       type: query

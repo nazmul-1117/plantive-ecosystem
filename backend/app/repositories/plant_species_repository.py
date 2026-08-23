@@ -26,8 +26,14 @@ class PlantSpeciesRepository:
 
     async def create(
             self,
-    ):
-        pass
+            *,
+            plant_species: PlantSpecies,
+    ) -> PlantSpecies:
+        
+        self.session.add(plant_species)
+        await self.session.flush()
+
+        return plant_species
 
     async def delete(
             self,
@@ -36,8 +42,13 @@ class PlantSpeciesRepository:
 
     async def update(
             self,
-    ):
-        pass
+            plant_species: PlantSpecies,
+    ) -> PlantSpecies | None:
+        
+        self.session.add(plant_species)
+        await self.session.flush()
+
+        return plant_species
 
     async def get_by_uid(
             self,
@@ -48,7 +59,8 @@ class PlantSpeciesRepository:
         statement = (
             select(PlantSpecies)
             .options(
-                selectinload(PlantSpecies.categories)
+                selectinload(PlantSpecies.categories),
+                joinedload(PlantSpecies.care_guide),
             )
             .where(
                 PlantSpecies.plant_species_uid == plant_species_uid
@@ -265,6 +277,26 @@ class PlantSpeciesRepository:
         result = await self.session.exec(statement)
 
         return result.one_or_none()
+
+    async def get_by_scientific_name(
+            self,
+            *,
+            scientific_name: str
+    ) -> PlantSpecies | None:
+        
+        statement = (
+            select(PlantSpecies)
+            .where(
+                PlantSpecies.scientific_name == scientific_name,
+            )
+        )
+
+        result = await self.session.exec(statement)
+
+        return result.one_or_none()
+
+
+
 
     async def commit(self) -> None:
         await self.session.commit()

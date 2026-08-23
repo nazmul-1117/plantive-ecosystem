@@ -17,7 +17,7 @@ from app.schemas.plant_species_schema import (
 )
 from app.models.plant_species import PlantSpecies
 
-from app.exceptions.plant_exception import PlantSpeciesNotFound
+from app.exceptions.plant_species_exception import PlantSpeciesNotFound
 from app.exceptions.plant_care_guide import PlantCareGuideNotFound
 
 class PlantSpeciesService:

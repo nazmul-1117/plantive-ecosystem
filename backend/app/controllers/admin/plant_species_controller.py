@@ -1,5 +1,5 @@
 
-# app/controllers/plant_species_controller.py
+# app/controllers/admin/plant_species_controller.py - admin
 
 from uuid import UUID
 from fastapi import Depends
@@ -16,7 +16,10 @@ from app.schemas.plant_care_guide_schema import PlantCareGuideResponse
 from app.schemas.admin.plant_species_schema import (
     AdminPlantSpeciesListParams,
     AdminPlantSpeciesListResponse,
-    AdminPlantSpeciesListItem,
+    AdminPlantSpeciesResponse,
+
+    AdminPlantSpeciesCreateRequest,
+    AdminPlantSpeciesUpdateRequest,
 )
 
 from app.constants.roles_constant import RoleConstant
@@ -49,25 +52,55 @@ async def list_plant_species(
         params=params
     )
 
+async def get_plant_species(
+        admin_plant_species_service: Annotated[
+            AdminPlantSpeciesService,
+            Depends(get_admin_plant_species_service)
+        ],
 
+        plant_species_uid: UUID
+) -> AdminPlantSpeciesResponse:
 
-# async def get_plant_species(
-#         _: Annotated[None, Depends(strict_query_params(PlantSpeciesListParams))],
-#         plant_species_service: Annotated[PlantSpeciesService, Depends(get_plant_species_service)],
+    return await admin_plant_species_service.get_by_uid(
+        plant_species_uid = plant_species_uid
+    )
 
-#         plant_species_uid: UUID
-# ) -> PlantSpeciesReadResponse:
+async def create_plant_species(
 
-#     return await plant_species_service.get_by_uid(
-#         plant_species_uid = plant_species_uid
-#     )
+        request: AdminPlantSpeciesCreateRequest,
 
-# async def get_care_guide(
-#         plant_species_service: Annotated[PlantSpeciesService, Depends(get_plant_species_service)],
-        
-#         plant_species_uid: UUID,
-# ) -> PlantCareGuideResponse:
+        admin_plant_species_service: Annotated[
+            AdminPlantSpeciesService,
+            Depends(get_admin_plant_species_service)
+        ],
 
-#     return await plant_species_service.get_care_guide(
-#         plant_species_uid=plant_species_uid
-#     )
+        # _: Annotated[
+        #     User,
+        #     Depends(require_roles(RoleConstant.ADMIN, RoleConstant.MODERATOR))
+        # ],
+) -> AdminPlantSpeciesResponse:
+
+    return await admin_plant_species_service.create_plant_species(
+        request=request
+    )
+
+async def update_plant_species(
+
+        plant_species_uid: UUID,
+        request: AdminPlantSpeciesUpdateRequest,
+
+        service: Annotated[
+            AdminPlantSpeciesService,
+            Depends(get_admin_plant_species_service)
+        ],
+
+        # _: Annotated[
+        #     User,
+        #     Depends(require_roles(RoleConstant.ADMIN, RoleConstant.MODERATOR))
+        # ],
+) -> AdminPlantSpeciesResponse:
+
+    return await service.update_plant_species(
+        plant_species_uid=plant_species_uid,
+        request=request
+    )

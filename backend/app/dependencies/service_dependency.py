@@ -26,11 +26,15 @@ from app.repositories.password_reset_token_repository import PasswordResetTokenR
 #plant repository
 from app.repositories.plant_species_repository import PlantSpeciesRepository
 from app.repositories.plant_care_guide_repository import PlantCareGuideRepository
+from app.repositories.plant_category_repository import PlantCategoryRepository
+from app.repositories.plant_species_category_repository import PlantSpeciesCategoryRepository
 
 from app.dependencies.repository_dependency import (
     get_role_repository, get_user_repository, get_user_role_repository,
     get_verification_token_repository, get_password_reset_token_repository,
-    get_plant_species_repository, get_plant_care_guide_repository
+    get_plant_species_repository, get_plant_care_guide_repository,
+    get_plant_category_repository,
+    get_plant_species_category_repository,
 )
 from app.dependencies.redis_dependency import get_redis
 
@@ -129,8 +133,18 @@ def get_plant_care_guide_service(
 # plant species admin
 def get_admin_plant_species_service(
     plant_species_repository: Annotated[PlantSpeciesRepository, Depends(get_plant_species_repository)],
+    plant_category_repository: Annotated[PlantCategoryRepository, Depends(get_plant_category_repository)],
+    plant_species_category_repository: Annotated[PlantSpeciesCategoryRepository, Depends(get_plant_species_category_repository)],
+    plant_care_guide_repository: Annotated[PlantCareGuideRepository, Depends(get_plant_care_guide_repository)],
 ) -> AdminPlantSpeciesService:
 
     return AdminPlantSpeciesService(
-        plant_species_repository=plant_species_repository
+        plant_species_repository=plant_species_repository,
+        plant_category_repository=plant_category_repository,
+        plant_species_category_repository=plant_species_category_repository,
+        plant_care_guide_repository=plant_care_guide_repository,
     )
+
+# plant category - public
+def get_plant_category_service():
+    pass
