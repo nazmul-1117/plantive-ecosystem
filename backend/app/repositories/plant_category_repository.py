@@ -1,5 +1,7 @@
 
-# app/repositories/plant_category_repository.py
+# ========================================================================================
+#                  app/repositories/plant_category_repository.py -> PUBLIC + ADMIN
+# ========================================================================================
 
 from uuid import UUID
 

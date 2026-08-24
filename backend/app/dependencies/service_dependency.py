@@ -12,6 +12,7 @@ from app.services.email_service import EmailService
 #plant service
 from app.services.plant_species_service import PlantSpeciesService
 from app.services.plant_care_guide_service import PlantCareGuideService
+from app.services.plant_category_service import PlantCategoryService
 
 from app.services.admin.user_service import AdminUserService
 from app.services.admin.user_role_service import AdminUserRoleService
@@ -122,6 +123,27 @@ def get_plant_species_service(
         plant_species_repository=plant_species_repository
     )
 
+def get_plant_category_service(
+        plant_species_repository: Annotated[
+            PlantSpeciesRepository,
+            Depends(
+                get_plant_species_repository,
+            )
+        ],
+
+        plant_category_repository: Annotated[
+            PlantCategoryRepository,
+            Depends(
+                get_plant_category_repository,
+            )
+        ],
+) -> PlantCategoryService:
+
+    return PlantCategoryService(
+        plant_species_repository=plant_species_repository,
+        plant_category_repository=plant_category_repository
+    )
+
 def get_plant_care_guide_service(
         plant_care_guide_repository: Annotated[PlantCareGuideRepository, Depends(get_plant_care_guide_repository)],
 ) -> PlantCareGuideService:
@@ -146,7 +168,6 @@ def get_admin_plant_species_service(
         plant_care_guide_repository=plant_care_guide_repository,
     )
 
-# plant category - admin
 def get_admin_plant_category_service(
         plant_species_repository: Annotated[
             PlantSpeciesRepository,
