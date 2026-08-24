@@ -36,3 +36,27 @@ class InvalidPlantCategoryUpdate(AppException):
             error_code="INVALID_PLANT_CATEGORY_UPDATE",
             status_code=status.HTTP_404_NOT_FOUND
         )
+
+class PlantCategoryAlreadyActive(AppException):
+    """
+    Raised when the plant Category already active
+    """
+
+    def __init__(self):
+        super().__init__(
+            message="Plant Category is already active.",
+            error_code="PLANT_CATEGORY_ALREADY_ACTIVE",
+            status_code=status.HTTP_409_CONFLICT,
+        )
+
+class PlantCategoryAlreadyInactive(AppException):
+    """
+    Raised when the plant Category already inactive
+    """
+
+    def __init__(self):
+        super().__init__(
+            message="Plant Category is already inactive.",
+            error_code="PLANT_CATEGORY_ALREADY_INACTIVE",
+            status_code=status.HTTP_409_CONFLICT,
+        )

@@ -23,6 +23,9 @@ from app.exceptions.plant_category_exception import (
     PlantCategoryNotFound,
     PlantCategoryAlreadyExists,
     InvalidPlantCategoryUpdate,
+
+    PlantCategoryAlreadyInactive,
+    PlantCategoryAlreadyActive,
 )
 
 class AdminPlantCategoryService:
@@ -177,6 +180,36 @@ class AdminPlantCategoryService:
 
         return plant_category
 
+    async def set_plant_species_active(
+            self,
+            *,
+            plant_category_uid: UUID,
+            is_active: bool
+    ) -> PlantCategory:
+
+        plant_category = await self.plant_category_repository.get_by_uid(
+            plant_category_uid=plant_category_uid
+        )
+
+        if plant_category is None:
+            raise PlantCategoryNotFound()
+
+        if plant_category.is_active == is_active:
+            if is_active:
+                raise PlantCategoryAlreadyActive()
+            raise PlantCategoryAlreadyInactive()
+
+        plant_category.is_active = is_active
+
+        try:
+            await self.plant_category_repository.commit()
+        except SQLAlchemyError:
+            await self.plant_category_repository.rollback()
+
+        await self.plant_category_repository.refresh(plant_category)
+
+        return plant_category
+        
 
     def _build_plant_category(
             self,

@@ -87,3 +87,34 @@ async def update_plant_category(
         plant_category_uid=plant_category_uid,
         request=request,
     )
+
+async def activate_plant_category(
+        
+        plant_category_uid: UUID,
+
+        service: Annotated[
+            AdminPlantCategoryService,
+            Depends(get_admin_plant_category_service)
+        ],
+) -> AdminPlantCategoryResponse:
+
+    return await service.set_plant_species_active(
+        plant_category_uid=plant_category_uid,
+        is_active=True,
+    )
+
+
+async def deactivate_plant_category(
+        
+        plant_category_uid: UUID,
+
+        service: Annotated[
+            AdminPlantCategoryService,
+            Depends(get_admin_plant_category_service)
+        ],
+) -> AdminPlantCategoryResponse:
+
+    return await service.set_plant_species_active(
+        plant_category_uid=plant_category_uid,
+        is_active=False,
+    )

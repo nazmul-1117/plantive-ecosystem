@@ -1,0 +1,16 @@
+info:
+  name: deactivate_category
+  type: http
+  seq: 6
+
+http:
+  method: POST
+  url: "{{ADMIN_PLANT_CATEGORIES_URL}}/00a0bd78-c1e4-45e3-bd46-fb2d9abf2e2b/deactivate"
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
