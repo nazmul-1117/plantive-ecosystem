@@ -1,0 +1,31 @@
+info:
+  name: update_category
+  type: http
+  seq: 4
+
+http:
+  method: PATCH
+  url: "{{ADMIN_PLANT_CATEGORIES_URL}}/00a0bd78-c1e4-45e3-bd46-fb2d9abf2e2b"
+  body:
+    type: json
+    data: |-
+      {
+        "name": "Climbing Plant",
+      //      "name": "Vegetabe",
+        
+        "description": "Plants that naturally grow upward by climbing, twining, or attaching themselves to nearby structures or supports.",
+        
+      //   "description": null,
+        
+        "image_url": "https://imgs.search.brave.com/7kAmKtQVeOdmQGeVDDJENSm48Dk9c_0Cgzeq-sv2EiM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/bW9ucm92aWEuY29t/L21lZGlhL2FtYXN0/eS9ibG9nL3ZhbHVh/YmxldmluZXNsZWFk/Y3JvcHBlZDEyMDB4/Njc1LTEwMjR4NTc2/XzJ4LmpwZw"
+        
+      //     "image_url": null
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

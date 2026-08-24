@@ -2,9 +2,7 @@
 
 from datetime import datetime
 from uuid import UUID
-from pydantic import BaseModel, ConfigDict, Field, model_validator, HttpUrl, field_validator
-
-from app.constants.plant_constant import SunlightRequirement, PlantSpeciesSort
+from pydantic import BaseModel, ConfigDict, Field, HttpUrl, field_validator
 
 
 # create
@@ -16,11 +14,15 @@ class AdminPlantCategoryCreateRequest(BaseModel):
     )
 
     name: str = Field(
-        ge=3,
-        le=50,
+        min_length=3,
+        max_length=50,
     )
 
-    description: str | None = None
+    description: str | None = Field(
+        default=None,
+        max_length=1000,
+    )
+
     image_url: HttpUrl | None = None
 
     @field_validator("name", mode="before")
@@ -32,17 +34,64 @@ class AdminPlantCategoryCreateRequest(BaseModel):
 
         return value.strip()
 
-    @field_validator("image_url", mode="after")
+    @field_validator("description", mode="before")
+    @classmethod
+    def normalize_description(
+        cls,
+        value: str | None,
+    ) -> str | None:
+
+        
+        if value is None:
+            return None
+        
+        return value.strip() or None
+
+
+# update
+class AdminPlantCategoryUpdateRequest(BaseModel):
+
+    model_config = ConfigDict(
+        extra="forbid"
+    )
+
+    name: str  | None = Field(
+        default=None,
+        min_length=3,
+        max_length=50,
+    )
+
+    description: str | None = Field(
+        default=None,
+        max_length=1000,
+    )
+
+    image_url: HttpUrl | None = None
+
+    @field_validator("name", mode="before")
     @classmethod
     def normalize_name(
         cls,
-        value: HttpUrl | None
-    ) -> str:
+        value: str | None
+    ) -> str | None:
 
-        if isinstance(value, HttpUrl):
-            return str(value)
+        if value is None:
+            return None
 
-        return value
+        return value.strip()
+
+    @field_validator("description", mode="before")
+    @classmethod
+    def normalize_description(
+        cls,
+        value: str | None,
+    ) -> str | None:
+
+        
+        if value is None:
+            return None
+        
+        return value.strip() or None
 
 
 #summary
@@ -57,6 +106,7 @@ class AdminPlantCategorySummary(BaseModel):
     is_active: bool
     created_at: datetime
     updated_at: datetime
+
 
 # read response
 class AdminPlantCategoryResponse(BaseModel):

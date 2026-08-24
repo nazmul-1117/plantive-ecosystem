@@ -4,8 +4,7 @@
 from uuid import UUID
 
 from sqlmodel.ext.asyncio.session import AsyncSession
-from sqlmodel import select, exists, delete, or_, func
-from sqlalchemy.orm import selectinload, joinedload
+from sqlmodel import select, or_, func
 
 from app.models.plant_category import PlantCategory
 
@@ -18,6 +17,27 @@ class PlantCategoryRepository:
     ):
         self.session = session
 
+    async def create(
+            self,
+            *,
+            plant_category: PlantCategory
+    ) -> PlantCategory:
+
+        self.session.add(plant_category)
+        await self.session.flush()
+
+        return plant_category
+
+    async def update(
+            self,
+            plant_category: PlantCategory
+    ) -> PlantCategory:
+        
+        # self.session.add(plant_category)
+        await self.session.flush()
+
+        return plant_category
+        
     async def list_categories(
             self,
             *,
@@ -57,6 +77,23 @@ class PlantCategoryRepository:
         result = await self.session.exec(statement)
         return result.all(), total
 
+    async def get_by_uid(
+            self,
+            *,
+            plant_category_uid: UUID,
+    ) -> PlantCategory | None:
+
+        statement = (
+            select(PlantCategory)
+            .where(
+                PlantCategory.plant_category_uid == plant_category_uid,
+            )
+        )
+
+        result = await self.session.exec(statement)
+
+        return result.one_or_none()
+
     async def get_by_uids(
             self,
             *,
@@ -77,6 +114,46 @@ class PlantCategoryRepository:
 
         return result.all()
 
+    async def get_by_name(
+        self,
+        *,
+        name: str
+    ) -> PlantCategory | None:
+
+        statement = (
+            select(PlantCategory)
+            .where(
+                func.lower(PlantCategory.name) == name.lower()
+            )
+        )
+
+        result = await self.session.exec(statement)
+
+        return result.one_or_none()
+
+    async def get_by_conflicting_category(
+        self,
+        *,
+        name: str,
+        slug: str,
+        exclude_uid: UUID,
+    ) -> PlantCategory | None:
+
+        statement = (
+            select(PlantCategory)
+            .where(
+                PlantCategory.plant_category_uid != exclude_uid,
+                or_(
+                    func.lower(PlantCategory.name) == name.lower(),
+                    func.lower(PlantCategory.slug) == slug,
+                ),
+            )
+            .limit(1)
+        )
+
+        result = await self.session.exec(statement)
+
+        return result.one_or_none()
 
     def _apply_filters(
         self,
@@ -103,3 +180,16 @@ class PlantCategoryRepository:
             )
 
         return statement
+
+
+
+
+
+    async def commit(self) -> None:
+        await self.session.commit()
+    
+    async def rollback(self) -> None:
+        await self.session.rollback()
+    
+    async def refresh(self, obj) -> None:
+        await self.session.refresh(obj)
