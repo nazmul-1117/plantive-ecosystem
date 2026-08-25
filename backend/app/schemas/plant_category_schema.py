@@ -6,6 +6,8 @@
 from uuid import UUID
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
+from app.constants.plant_constant import PlantSpeciesSort
+
 #summary
 class PlantCategorySummary(BaseModel):
 
@@ -45,7 +47,7 @@ class PlantCategoryListResponse(BaseModel):
     )
 
 class PlantCategoryListParams(BaseModel):
-    model_config = ConfigDict(from_attributes=True)
+    model_config = ConfigDict(extra="forbid")
 
     search: str | None = None
 
@@ -74,3 +76,45 @@ class PlantCategoryListParams(BaseModel):
         return value.strip() or None
 
 
+
+# plant species
+class PlantSpeciesSummary(BaseModel):
+    
+    """
+    Summary Representation of a Plant species
+    """
+    model_config = ConfigDict(from_attributes=True)
+    
+    plant_species_uid: UUID
+    common_name: str
+    scientific_name: str
+
+    image_url: str | None = None
+
+class PlantSpeciesListResponse(BaseModel):
+
+
+    """
+    Paginated plant species belonging to a plant category.
+    """
+
+    page: int
+    page_size: int
+
+    total: int
+    total_pages: int
+
+    plant_category_uid: UUID
+    name: str
+    image_url: str | None
+    
+    items: list[PlantSpeciesSummary] = Field(
+        default_factory=list,
+    )
+
+
+class PlantSpeciesListParams(PlantCategoryListParams):
+
+    sort: PlantSpeciesSort = Field(
+        default=PlantSpeciesSort.SCIENTIFIC_NAME,
+    )

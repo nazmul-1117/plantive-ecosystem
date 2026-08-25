@@ -16,6 +16,8 @@ from app.schemas.plant_category_schema import (
     PlantCategoryListResponse,
 
     PlantCategoryListParams,
+    PlantSpeciesListParams,
+    PlantSpeciesListResponse,
 )
 
 from app.exceptions.plant_category_exception import (
@@ -25,6 +27,7 @@ from app.exceptions.plant_category_exception import (
     PlantCategoryAlreadyInactive,
     PlantCategoryAlreadyActive,
 )
+from app.exceptions.plant_species_exception import PlantSpeciesNotFound
 
 class PlantCategoryService:
 
@@ -85,3 +88,52 @@ class PlantCategoryService:
             raise PlantCategoryNotFound()
 
         return plant_caterory
+
+    async def get_plant_species(
+            self,
+            *,
+            plant_category_uid: UUID,
+            params: PlantSpeciesListParams,
+    ) -> PlantSpeciesListResponse:
+
+        offset = (
+            params.page - 1
+        )*params.page_size
+
+        plant_category = await self.plant_category_repository.get_by_uid(
+            plant_category_uid=plant_category_uid
+        )
+
+        if plant_category is None:
+            raise PlantCategoryNotFound()
+
+        plant_species, total = await self.plant_species_repository.get_by_category_uid(
+            plant_category_uid=plant_category_uid,
+            search=params.search,
+            sort=params.sort,
+            is_active=True,
+
+            offset=offset,
+            limit=params.page_size,
+        )
+
+        total_page = (
+            (total + params.page_size - 1)
+            // params.page_size
+            if total > 0
+            else 0
+        )
+
+
+        return PlantSpeciesListResponse(
+            page=params.page,
+            page_size=params.page_size,
+            total=total,
+            total_pages=total_page,
+
+            plant_category_uid=plant_category.plant_category_uid,
+            name=plant_category.name,
+            image_url=plant_category.image_url,
+
+            items=plant_species,
+        )

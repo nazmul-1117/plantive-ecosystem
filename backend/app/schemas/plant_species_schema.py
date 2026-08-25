@@ -1,8 +1,9 @@
 
 # app/schemas/plant_species_schema.py
 
+import re
 from uuid import UUID
-from pydantic import BaseModel, ConfigDict, Field, model_validator
+from pydantic import BaseModel, ConfigDict, Field, model_validator, field_validator
 
 from app.constants.plant_constant import SunlightRequirement, PlantSpeciesSort
 
@@ -123,6 +124,22 @@ class PlantSpeciesListParams(BaseModel):
             )
 
         return self
+
+    @field_validator("category", mode="before")
+    @classmethod
+    def slugify(
+        cls,
+        value: str | None
+    ) -> str | None:
+
+        if value is None:
+            return None
+
+        value = value.strip().lower()
+        value = re.sub(r"[^a-z0-9\s-]", "", value)
+        value = re.sub(r"[\s-]+", "-", value)
+
+        return value.strip("-") or None
 
 class PlantSpeciesReadListResponse(BaseModel):
 

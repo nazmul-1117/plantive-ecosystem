@@ -71,6 +71,75 @@ class PlantSpeciesRepository:
 
         return result.first()
 
+    async def get_by_category_uid(
+            self,
+            *,
+            plant_category_uid: UUID,
+
+            search: str | None = None,
+            sort: PlantSpeciesSort = PlantSpeciesSort.COMMON_NAME,
+            is_active: bool = True,
+
+            offset: int = 0,
+            limit: int = 20,
+    ) -> tuple[list[PlantSpecies], int]:
+
+        base_filters = [
+            PlantSpeciesCategory.plant_category_uid == plant_category_uid,
+            PlantSpecies.is_active.is_(is_active),
+        ]
+
+        if search:
+            search = search.strip().strip("-")
+
+            if search:
+                search_pattern = f"%{search}%"
+
+                base_filters.append(
+                    PlantSpecies.common_name.ilike(search_pattern)
+                    | PlantSpecies.scientific_name.ilike(search_pattern)
+                )
+
+        count_statement = (
+            select(func.count(PlantSpecies.plant_species_uid))
+            .select_from(PlantSpecies)
+            .join(
+                PlantSpeciesCategory,
+                PlantSpeciesCategory.plant_species_uid 
+                == PlantSpecies.plant_species_uid,
+            )
+            .where(*base_filters)
+        )
+
+        count_result = await self.session.exec(count_statement)
+        total = count_result.one()
+
+        statement = (
+            select(PlantSpecies)
+            .join(
+                PlantSpeciesCategory,
+                PlantSpeciesCategory.plant_species_uid 
+                == PlantSpecies.plant_species_uid,
+            )
+            .where(*base_filters)
+        )
+
+        statement = await self._apply_sorting(
+            statement=statement,
+            sort=sort,
+        )
+
+        statement = (
+            statement
+            .offset(offset)
+            .limit(limit)
+        )
+
+
+        result = await self.session.exec(statement)
+
+        return result.all(), total
+    
     async def list(
             self,
             *,
@@ -165,12 +234,12 @@ class PlantSpeciesRepository:
             self,
             statement,
             *,
-            search: str | None,
-            category: str | None,
-            sunlight_requirement: SunlightRequirement | None,
-            min_temp: float | None,
-            max_temp: float | None,
-            is_active: bool | None,
+            search: str | None = None,
+            category: str | None = None,
+            sunlight_requirement: SunlightRequirement | None = None,
+            min_temp: float | None = None,
+            max_temp: float | None = None,
+            is_active: bool | None = None,
     ):
 
         if search:

@@ -15,6 +15,8 @@ from app.schemas.plant_category_schema import (
     PlantCategoryListResponse,
 
     PlantCategoryListParams,
+    PlantSpeciesListResponse,
+    PlantSpeciesListParams
 )
 
 from app.dependencies.permission_dependency import require_roles
@@ -60,3 +62,27 @@ async def get_plant_category(
         plant_category_uid=plant_category_uid
     )
 
+async def get_plant_species(
+        _query_params: Annotated[
+            None,
+            Depends(strict_query_params(PlantSpeciesListParams))
+        ],
+
+        params: Annotated[
+            PlantSpeciesListParams,
+            Depends()
+        ],
+
+        plant_category_uid: UUID,
+
+        service: Annotated[
+            PlantCategoryService,
+            Depends(get_plant_category_service)
+        ],
+        
+) -> PlantSpeciesListResponse:
+
+    return await service.get_plant_species(
+        plant_category_uid=plant_category_uid,
+        params=params
+    )
